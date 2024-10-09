@@ -65,20 +65,26 @@
                                 </li>
                                 <li class="onhover-dropdown">
                                     <div class="cart-media name-usr">
+                                        @auth
+                                            <span>{{ auth()->user()->name }}</span>
+                                        @endauth
                                         <i data-feather="user"></i>
                                     </div>
                                     <div class="onhover-div profile-dropdown">
                                         <ul>
-                                            <li>
-                                                <a href="{{route('login')}}" class="d-block">Login</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('register')}}" class="d-block">Register</a>
-                                            </li>
-
+                                            @auth
+                                                <li><a href="">My Acc</a></li>
+                                                <li><a href="{{ route('logout') }}">Logout</a></li>
+                                            @else
+                                                @if (Route::has('login'))
+                                                    <li><a href="{{ route('login') }}" class="d-block">Login</a></li>
+                                                    <li><a href="{{ route('register') }}" class="d-block">Register</a></li>
+                                                @endif
+                                            @endauth
                                         </ul>
                                     </div>
                                 </li>
+
                             </ul>
                         </div>
                         <div class="search-full">

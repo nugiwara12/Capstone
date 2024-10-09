@@ -200,7 +200,7 @@
                                         <i class="fa fa-bookmark fz-16 me-2"></i>
                                         <span>Wishlist</span>
                                     </a> --}}
-                                    <a href="javascript:void(0)"
+                                    {{-- <a href="javascript:void(0)"
                                         id="cartEffect" class="btn btn-solid hover-solid btn-animation">
                                         <i class="fa fa-shopping-cart"></i>
                                         <span>Add To Cart</span>
@@ -214,10 +214,9 @@
                                             <input type="hidden" name="price" value="13">
                                             <input type="hidden" name="quantity" id="qty" value="1">
                                         </form>
-                                    </a>
+                                    </a> --}}
 
-
-
+                                    <x-add-to-cart.cart :product="$product" />
                                 </div>
 
                                 <ul class="product-count shipping-order">

@@ -143,7 +143,7 @@
             <div class="col-xl-2 col-lg-2 col-6">
                 <div class="product-box">
                     <div class="img-wrapper">
-                        <a href="#">
+                        <a href="{{route('product-details', $item->id)}}">
                             <img src="{{ asset('images/' . $item->main_image) }}" class="w-100 bg-img blur-up lazyload" alt="{{$item->title}}">
                         </a>
                         <div class="circle-shape"></div>
@@ -296,7 +296,102 @@
 <!-----End of about ---->
 
 {{-- Best Seller --}}
-<section class="ratio_asos overflow-hidden">
+
+<section class="ratio_asos overflow-hidden pb-5">
+    <div class="px-0 container-fluid p-sm-0">
+        <div class="row m-0">
+            <div class="col-12 p-0">
+                <div class="title-3 text-center">
+                    <h2>Best Selling Products</h2>
+                    <h5 class="theme-color">Our Collection</h5>
+                </div>
+            </div>
+
+            <div class="our-product products-c">
+                @foreach ($best_seller as $best)
+                <div>
+                    <div class="product-box">
+                        <div class="img-wrapper">
+                            <a href="{{route('product-details', $best->id)}}">
+                                <img src="{{ asset('images/' . $best->main_image) }}"
+                                    class="w-100 bg-img blur-up lazyload" alt="">
+                            </a>
+                            <div class="circle-shape"></div>
+                            <span class="background-text">Hand</span>
+                            <div class="cart-wrap">
+                                <ul>
+                                    <li>
+                                        <a href="{{route('cart')}}">
+                                            <i data-feather="shopping-cart"></i>
+                                        </a>
+                                    </li>
+                                    <li><a href="{{route('product-details', $best->id)}}"><i data-feather="eye"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="" class="wishlist">
+                                            <i data-feather="heart"></i>
+                                        </a>
+                                    </li>
+                                    {{-- <li>
+                                        <a href="{{route('cart')}}" class="addtocart-btn" data-bs-toggle="modal"
+                                            data-bs-target="#addtocart">
+                                            <i data-feather="shopping-cart"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('product-details', $item->id)}}" data-bs-toggle="modal"
+                                            data-bs-target="#quick-view">
+                                            <i data-feather="eye"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="" class="wishlist">
+                                            <i data-feather="heart"></i>
+                                        </a>
+                                    </li> --}}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="product-style-3 product-style-chair">
+                            <div class="product-title d-block mb-0">
+                                <div class="r-price">
+                                    <div class="theme-color">&#8369;{{$best->price}}</div>
+                                    <div class="main-price">
+                                        <ul class="rating mb-1 mt-0">
+                                            <li>
+                                                <i class="fas fa-star theme-color"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-star theme-color"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-star"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-star"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-star"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <p class="font-light mb-sm-2 mb-0">{{$best->category}}</p>
+                                <a href="product/details.html" class="font-default">
+                                    <h5>{{$best->title}}</h5>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- <section class="ratio_asos overflow-hidden">
     <div class="container p-sm-0">
         <div class="row m-0">
             <div class="col-12 p-0">
@@ -347,7 +442,7 @@
 
         </div>
     </div>
-</section>
+</section> --}}
 {{-- End of Best Seller --}}
 
 {{-- <div id="qvmodal"></div> --}}

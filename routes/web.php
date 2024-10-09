@@ -79,6 +79,7 @@ Route::controller(ShopController::class)->group(function () {
     Route::get( 'cart', 'cart')->name('cart');
     Route::get( 'checkout', 'checkout')->name('checkout');
     Route::get( 'product-details/{id}', 'show')->name('product-details');
+    Route::post('cart/{$id}', 'add_to_cart')->name('add_to_cart');
 
  });
 // ----------------------------- PRODUCT -----------------------//

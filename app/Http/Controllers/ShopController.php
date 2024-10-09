@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ShopController extends Controller
 {
@@ -36,4 +38,12 @@ class ShopController extends Controller
         return view('product-details', compact('product'));
     }
 
+    public function add_to_cart(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        return redirect()->route('components.add-to-cart.cart')->with('success', 'Product added to cart successfully');
+    }
+
 }
+
