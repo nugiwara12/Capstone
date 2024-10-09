@@ -1,0 +1,66 @@
+#largeBox{
+    border: 1px dashed #2275fc; border-radius: 10px; text-align: center; cursor: pointer; background-color: #f8f8f8; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; height: 200px;
+}
+#image-preview{
+    max-width: 100%; max-height: 100%; display: none; border-radius: 10px;
+}
+#delete-button{
+    display: none; position: absolute; top: 10px; right: 10px; background: red; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;
+}
+#file-upload-1, #file-upload-2, #fileInput{
+    display: none;
+}
+#imageGallery{
+    border: 1px dashed #2275fc; border-radius: 10px; text-align: center; cursor: pointer; background-color: #f8f8f8; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
+    height: 150px;
+}
+#image-gallery{
+    display: flex; flex-wrap: wrap; margin-top: 10px;
+}
+#customizeBox{
+    border: 1px dashed #c0c0c4; border-radius: 10px; text-align: center; cursor: pointer; background-color: #e9ecef; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; height: 200px;
+}
+
+#canvasContainer{
+    position: relative; display:none; width:300px; height:300px;
+}
+#preview2{
+    max-width: 100%; max-height: 100%; display: none; border-radius: 10px;
+}
+#canvas{
+    position: absolute; height: 86%; width: 60%; top: 6%; left: 21%; border: dotted dimgray; display:none;
+}
+#customizeImagePreview{
+    display: none;
+}
+#mainImagePreview{
+    position: relative; width:200px; height:200px; display:none;
+}
+#description{
+    height: 200px;
+}
+
+
+#showMainImagePreview{
+    width:200px; height:200px; position: relative; border: 2px solid #ddd; border-radius: 10px;
+    display: block;
+}
+
+#show-image-gallery{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#galleryImagePreview{
+    border: 2px solid rgb(221, 221, 221);
+    border-radius: 10px;
+    margin: 5px;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(248, 248, 248);
+    position: relative;
+    overflow: hidden;
+}

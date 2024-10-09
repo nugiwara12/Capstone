@@ -1,0 +1,14 @@
+.dropdown-menu {
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .dropdown-item {
+    padding: 10px 20px;
+  }
+  .dropdown-item:hover {
+    background-color: #dceeff;
+  }
+  .dropdown-toggle::after {
+    display: none !important; /* Forcefully hide the inverted triangle (caret) */
+  }

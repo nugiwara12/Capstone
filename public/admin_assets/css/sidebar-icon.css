@@ -1,0 +1,15 @@
+.sidebar-icon{
+    margin-left: 5px;
+    color: #FFFFFF;
+}
+
+.accounting-icon{
+    height: 6rem;
+    width: 6.1rem;
+    justify-content: center;
+}
+
+.sidebar {
+    background: linear-gradient(180deg, #00008B 10%, #37802b 100%);
+    background-size: cover;
+}

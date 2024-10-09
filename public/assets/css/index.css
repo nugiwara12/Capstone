@@ -1,0 +1,406 @@
+.h-logo {
+    max-width: 185px !important;
+}
+
+.f-logo {
+    max-width: 220px !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .h-logo {
+        max-width: 110px !important;
+    }
+}
+header .profile-dropdown ul li {
+    display: block;
+    padding: 5px 20px;
+    border-bottom: 1px solid #ddd;
+    line-height: 35px;
+}
+
+header .profile-dropdown ul li:last-child {
+    border-color: #fff;
+}
+
+header .profile-dropdown ul {
+    padding: 10px 0;
+    min-width: 250px;
+}
+
+.name-usr {
+    background: #3fb0a5;
+    padding: 8px 12px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 24px;
+}
+
+.name-usr span {
+    margin-right: 10px;
+}
+
+@media (max-width:600px) {
+    .h-logo {
+        max-width: 150px !important;
+    }
+
+    i.sidebar-bar {
+        font-size: 22px;
+    }
+
+    .mobile-menu ul li a svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .mobile-menu ul li a span {
+        margin-top: 0px;
+        font-size: 12px;
+    }
+
+    .name-usr {
+        padding: 5px 12px;
+    }
+}
+.slide {
+    display: none; /* Hide slides by default */
+}
+
+.active {
+    display: block; /* Show the active slide */
+}
+
+.box1-image {
+    width: 100%; /* Ensures the image takes full width */
+    height: auto; /* Maintains aspect ratio */
+}
+
+.lightblue-box {
+    background-color: #D3EEE9; /* Light blue color */
+    border-radius: 10px 0px 0px 10px;
+    position: relative; /* Required for positioning text */
+    overflow: hidden; /* Hides overflow from child elements */
+}
+.box_2 {
+    width: 100%; /* Make it responsive */
+    max-width: 1480px; /* Limit the maximum width */
+    height: 200px; /* Keep the height smaller */
+    background-color: #F7FBFD;
+    margin: 20px auto; /* Center the box */
+    padding: 20px; /* Added padding for better spacing */
+}
+
+.box_2 .text-row-1 {
+    margin-bottom: 10px; /* Reduced bottom margin */
+    color: #000;
+    font-size: 36px; /* Reduced font size */
+    line-height: 1.2; /* Reduced line height for a more compact appearance */
+    font-family: 'Cantora One', cursive;
+}
+
+.box_2 .text-row-2 {
+    margin-bottom: 10px; /* Reduced bottom margin */
+    color: #000;
+    font-size: 20px; /* Reduced font size */
+    line-height: 1.2; /* Reduced line height */
+    font-family: 'Cambay', sans-serif;
+}
+
+.box_2 .shop-now-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #D8C5AD;
+    color: #29645F;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 20px; /* Adjusted button font size */
+    font-family: 'Spectral SC', serif;
+    transition: background-color 0.3s;
+}
+
+.box_2 .shop-now-button:hover {
+    background-color: #e0e0e0;
+}
+.box_2 {
+    /* Width is not set; Bootstrap will handle it with the grid system */
+    height: 200px; /* Keep the height smaller */
+    margin-left: 0; /* Removed margin-left to use Bootstrap's grid */
+}
+
+.btn-custom {
+    background-color: #D8C5AD;
+    color: #29645F;
+    border-radius: 5px !important;
+    font-size: 20px !important; /* Adjusted button font size */
+    font-family: 'Spectral SC', serif;
+    transition: background-color 0.3s;
+}
+
+.btn-custom:hover {
+    background-color: #e0e0e0;
+}
+.r-price {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.r-price .main-price {
+    width: 100%;
+}
+
+.r-price .rating {
+    padding-left: auto;
+}
+
+.product-style-3.product-style-chair .product-title {
+    text-align: left;
+    width: 100%;
+}
+
+@media (max-width:600px) {
+
+    .product-box p,
+    .product-box a {
+        text-align: left;
+    }
+
+    .product-style-3.product-style-chair .main-price {
+        text-align: right !important;
+    }
+}
+
+/*----- About in HOMEPAGE --------------------------------------------------------------*/
+#billboard {
+    background-color: #F3F2EC; /* Set the background color of the About section */
+    padding: 80px 0;
+    position: relative; /* To position background text within this section */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Added shadow to the billboard section */
+  }
+
+  .main-slider .slider-item {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    position: relative; /* Needed for background text positioning */
+  }
+
+  .main-slider .banner-content {
+    width: 35%; /* Adjust as needed */
+    margin-left: 20px; /* Space between text and image */
+    position: relative; /* To keep it above the background text */
+    z-index: 2; /* Ensures the content stays on top */
+  }
+
+  .banner-content h2.banner-title {
+    font-size: 4.5em;
+    font-weight: 500;
+    color: #222;
+  }
+
+  .banner-content p {
+    margin: 0; /* Remove default margin */
+    margin-top: 30px; /* Adjust this value for space between title and paragraph */
+    line-height: 1.6; /* Maintain line height for readability */
+  }
+
+  .btn-wrap a.btn {
+    border: 1px solid #74642F; /* Set border color */
+    background-color: transparent; /* Keep background transparent */
+    color: #74642F; /* Set text color to match border */
+    margin-top: 40px; /* Space between paragraph and button */
+    padding: 10px 20px; /* Adjust padding as needed */
+  }
+
+  .btn-wrap a.btn:hover {
+    background-color: #74642F; /* Optional: Change background on hover */
+    color: white; /* Change text color on hover */
+  }
+
+  .banner-image {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center the image vertically */
+  }
+
+  #billboard .slick-dots {
+    left: 200px;
+    bottom: 110px;
+    width: 10%;
+    text-align: inherit;
+  }
+
+  #billboard button.slick-arrow {
+    background: transparent;
+    border: 1px solid #E5E3DA;
+    padding: initial;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    cursor: pointer;
+  }
+
+  #billboard button.slick-arrow:hover {
+    border: 1px solid #74642F;
+    background-color: #E5E3DA;
+  }
+
+  #billboard button.prev.slick-arrow {
+    left: 110px;
+  }
+
+  #billboard button.next.slick-arrow {
+    right: 110px;
+  }
+
+  #billboard .slick-arrow i.icon {
+    color: #8C8C8C;
+  }
+
+  @media screen and (max-width: 1366px) {
+    #billboard button.prev.slick-arrow {
+      left: 0;
+    }
+
+    #billboard button.next.slick-arrow {
+      right: 0;
+    }
+  }
+
+  @media screen and (max-width: 999px) {
+    .banner-content h2.banner-title {
+      font-size: 3.5em;
+    }
+
+    #billboard .main-slider {
+      margin: 70px 0;
+      padding: 0;
+    }
+
+    .main-slider .slider-item {
+      flex-wrap: wrap;
+      text-align: center;
+      flex-direction: column-reverse;
+    }
+
+    .main-slider .banner-content {
+      width: 100%;
+      margin-top: 60px;
+      margin-left: 0; /* No margin on small screens */
+      margin-bottom: 80px;
+    }
+
+    #billboard .slick-dots {
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  /* Background text styling */
+.background-text {
+position: absolute;
+font-size: 6rem; /* Adjust this size as needed */
+color: rgba(128, 128, 128, 0.2); /* Subtle gray for background text */
+top: 25%; /* Adjust this to move the text higher */
+right: -40px; /* Shift to the right side */
+transform: rotate(90deg) translateY(-50%); /* Rotate and vertically center the text */
+z-index: 1; /* Behind the content */
+pointer-events: none; /* Disable interaction with the background text */
+}
+
+.products-c .bg-size {
+    background-position: center 0 !important;
+}
+.site-banner {
+    text-align: center;
+    min-height: 350px; /* Adjust height */
+    position: relative;
+    overflow: hidden; /* Prevents overflow of background image */
+}
+
+/* Overlay to make the background less visible */
+.site-banner .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(211, 211, 211, 0.5); /* Light gray with transparency */
+    z-index: 0; /* Behind the content */
+}
+
+.site-banner h1.page-title {
+    font-size: 7.2em;
+    font-weight: 800;
+    line-height: 1em;
+    letter-spacing: -0.02em;
+    text-transform: capitalize;
+    color: var(--dark-color);
+    z-index: 1; /* Ensures the text stays above */
+    position: relative;
+}
+
+.breadcrumbs a:hover {
+    color: var(--accent-color);
+}
+
+.breadcrumbs {
+    color: var(--accent-color);
+    z-index: 1;
+    position: relative;
+}
+
+.breadcrumbs .item {
+    text-transform: capitalize;
+}
+
+/* Parallax Effect */
+@media (prefers-reduced-motion: no-preference) {
+    .jarallax {
+        background-attachment: fixed; /* Keeps the background fixed while scrolling */
+    }
+}
+
+/* Background animation for movement effect */
+.site-banner {
+    animation: moveBackground 20s infinite linear; /* Animates the background */
+}
+
+@keyframes moveBackground {
+    0% { background-position: top; }
+    50% { background-position: bottom; }
+    100% { background-position: top; }
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1099px) {
+    .site-banner h1.page-title {
+        font-size: 6em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .site-banner h1.page-title {
+        font-size: 4.6em;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .site-banner h1.page-title {
+        font-size: 3.2em;
+    }
+}
+
+#site-banner {
+    background: url('assets/images/banner.png') no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: top;
+}
