@@ -38,8 +38,6 @@
                                 <div class="accordion-body category-scroll">
                                     <ul class="category-list">
                                         @foreach ($category as $cat)
-
-                                        @endforeach
                                         <li>
                                             <div class="form-check ps-0 custome-form-check">
                                                 <input class="checkbox_animated check-it" id="br1" name="brands"
@@ -48,6 +46,7 @@
                                                 <p class="font-light">(1)</p>
                                             </div>
                                         </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -352,7 +351,7 @@
                         <div class="product-box">
                             <div class="img-wrapper">
                                 <div class="front">
-                                    <a href="product/nihil-beatae-sit-sed.html">
+                                    <a href="{{route('product-details', $product->id)}}">
                                         <img src="{{ asset('images/' . $product->main_image) }}"
                                             class="bg-img blur-up lazyload" alt="">
                                     </a>
@@ -365,21 +364,10 @@
                                 </div> --}}
                                 <div class="cart-wrap">
                                     <ul>
-                                        <li>
-                                            <a href="javascript:void(0)" class="addtocart-btn">
-                                                <i data-feather="shopping-cart"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{route('product-details', $product->id)}}">
-                                                <i data-feather="eye"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)" class="wishlist">
-                                                <i data-feather="heart"></i>
-                                            </a>
-                                        </li>
+                                        {{-- <li><a href="{{route('cart')}}" class="addtocart-btn"><i data-feather="shopping-cart"></i></a></li> --}}
+                                        <li><a href="{{route('product-details', $product->id)}}"><i data-feather="eye"></i></a></li>
+                                        {{-- <li><a href="javascript:void(0)" class="wishlist"><i data-feather="heart"></i></a></li> --}}
+
                                     </ul>
                                 </div>
                             </div>
@@ -413,7 +401,7 @@
                                         <p class="font-light">{{$product->description}}</p>
                                     </div>
                                     <h3 class="theme-color">&#8369;{{$product->price}}</h3>
-                                    <button class="btn listing-content">Add To Cart</button>
+                                    <button class="btn listing-content"><a class="text-white" href="{{route('product-details', $product->id)}}">Add To Cart </a></button>
                                 </div>
                             </div>
                         </div>

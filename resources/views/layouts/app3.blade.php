@@ -112,7 +112,8 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-
+{{-- Sweet Alert Delete Js --}}
+<script src="{{asset('admin_assets/js/delete.js')}}"></script>
 
   <!-- Bootstrap core JavaScript-->
   <script src="{{ asset('admin_assets/vendor/jquery/jquery.min.js') }}"></script>

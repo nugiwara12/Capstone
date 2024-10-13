@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -20,29 +22,35 @@ class ShopController extends Controller
    }
 
    public function aboutUs()
-{
+    {
     return view('about_us');
-}
-
-    public function cart(){
-        return view('cart');
     }
 
-    public function checkout(){
-        return view('checkout');
+    public function my_account()
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'You cannot access My Account if you are not logged in');
+        }
+        $id = Auth::user()->id;
+        $order = Order::where('user_id', $id)->get();
+        $orderCount = Order::where('user_id', $id)->count();
+        $orderPendingCount = Order::where('user_id', $id)->where('delivery_status', 'Pending')->count();
+        return view('my_account', compact('order', 'orderCount', 'orderPendingCount'));
     }
 
+    public function thankYou(){
+        return view('thank-you');
+    }
     public function show($id)
     {
         $product= Product::findOrFail($id);
-        return view('product-details', compact('product'));
+        $allproduct=Product::all();
+        $shuffle= $allproduct->shuffle();
+        return view('product-details', compact('product', 'shuffle'));
     }
 
-    public function add_to_cart(Request $request, $id)
-    {
-        $product = Product::findOrFail($id);
-
-        return redirect()->route('components.add-to-cart.cart')->with('success', 'Product added to cart successfully');
+    public function customize(){
+        return view('customize');
     }
 
 }

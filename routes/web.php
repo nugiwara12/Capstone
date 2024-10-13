@@ -4,11 +4,14 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ContactUsFormController;
+use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendVerificationMailer;
 use Illuminate\Support\Facades\Session;
@@ -35,11 +38,13 @@ Route::get('/', function () {
 
 
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
+
+ Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
 
 require __DIR__.'/auth.php';
 
@@ -76,12 +81,35 @@ Route::get('/fetch-products', [ProductController::class, 'fetchProducts'])->name
 Route::controller(ShopController::class)->group(function () {
     Route::get('shop', 'shop')->name('shop');
     Route::get('about_us', 'aboutUs')->name('about_us');
-    Route::get( 'cart', 'cart')->name('cart');
-    Route::get( 'checkout', 'checkout')->name('checkout');
+    Route::get( 'my_account', 'my_account')->name('my_account');
     Route::get( 'product-details/{id}', 'show')->name('product-details');
-    Route::post('cart/{$id}', 'add_to_cart')->name('add_to_cart');
+    Route::get( 'thankyou', 'thankYou')->name('thank-you');
+    Route::get( 'customize', 'customize')->name('customize');
+
 
  });
+
+// ----------------------------- CART -----------------------//
+Route::controller(CartController::class)->group(function () {
+    Route::get( 'cart', 'cart')->name('cart');
+    Route::post('cart/{id}', 'add_to_cart')->name('add_to_cart');
+    Route::get( 'checkout', 'checkout')->name('checkout');
+    Route::delete('destroy/{id}', 'destroy')->name('remove_product');
+});
+
+// ----------------------------- ORDER -----------------------//
+Route::controller(OrderController::class)->group(function () {
+    Route::get( 'order', 'index')->name('showOrder');
+    Route::post( 'order', 'placeOrder')->name('order');
+    Route::get( 'shipped/{id}', 'shipped')->name('order_shipped');
+    Route::get( 'delivered/{id}', 'delivered')->name('order_delivered');
+});
+
+// ----------------------------- STRIPE PAYMENT -----------------------//
+Route::controller(StripePaymentController::class)->group(function(){
+    Route::get( 'stripe', 'stripe')->name('stripe');
+    Route::post('stripe', 'stripePost')->name('stripe.post');
+});
 // ----------------------------- PRODUCT -----------------------//
     Route::controller(ProductController::class)->prefix('products')->group(function () {
         //Seller
@@ -94,13 +122,16 @@ Route::controller(ShopController::class)->group(function () {
         Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
     });
 
-    Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
+
 
 // ----------------------------- Category -----------------------//
 Route::controller(CategoryController::class)->prefix('categories')->group(function () {
     Route::get('', 'index') ->name('category');
     Route::get('create', 'create')->name('category.create');
     Route::post('store', 'store')->name('category.store');
+    Route::get('show/{id}', 'show')->name('category.show');
+    Route::get('edit/{id}', 'edit')->name('category.edit');
+    Route::put('edit/{id}', 'update')->name('category.update');
     Route::delete('destroy/{id}', 'destroy')->name('category.destroy');
 });
 
@@ -136,7 +167,7 @@ Route::post('/new-password', [AuthController::class,'findUserToChangePass']);
 route::get('test-mail',function(){
     // Inside your function/method
     Session::put('reset_otp_code', random_int(000000,999999));
-    Mail::to('sarmientojohnchristoper@gmail.com')->send(new SendVerificationMailer());
+    Mail::to('gawanggamat1111@gmail.com')->send(new SendVerificationMailer());
 });
 Route::get('/new-password', [AuthController::class, 'newPassword'])->name('new-password');
 

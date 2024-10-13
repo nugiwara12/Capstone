@@ -82,18 +82,21 @@
                 <div class="col">
                     <label class="form-label"><b>Product Images <span class="text-danger">*</span></b></label>
                         <div class="row-md-6 mb-3">
+                            <div id="currentImage"><p>Current Image </p>
+                                <img id="current-image-preview" src="{{ asset('images/' . $product->main_image) }}" alt="Image Preview" >
+                            </div>
                             <div class="upload-box large-box w-100" id="largeBox" >
                                 <div class="text-center" id="textUpload">
                                     <div class="text-primary fs-1"><i class="bi bi-cloud-arrow-up"></i></div>
                                     <div class="text-muted">
-                                        Upload your <b>Main Product Image</b> <a href="#" id="upload-link-1">click here to browse</a>
+                                        Change the <b>Main Product Image</b> <a href="#" id="upload-link-1">click here to browse</a>
                                         <input type="file" id="file-upload-1" accept="image/*" name="main_image" >
                                     </div>
                                 </div>
                             </div>
-                            <div id="mainImagePreview" style="display: block;">
+                            <div id="mainImagePreview">
                                 <button id="delete-button">&times;</button>
-                                <img id="image-preview" src="{{ asset('images/' . $product->main_image) }}" alt="Image Preview" style="display: block;">
+                                <img id="image-preview" src="" alt="Image Preview" >
                             </div>
 
                         </div>

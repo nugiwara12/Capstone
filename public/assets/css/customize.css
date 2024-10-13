@@ -1,0 +1,42 @@
+#canvasContainer{
+	position: absolute;
+	top: 0;
+	left: 0;
+	border:1px dotted dimgray;
+}
+#canvas{
+	position: absolute;
+}
+#container{
+	position: relative;
+	border: 1px solid black;
+	background-size: cover;
+	width: 400px;
+	height: 400px;
+}
+#fcol{
+	margin: 3rem !important;
+	width: 400px;
+	height: 400px;
+}
+.edit-text{
+	background-color: #dbd5d5;
+    height: 3rem;
+}
+.editing{
+	background-color: #dbd5d5;
+    height: 3rem;
+}
+.shapes-and-graphics{
+      background-color: #dbd5d5;
+      height: 3.5rem;
+}
+#deleteBtn{
+	background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+.dropdown-menu li{
+    display: block;
+}

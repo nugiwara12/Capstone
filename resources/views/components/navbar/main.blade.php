@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                                 <li><!-- For the space between the menu and icons--></li>
-                                <li class="onhover-dropdown wislist-dropdown">
+                                {{-- <li class="onhover-dropdown wislist-dropdown">
                                     <div class="cart-media">
                                         <a href="">
                                             <i data-feather="heart"></i>
@@ -52,28 +52,28 @@
                                             </span>
                                         </a>
                                     </div>
-                                </li>
+                                </li> --}}
                                 <li class="onhover-dropdown wislist-dropdown">
                                     <div class="cart-media">
                                         <a href="{{route('cart')}}">
                                             <i data-feather="shopping-cart"></i>
-                                            <span id="cart-count" class="label label-theme rounded-pill">
-                                                0
-                                            </span>
+                                            {{-- <span id="cart-count" class="label label-theme rounded-pill">
+                                                    0
+                                            </span> --}}
                                         </a>
                                     </div>
                                 </li>
                                 <li class="onhover-dropdown">
                                     <div class="cart-media name-usr">
-                                        @auth
+                                        {{-- @auth
                                             <span>{{ auth()->user()->name }}</span>
-                                        @endauth
+                                        @endauth --}}
                                         <i data-feather="user"></i>
                                     </div>
                                     <div class="onhover-div profile-dropdown">
                                         <ul>
                                             @auth
-                                                <li><a href="">My Acc</a></li>
+                                                <li><a href="{{route('my_account')}}">Profile</a></li>
                                                 <li><a href="{{ route('logout') }}">Logout</a></li>
                                             @else
                                                 @if (Route::has('login'))

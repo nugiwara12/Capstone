@@ -71,14 +71,6 @@
                   @enderror
               </div>
 
-              <div class="form-group">
-                  <label for="exampleInputAddress" class="form-label">Address</label>
-                  <input name="address" type="text" class="form-control form-control-user @error('address') is-invalid @enderror" id="exampleInputAddress" placeholder="Barangay/City/Province" required>
-                  @error('address')
-                      <span class="invalid-feedback">{{ $message }}</span>
-                  @enderror
-              </div>
-
                 <div class="form-group">
                     <label for="exampleInputEmail" class="form-label">Email Address</label>
                     <input name="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="exampleInputEmail" placeholder="Email Address" autocomplete="Email">

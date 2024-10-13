@@ -38,20 +38,20 @@ class AuthController extends Controller
                     ->numbers(1)
                     ->uncompromised(),
             'password_confirmation' => 'required',
-            'phone' => ['required', 'regex:/^\d{11}$/'], // Adjusted for 11-digit phone numbers
-            'address' => ['required', 'string', 'max:255'], // Adjust as needed
+            'phone' => ['required', 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11'], // Adjusted for 11-digit phone numbers
             ],
         ])->validate();
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'role' => $request->role,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'level' => 'Admin',
             'phone' => $request->phone, // Add phone field
-            'address' => $request->address, // Add address field
         ]);
+
+        Auth::login($user);
 
         if ($request->role === 'Admin') {
             return redirect()->route('dashboard');
@@ -127,7 +127,7 @@ class AuthController extends Controller
 
     }
 
-    //OTP notifications
+        //OTP notifications
     public function profile()
     {
         return view('profile');

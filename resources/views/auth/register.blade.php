@@ -126,13 +126,13 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" hidden>
                             <fieldset class="form-group">
                                 <label for="exampleInputRole" class="form-label">Role</label><br>
                                 <div class="select-container">
                                     <select class="form-select @error('role') is-invalid @enderror" name="role" id="role" required autofocus autocomplete="role">
-                                        <option selected disabled>User Types</option>
-                                        <option value="Admin">Admin</option>
+                                        {{-- <option selected disabled>User Types</option>
+                                        <option value="Admin">Admin</option> --}}
                                         <option value="User">User</option>
                                     </select>
                                     <div class="form-control-icon">
@@ -151,14 +151,6 @@
                             <label for="exampleInputPhone" class="form-label">Phone</label>
                             <input name="phone" type="number" class="form-control form-control-user @error('phone') is-invalid @enderror" id="exampleInputPhone" placeholder="09XXXXXXXXX" required>
                             @error('phone')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="exampleInputAddress" class="form-label">Address</label>
-                            <input name="address" type="text" class="form-control form-control-user @error('address') is-invalid @enderror" id="exampleInputAddress" placeholder="Barangay/City/Province" required>
-                            @error('address')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
                         </div>
@@ -190,6 +182,9 @@
 
                         <button type="submit" class="btn btn-primary btn-user btn-block">Register Account</button>
                     </form>
+                    <div class="text-center">
+                        <a class="small" href="login">Already registered to an existing account.</a>
+                      </div>
                <hr>
                 </div>
             </div>
@@ -198,7 +193,7 @@
        </div>
      </div>
    </div>
-
+</div>
 
 
    <!-- Bootstrap core JavaScript   -->

@@ -45,8 +45,8 @@
                     <div class="col mx-3 mt-3">
                         <div class="form-check">
                             <input type="hidden" name="featured" value="0">
-                            <input class="form-check-input" type="checkbox" id="customizableCheckbox" name="featured" value="1" >
-                            <label class="form-check-label" for="customizableCheckbox">Featured</label>
+                            <input class="form-check-input" type="checkbox" id="featuredCheckbox" name="featured" value="1" >
+                            <label class="form-check-label" for="featuredCheckbox">Featured</label>
                         </div>
                         <p class="form-text text-muted">
                             This product will be shown in the "Featured Products"
@@ -55,8 +55,8 @@
                     <div class="col mx-3 mt-3">
                         <div class="form-check">
                             <input type="hidden" name="best_seller" value="0">
-                            <input class="form-check-input" type="checkbox" id="customizableCheckbox" name="best_seller" value="1">
-                            <label class="form-check-label" for="customizableCheckbox">Best Seller</label>
+                            <input class="form-check-input" type="checkbox" id="bestSellerCheckbox" name="best_seller" value="1">
+                            <label class="form-check-label" for="bestSellerCheckbox">Best Seller</label>
                         </div>
                         <p class="form-text text-muted">
                             This product will be shown in the "Best Seller Products"
@@ -68,12 +68,12 @@
                         <label><b>Product Price <span class="text-danger">*</span></b></label>
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon3">&#8369;</span>
-                            <input type="number" name="price" min="0" class="form-control" placeholder="Enter Product Price" required>
+                            <input type="number" name="price" min="1" max="1000" class="form-control" placeholder="Enter Product Price" required>
                         </div>
                     </div>
                     <div class="col">
                         <label><b>Product Quantity <span class="text-danger">*</span></b></label>
-                        <input type="number" name="quantity" min="0" class="form-control" placeholder="Enter Product Quantity" required>
+                        <input type="number" name="quantity" min="1" max="1000" maxlength="4" class="form-control" placeholder="Enter Product Quantity" required>
                     </div>
                 </div>
             </div>

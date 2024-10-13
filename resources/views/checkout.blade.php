@@ -1,6 +1,30 @@
 @extends('layouts.app2')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+    .hide{
+        display:none !important;
+    }
+</style>
 @section('contents')
+@if(Session::has('success'))
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'center',
+            customClass: {
+                popup: 'colored-toast',
+            },
+            showCloseButton: true,
+            showConfirmButton: false,
+            timer: 2500,
+        });
+        Toast.fire({
+            icon: 'success',
+            title: '{{ Session::get('success') }}',
+        });
+    </script>
+@endif
+
 <section class="breadcrumb-section section-b-space" style="padding-top:20px;padding-bottom:20px;">
     <ul class="circles">
         <li></li>
@@ -32,270 +56,425 @@
         </div>
     </div>
 </section>
+
 <!-- Cart Section Start -->
 <section class="section-b-space">
     <div class="container">
         <div class="row g-4">
             <div class="col-lg-8">
-                <form class="needs-validation" method="POST" action="place-order">
-                    <input type="hidden" name="_token" value="CVH6XgdFhoUV6OBdiTIlT2bviIidpb0qD6U1Vf68">
-                    <div id="billingAddress" class="row g-4">
-                        <h3 class="mb-3 theme-color">Billing address</h3>
-                        <div class="col-md-6">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter Full Name">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="phone" class="form-label">Phone</label>
-                            <input type="text" class="form-control" id="phone" name="phone"
-                                placeholder="Enter Phone Number">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="locality" class="form-label">Locality</label>
-                            <input type="text" class="form-control" id="locality" name="locality"
-                                placeholder="Locality">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="landmark" class="form-label">Landmark</label>
-                            <input type="text" class="form-control" id="landmark" name="landmark"
-                                placeholder="Landmark">
-                        </div>
+            <form
 
-                        <div class="col-md-12">
-                            <label for="address" class="form-label">Address</label>
-                            <textarea class="form-control" id="address" name="address"></textarea>
+                            role="form"
 
-                        </div>
+                            action="{{ route('stripe.post') }}"
 
-                        <div class="col-md-3">
-                            <label for="city" class="form-label">City</label>
-                            <input type="text" class="form-control" id="city" name="city" placeholder="City">
+                            method="post"
 
-                        </div>
+                            class="require-validation"
 
-                        <div class="col-md-3">
-                            <label for="country" class="form-label">Country</label>
-                            <select class="form-select custome-form-select" id="country" name="country">
-                                <option>India</option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Please select a valid country.
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="state" class="form-label">State</label>
-                            <select class="form-select custome-form-select" id="state" name="state">
-                                <option selected="" disabled="" value="">Choose...</option>
-                                <option value="Andhra Pradesh">Andhra Pradesh</option>
-                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                                <option value="Assam">Assam</option>
-                                <option value="Bihar">Bihar</option>
-                                <option value="Chhattisgarh">Chhattisgarh</option>
-                                <option value="Goa">Goa</option>
-                                <option value="Gujarat">Gujarat</option>
-                                <option value="Haryana">Haryana</option>
-                                <option value="Himachal Pradesh">Himachal Pradesh</option>
-                                <option value="Jharkhand">Jharkhand</option>
-                                <option value="Karnataka">Karnataka</option>
-                                <option value="Kerala">Kerala</option>
-                                <option value="Madhya Pradesh">Madhya Pradesh</option>
-                                <option value="Maharashtra">Maharashtra</option>
-                                <option value="Manipur">Manipur</option>
-                                <option value="Meghalaya">Meghalaya</option>
-                                <option value="Mizoram">Mizoram</option>
-                                <option value="Nagaland">Nagaland</option>
-                                <option value="Odisha">Odisha</option>
-                                <option value="Punjab">Punjab</option>
-                                <option value="Rajasthan">Rajasthan</option>
-                                <option value="Sikkim">Sikkim</option>
-                                <option value="Tamil Nadu">Tamil Nadu</option>
-                                <option value="Telangana">Telangana</option>
-                                <option value="Tripura">Tripura</option>
-                                <option value="Uttar Pradesh">Uttar Pradesh</option>
-                                <option value="Uttarakhand">Uttarakhand</option>
-                                <option value="West Bengal">West Bengal</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="zip" class="form-label">Zip</label>
-                            <input type="text" class="form-control" id="zip" name="zip" placeholder="123456">
-                        </div>
+                            data-cc-on-file="false"
 
-                        <div class="col-md-12 form-check ps-0 mt-3 custome-form-check"
-                            style="padding-left:15px !important;">
-                            <input class="checkbox_animated check-it" type="checkbox" name="sameAsBilling"
-                                id="sameAsBilling">
-                            <label class="form-check-label checkout-label" for="sameAsBilling">Shipping address is
-                                same as Billing Address</label>
-                        </div>
-                    </div>
+                            data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
 
-                    <div id="shippingAddress" class="row g-4 mt-5">
+                            id="payment-form">
+
+                        @csrf
+                    <div id="shippingAddress" class="row g-4">
                         <h3 class="mb-3 theme-color">Shipping address</h3>
                         <div class="col-md-6">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="s_name" name="s_name"
-                                placeholder="Enter Full Name">
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name">
                         </div>
                         <div class="col-md-6">
-                            <label for="phone" class="form-label">Phone</label>
-                            <input type="text" class="form-control" id="s_phone" name="s_phone"
-                                placeholder="Enter Phone Number">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="locality" class="form-label">Locality</label>
-                            <input type="text" class="form-control" id="s_locality" name="s_locality"
-                                placeholder="Locality">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="landmark" class="form-label">Landmark</label>
-                            <input type="text" class="form-control" id="s_landmark" name="s_landmark"
-                                placeholder="Landmark">
+                            <label for="last_name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name">
                         </div>
 
                         <div class="col-md-12">
                             <label for="address" class="form-label">Address</label>
-                            <textarea class="form-control" id="s_address" name="s_address"></textarea>
-
+                            <input type="text" class="form-control" id="address" name="address" placeholder="Enter House no./Unit no./Building Name ">
                         </div>
 
                         <div class="col-md-3">
-                            <label for="city" class="form-label">City</label>
-                            <input type="text" class="form-control" id="s_city" name="s_city" placeholder="City">
-
-                        </div>
-
-                        <div class="col-md-3">
-                            <label for="country" class="form-label">Country</label>
-                            <select class="form-select custome-form-select" id="s_country" name="s_country">
-                                <option>India</option>
+                            <label for="province">Province</label>
+                            <select class="form-select custome-form-select" id="province" name="province" onchange="updateCities()">
+                                <option value="">Choose...</option>
+                                <option value="Pampanga">Pampanga</option>
+                                <!-- Add more provinces here -->
                             </select>
                         </div>
+
                         <div class="col-md-3">
-                            <label for="state" class="form-label">State</label>
-                            <select class="form-select custome-form-select" id="s_state" name="s_state">
-                                <option selected="" disabled="" value="">Choose...</option>
-                                <option value="Andhra Pradesh">Andhra Pradesh</option>
-                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                                <option value="Assam">Assam</option>
-                                <option value="Bihar">Bihar</option>
-                                <option value="Chhattisgarh">Chhattisgarh</option>
-                                <option value="Goa">Goa</option>
-                                <option value="Gujarat">Gujarat</option>
-                                <option value="Haryana">Haryana</option>
-                                <option value="Himachal Pradesh">Himachal Pradesh</option>
-                                <option value="Jharkhand">Jharkhand</option>
-                                <option value="Karnataka">Karnataka</option>
-                                <option value="Kerala">Kerala</option>
-                                <option value="Madhya Pradesh">Madhya Pradesh</option>
-                                <option value="Maharashtra">Maharashtra</option>
-                                <option value="Manipur">Manipur</option>
-                                <option value="Meghalaya">Meghalaya</option>
-                                <option value="Mizoram">Mizoram</option>
-                                <option value="Nagaland">Nagaland</option>
-                                <option value="Odisha">Odisha</option>
-                                <option value="Punjab">Punjab</option>
-                                <option value="Rajasthan">Rajasthan</option>
-                                <option value="Sikkim">Sikkim</option>
-                                <option value="Tamil Nadu">Tamil Nadu</option>
-                                <option value="Telangana">Telangana</option>
-                                <option value="Tripura">Tripura</option>
-                                <option value="Uttar Pradesh">Uttar Pradesh</option>
-                                <option value="Uttarakhand">Uttarakhand</option>
-                                <option value="West Bengal">West Bengal</option>
+                            <label for="city">City</label>
+                            <select class="form-select custome-form-select" id="city" name="city" onchange="updateBarangays()">
+                                <option value="">Choose...</option>
                             </select>
                         </div>
+
                         <div class="col-md-3">
-                            <label for="zip" class="form-label">Zip</label>
-                            <input type="text" class="form-control" id="s_zip" name="s_zip" placeholder="123456">
+                            <label for="barangay">Barangay</label>
+                            <select class="form-select custome-form-select" id="barangay" name="barangay">
+                                <option value="">Choose...</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div class="form-check ps-0 mt-3 custome-form-check">
-                        <input class="checkbox_animated check-it" type="checkbox" name="saveAddress"
-                            id="saveAddress">
-                        <label class="form-check-label checkout-label" for="saveAddress">Save this information for
-                            next time</label>
-                    </div>
+                    {{-- <div class="form-check ps-0 mt-3 custome-form-check">
+                        <label class="form-check-label checkout-label" for="saveAddress">This information will be used for the next time</label>
+                    </div> --}}
 
                     <hr class="my-lg-5 my-4">
 
-                    <h3 class="mb-3">Payment</h3>
 
-                    <div class="d-block my-3">
+
+            </div>
+
+            <div class="col-lg-4">
+                <div class="checkout__totals">
+                    <h3 class="fw-bold">Your Order</h3>
+                    <table class="checkout-cart-items">
+                        <thead>
+                            <tr>
+                                <th class="fw-bold">PRODUCT</th>
+                                <th class="fw-bold text-end">SUBTOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $totalAmount = 0; // Initialize total amount
+                            @endphp
+                            @foreach ($cart as $item)
+                            <tr>
+                                <td>
+                                    {{$item->product_title}} x {{$item->quantity}}
+                                </td>
+                                <td class="text-end">
+                                    &#8369;{{$item->price * $item->quantity}}
+                                </td>
+                            </tr>
+                            @php
+                            $totalAmount += $item->price * $item->quantity; // Add to total amount
+                            @endphp
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <table class="checkout-totals">
+                        <tbody>
+                            <tr>
+                                <th>SUBTOTAL</th>
+                                <td class="text-end">&#8369;{{$totalAmount}}</td>
+                            </tr>
+                            @php
+                                $shippingCost = $cart->count() > 0 ? 100 : 0;
+                            @endphp
+                            <tr>
+                                <th>SHIPPING</th>
+                                <td class="text-end">&#8369;{{$shippingCost}}</td>
+                            </tr>
+                            <tr>
+                                <th class="border-bottom-0 fw-bold">TOTAL</th>
+                                <td class="border-bottom-0 text-end fw-bold">&#8369;{{$value=$totalAmount + $shippingCost}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <h3 class="mb-3">Pay Using Card</h3>
+            <div class="d-block">
+                <div class="d-block">
+                    {{-- <div>
                         <div class="form-check custome-radio-box">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" checked=""
-                                id="cod">
-                            <label class="form-check-label" for="cod">COD</label>
+                            <input class="form-check-input" type="radio" id="debitCard" name="payment" value="debit"> Pay Using Card
                         </div>
                         <div class="form-check custome-radio-box">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="debit">
-                            <label class="form-check-label" for="debit">Debit card</label>
+                            <input class="form-check-input" type="radio" id="paypal" name="payment" value="paypal"> PayPal
+                        </div>
+                    </div> --}}
+
+                      <!-- Debit card input field for Stripe -->
+                    <div class="row g-4" id="debitCardFields" >
+                        <ul class="my-2">
+                            <li class="text-muted">Credit Card/Debit Card</li>
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <img src="{{asset('assets/images/payment-icon/1.jpg')}}" class="img-fluid blur-up lazyload ps-4"
+                                        alt="payment icon">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <img src="{{asset('assets/images/payment-icon/2.jpg')}}" class="img-fluid blur-up lazyload ps-4"
+                                        alt="payment icon">
+                                </a>
+                            </li>
+                        </ul>
+                        <div class='form-row row'>
+                            <div class='col-md-6 form-group required'>
+                                <label class='control-label'>Name on Card</label>
+                                <input class='form-control' size='4' type='text'>
+                            </div>
+                        </div>
+                        <div class='form-row row mt-3'>
+                            <div class='col-md-6 form-group card required' style="border:none;">
+                                <label class='control-label'>Card Number</label> <input autocomplete='off' class='form-control card-number' size='20' type='text'>
+                            </div>
+                        </div>
+                        <div class='form-row row mt-3'>
+                            <div class='col-md-2 form-group cvc required'>
+                                <label class='control-label'>CVC</label>
+                                <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' size='4' type='text'>
+                            </div>
+                            <div class='col-md-2 form-group expiration required'>
+                                <label class='control-label'>Expiration Month</label>
+                                <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
+                            </div>
+                            <div class='col-md-2 form-group expiration required'>
+                                <label class='control-label'>Expiration Year</label>
+                                <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
+                            </div>
                         </div>
 
-                        <div class="form-check custome-radio-box">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="paypal">
-                            <label class="form-check-label" for="paypal">PayPal</label>
-                        </div>
+                            <div class='col-md-6 error form-group hide'>
+
+                                <div class='alert-danger alert'>Please correct the errors and try again.
+                                </div>
+
+                            </div>
+
                     </div>
-                    <div class="row g-4" style="display: none;">
+
+                      <!-- PayPal input field -->
+                      {{-- <div class="row g-4" id="paypalFields" style="display:none;">
                         <div class="col-md-6">
                             <label for="cc-name" class="form-label">Name on card</label>
                             <input type="text" class="form-control" id="cc-name">
                             <div id="emailHelp" class="form-text">Full name as displayed on card</div>
                         </div>
-                        <div class="col-md-6">
-                            <label for="cc-number" class="form-label">Credit card number</label>
-                            <input type="text" class="form-control" id="cc-number">
-                            <div class="invalid-feedback">Credit card number is required</div>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="expiration" class="form-label">Expiration</label>
-                            <input type="text" class="form-control" id="expiration">
-                        </div>
-                        <div class="col-md-3">
-                            <label for="cc-cvv" class="form-label">CVV</label>
-                            <input type="text" class="form-control" id="cc-cvv">
-                        </div>
-                    </div>
-                    <button class="btn btn-solid-default mt-4" type="submit">Place Order</button>
-                </form>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="your-cart-box">
-                    <h3 class="mb-3 d-flex text-capitalize">Your cart<span
-                            class="badge bg-theme new-badge rounded-pill ms-auto bg-dark">0</span>
-                    </h3>
-                    <ul class="list-group mb-3">
-
-
-
-                        <li class="list-group-item d-flex justify-content-between lh-condensed active">
-                            <div class="text-dark">
-                                <h6 class="my-0">Tax</h6>
-                                <small></small>
-                            </div>
-                            <span>$0.00</span>
-                        </li>
-                        <li class="list-group-item d-flex lh-condensed justify-content-between">
-                            <span class="fw-bold">Total (USD)</span>
-                            <strong>$0.00</strong>
-                        </li>
-                    </ul>
-
-                    <form class="card border-0">
-                        <div class="input-group custome-imput-group">
-                            <input type="text" class="form-control" placeholder="Promo code">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-solid-default rounded-0">Redeem</button>
-                            </div>
-                        </div>
-                    </form>
+                    </div> --}}
+                        <input type="hidden" name="total_amount" value="{{ $totalAmount + $shippingCost }}">
+                      <button class="btn btn-solid-default mt-4" type="submit">Pay Now (&#8369;{{$value}})</button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 </section>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+
+
+<script type="text/javascript">
+
+
+
+$(function() {
+
+
+
+    /*------------------------------------------
+
+    --------------------------------------------
+
+    Stripe Payment Code
+
+    --------------------------------------------
+
+    --------------------------------------------*/
+
+
+
+    var $form = $(".require-validation");
+
+
+
+    $('form.require-validation').bind('submit', function(e) {
+
+        var $form = $(".require-validation"),
+
+        inputSelector = ['input[type=email]', 'input[type=password]',
+
+                         'input[type=text]', 'input[type=file]',
+
+                         'textarea'].join(', '),
+
+        $inputs = $form.find('.required').find(inputSelector),
+
+        $errorMessage = $form.find('div.error'),
+
+        valid = true;
+
+        $errorMessage.addClass('hide');
+
+
+
+        $('.has-error').removeClass('has-error');
+
+        $inputs.each(function(i, el) {
+
+          var $input = $(el);
+
+          if ($input.val() === '') {
+
+            $input.parent().addClass('has-error');
+
+            $errorMessage.removeClass('hide');
+
+            e.preventDefault();
+
+          }
+
+        });
+
+
+
+        if (!$form.data('cc-on-file')) {
+
+          e.preventDefault();
+
+          Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+
+          Stripe.createToken({
+
+            number: $('.card-number').val(),
+
+            cvc: $('.card-cvc').val(),
+
+            exp_month: $('.card-expiry-month').val(),
+
+            exp_year: $('.card-expiry-year').val()
+
+          }, stripeResponseHandler);
+
+        }
+
+
+
+    });
+
+
+
+    /*------------------------------------------
+
+    --------------------------------------------
+
+    Stripe Response Handler
+
+    --------------------------------------------
+
+    --------------------------------------------*/
+
+    function stripeResponseHandler(status, response) {
+
+        if (response.error) {
+
+            $('.error')
+
+                .removeClass('hide')
+
+                .find('.alert')
+
+                .text(response.error.message);
+
+        } else {
+
+            /* token contains id, last4, and card type */
+
+            var token = response['id'];
+
+
+
+            $form.find('input[type=text]').empty();
+
+            $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+
+            $form.get(0).submit();
+
+        }
+
+    }
+
+
+
+});
+
+</script>
+<script>
+// List of cities and barangays for Pampanga (example dataset)
+const cityBarangays = {
+    Pampanga: {
+        Angeles: ['Balibago', 'Cutcut', 'Pulung Maragul'],
+        SanFernando: ['Sto. Rosario', 'Sindalan', 'Telabastagan'],
+        Mabalacat: ['Dau', 'Camachiles', 'Tabun']
+    }
+};
+
+// Function to update cities based on the selected province
+function updateCities() {
+    const provinceSelect = document.getElementById('province');
+    const citySelect = document.getElementById('city');
+    const barangaySelect = document.getElementById('barangay');
+    const selectedProvince = provinceSelect.value;
+
+    // Clear the city and barangay dropdowns
+    citySelect.innerHTML = '<option value="">Choose...</option>';
+    barangaySelect.innerHTML = '<option value="">Choose...</option>';
+
+    if (cityBarangays[selectedProvince]) {
+        const cities = Object.keys(cityBarangays[selectedProvince]);
+        cities.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city;
+            option.textContent = city;
+            citySelect.appendChild(option);
+        });
+    }
+}
+
+// Function to update barangays based on the selected city
+function updateBarangays() {
+    const provinceSelect = document.getElementById('province');
+    const citySelect = document.getElementById('city');
+    const barangaySelect = document.getElementById('barangay');
+    const selectedProvince = provinceSelect.value;
+    const selectedCity = citySelect.value;
+
+    // Clear the barangay dropdown
+    barangaySelect.innerHTML = '<option value="">Choose...</option>';
+
+    if (cityBarangays[selectedProvince] && cityBarangays[selectedProvince][selectedCity]) {
+        const barangays = cityBarangays[selectedProvince][selectedCity];
+        barangays.forEach(barangay => {
+            const option = document.createElement('option');
+            option.value = barangay;
+            option.textContent = barangay;
+            barangaySelect.appendChild(option);
+        });
+    }
+}
+
+// Select the payment radio buttons
+const debitCardRadio = document.getElementById('debitCard');
+const paypalRadio = document.getElementById('paypal');
+
+// Select the corresponding input field divs
+const debitCardFields = document.getElementById('debitCardFields');
+const paypalFields = document.getElementById('paypalFields');
+
+// Add event listeners to toggle fields when a payment method is selected
+debitCardRadio.addEventListener('change', function() {
+    if (this.checked) {
+        debitCardFields.style.display = 'block';
+        paypalFields.style.display = 'none';
+    }
+});
+
+paypalRadio.addEventListener('change', function() {
+    if (this.checked) {
+        paypalFields.style.display = 'block';
+        debitCardFields.style.display = 'none';
+    }
+});
+</script>
+
 @endsection

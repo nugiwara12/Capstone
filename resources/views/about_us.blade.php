@@ -45,12 +45,12 @@
                     <div class="about-details">
                         <div>
                             <h2>WHO WE ARE</h2>
-                            <h3>At Hanscrafting with Love</h3>
+                            <h3>At Handcrafting with Love</h3>
                             <p>We specialize in creating handcrafted gifts for every occasion, making each moment special since 2019.</p>
                             <p>Our passion for craftsmanship shines through in every piece we create, ensuring that our gifts carry a personal touch. Whether it’s a birthday, anniversary, or just because, we believe that thoughtful, unique gifts can make lasting memories.
 
                             </p>
-                            <button onclick="location.href = 'shop.html';" type="button" class="btn btn-solid-default">Shop Now</button>
+                            <button onclick="location.href = '{{route('shop')}}';" type="button" class="btn btn-solid-default">Shop Now</button>
 
                         </div>
                     </div>
