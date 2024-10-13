@@ -12,13 +12,13 @@
                                 </a>
                             </div>
                         </div>
-                        <nav>
+                        {{-- <nav>
                             <li>
                                 <div class="search-box theme-bg-color">
                                     <i data-feather="search"></i>
                                 </div>
                             </li>
-                        </nav>
+                        </nav> --}}
                         <div class="menu-right">
                             <ul>
                                 <div class="main-navbar">

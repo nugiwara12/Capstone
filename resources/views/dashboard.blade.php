@@ -24,8 +24,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h6 class="text-muted font-semibold">T-Shirt Email Record</h6>
-                                    <h6 class="font-extrabold mb-0"> <span class="badge badge-danger badge-counter" id="notification-badge">1</span> </h6>
+                                    <h6 class="text-muted font-semibold">Gawang Gamat Email Record</h6>
+                                    <h6 class="font-extrabold mb-0"> <span class="badge badge-danger badge-counter" id="notification-badge">{{ \App\Models\Contact::count() }}</span> </h6>
                                 </div>
                             </div>
                         </div>

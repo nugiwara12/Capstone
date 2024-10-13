@@ -35,7 +35,11 @@ class OrderController extends Controller
         $order->delivery_status = "Shipped";
         $order->save();
 
-        return redirect()->back()->with('success', 'Order Delivery Status Updated successfully');
+        // Send email to the buyer
+        Mail::to($order->email)->send(new DeliveryStatusUpdated($order));
+
+        return redirect()->back()->with('success', 'Delivery status updated and email sent!');
+
     }
 
     public function placeOrder(Request $request)

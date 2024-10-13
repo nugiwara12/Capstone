@@ -12,6 +12,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ContactUsFormController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendVerificationMailer;
 use Illuminate\Support\Facades\Session;
@@ -62,17 +63,10 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 // ----------------------------- DASHBOARD -----------------------//
-Route::get('dashboard', function () {
-    return view('dashboard'); // Admin dashboard view
-})->name('dashboard');
-
-Route::get('seller_dashboard', function () {
-    return view('seller_dashboard'); // Seller dashboard view
-})->name('seller_dashboard');
-// User Dashboard
-Route::get('/', function () {
-    return view('welcome'); // User dashboard view
-})->name('home');
+Route::controller(DashboardController::class)->group(function () {
+    Route::get('dashboard', 'dashboard')->name('dashboard');
+    Route::get('seller_dashboard', 'sellerDashboard')->name('seller_dashboard');
+});
 
 Route::get('/', [ProductController::class, 'showProduct'])->name('home');
 

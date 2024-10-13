@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="contact-title">
                                     <h4>Address :</h4>
-                                    <p>NIT, Faridabad, Haryana, India</p>
+                                    <p>San Francisco, Mabalacat City, Pampanga</p>
                                 </div>
                             </div>
 
@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="contact-title">
                                     <h4>Phone Number :</h4>
-                                    <p>+1 0000000000</p>
+                                    <p>095324816612</p>
                                 </div>
                             </div>
 
@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="contact-title">
                                     <h4>Email Address :</h4>
-                                    <p>contact@surfsidemedia.in</p>
+                                    <p>gawanggamat1111@gmail.com</p>
                                 </div>
                             </div>
                         </div>

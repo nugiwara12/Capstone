@@ -15,14 +15,14 @@
                     </div>
                 </div>
                 <div class="slide">
-                    <div class="lightblue-box"><img src="assets/images/slide.png" alt="SECOND IMAGE" class="box1-image"></div>
+                    <div class="lightblue-box"><img src="assets/images/first-promo.png" alt="SECOND IMAGE" class="box1-image"></div>
                 </div>
                 <div class="slide">
-                    <div class="lightblue-box"><img src="assets/images/slide.png" alt="THIRD IMAGE" class="box1-image"></div>
+                    <div class="lightblue-box"><img src="assets/images/second-promo.png" alt="THIRD IMAGE" class="box1-image"></div>
                 </div>
                 <!-- Next and previous buttons -->
-                <a class="prev" onclick="plusSlides(-1)" style="position: absolute; left: 10px; top: 50%; color: white;">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)" style="position: absolute; right: 10px; top: 50%; color: white;">&#10095;</a>
+                <a class="prev" onclick="plusSlides(-1)" style="font-size:30px; position: absolute; left: 10px; top: 50%; color: #61d1c7;">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)" style="font-size:30px; position: absolute; right: 10px; top: 50%; color: #61d1c7;">&#10095;</a>
                 <div class="dot-container">
                     <div class="dot" onclick="currentSlide(1)"></div>
                     <div class="dot" onclick="currentSlide(2)"></div>
@@ -33,8 +33,8 @@
 
         <div class="col-md-4 d-flex"> <!-- Use flex for horizontal alignment -->
             <div class="d-flex flex-column"> <!-- Create a column for promo images -->
-                <div class="lightblue-box1 mb-2"><img src="assets/images/promo.png" alt="FIRST PROMO" class="box1-image"></div>
-                <div class="lightblue-box2 mb-2"><img src="assets/images/promo.png" alt="SECOND PROMO" class="box1-image"></div>
+                <div class="lightblue-box1 mb-2"><img src="assets/images/first-promo.png" alt="FIRST PROMO" class="box1-image"></div>
+                <div class="lightblue-box2 mb-2"><img src="assets/images/second-promo.png" alt="SECOND PROMO" class="box1-image"></div>
             </div>
         </div>
     </div>
@@ -226,9 +226,7 @@
                 <!-- Text Section on the Left -->
                 <div class="banner-content md:w-1/2 flex flex-col justify-center">
                     <h2 class="banner-title">We are Gawang Gamat</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero
-                        ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend. Amet, quis
-                        urna, a eu.</p>
+                    <p>Your gateway to locally crafted treasures. Specializing in handcrafted, one-of-a-kind products, offering a wide range of unique items made with love and care. Bring beautifully crafted, customizable products to your home and discover the charm of handmade items, and create something truly special with us!</p>
                     <div class="btn-wrap">
                         <a href="{{route('about_us')}}" class="btn btn-outline-warning">
                             Read More

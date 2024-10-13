@@ -13,19 +13,18 @@
                             </div>
                             <ul class="contact-lists" style="clear:both;">
                                 <li>
-                                    <span><b>phone:</b> <span class="font-light"> +1 0000000000</span></span>
+                                    <span><b>phone:</b> <span class="font-light"> 095324816612</span></span>
                                 </li>
                                 <li>
-                                    <span><b>Address:</b><span class="font-light"> NIT, Faridabad, Haryana,
-                                            India</span></span>
+                                    <span><b>Address:</b><span class="font-light"> San Francisco, Mabalacat City, Pampanga</span></span>
                                 </li>
                                 <li>
-                                    <span><b>Email:</b><span class="font-light"> contact@surfsidemedia.in</span></span>
+                                    <span><b>Email:</b><span class="font-light text-lowercase"> gawanggamat1111@gmail.com</span></span>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="col-lg-2 col-md-5 col-sm-6">
                         <div class="footer-links">
                             <div class="footer-title">
                                 <h3>About us</h3>
@@ -48,28 +47,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
                         <div class="footer-links">
                             <div class="footer-title">
-                                <h3>New Categories</h3>
+                                <h3>Categories</h3>
                             </div>
                             <div class="footer-content">
                                 <ul>
                                     <li>
-                                        <a href="shop.html" class="font-dark">Latest Shoes</a>
+                                        <a href="{{route('shop')}}" class="font-dark">For Him</a>
                                     </li>
                                     <li>
-                                        <a href="shop.html" class="font-dark">Branded Jeans</a>
+                                        <a href="{{route('shop')}}" class="font-dark">For Her</a>
                                     </li>
                                     <li>
-                                        <a href="shop.html" class="font-dark">New Jackets</a>
+                                        <a href="{{route('shop')}}" class="font-dark">Special Occassions</a>
                                     </li>
                                     <li>
-                                        <a href="shop.html" class="font-dark">Colorfull Hoodies</a>
+                                        <a href="{{route('shop')}}" class="font-dark">Customize</a>
                                     </li>
-                                    <li>
-                                        <a href="shop.html" class="font-dark">Shiner Goggles</a>
-                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -101,17 +98,18 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-4 col-sm-6 d-none d-sm-block">
-                        <div class="footer-newsletter">
-                            <h3>Let’s stay in touch</h3>
-                            <div class="form-newsletter">
-                                <div class="input-group mb-4">
-                                    <input type="text" class="form-control color-4" placeholder="Your Email Address">
-                                    <span class="input-group-text" id="basic-addon4"><i
-                                            class="fas fa-arrow-right"></i></span>
-                                </div>
-                                <p class="font-dark mb-0">Keep up to date with our latest news and special offers.
-                                </p>
-                            </div>
+                        <div class="footer-title">
+                            <h3>Get Help</h3>
+                        </div>
+                        <div class="d-flex align-items-center p-3">
+
+                            <a href="#" class="text-dark mx-2"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="text-dark mx-2"><i class="bi bi-tiktok"></i></a>
+                            <a href="#" class="text-light mx-2"><i class="fab fa-google-play"></i></a>
+                            <a href="#" class="text-light mx-2"><i class="fab fa-pinterest-p"></i></a>
+                            <a href="#" class="text-light mx-2"><i class="fab fa-youtube"></i></a>
+                            <a href="#" class="text-light mx-2"><i class="fab fa-google"></i></a>
+                            <a href="#" class="text-light mx-2"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
