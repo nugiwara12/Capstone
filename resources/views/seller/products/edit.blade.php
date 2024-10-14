@@ -69,7 +69,7 @@
                         <label><b>Product Price <span class="text-danger">*</span></b></label>
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon3">&#8369;</span>
-                            <input type="number" name="price" min="0" class="form-control" value="{{$product->price}}">
+                            <input type="text" name="price" min="0" class="form-control" value="{{$product->price}}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                         </div>
                     </div>
                     <div class="col">
@@ -89,7 +89,7 @@
                                 <div class="text-center" id="textUpload">
                                     <div class="text-primary fs-1"><i class="bi bi-cloud-arrow-up"></i></div>
                                     <div class="text-muted">
-                                        Change the <b>Main Product Image</b> <a href="#" id="upload-link-1">click here to browse</a>
+                                        Change the <b>Main Product Image</b> <a href=javascript:void(0) id="upload-link-1">click here to browse</a>
                                         <input type="file" id="file-upload-1" accept="image/*" name="main_image" >
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                 <div class="text-center small">
                                     <div class="text-primary fs-3"><i class="bi bi-cloud-arrow-up"></i></div>
                                     <div class="text-muted">
-                                        Upload your images here for <b>Product Gallery</b> <a href="#" id="upload-link-2">click to browse</a>
+                                        Upload your images here for <b>Product Gallery</b> <a href=javascript:void(0) id="upload-link-2">click to browse</a>
                                         <input type="file" id="file-upload-2" accept="image/*" multiple name="img_gallery[]">
                                     </div>
                                 </div>
@@ -137,7 +137,7 @@
                         <div class="text-center">
                             <div class="text-primary fs-1"><i class="bi bi-cloud-arrow-up"></i></div>
                             <div class="text-muted">
-                                Upload your <b>Customize Product Image</b> <a href="#" id="browseLink">click here to browse</a>
+                                Upload your <b>Customize Product Image</b> <a href=javascript:void(0) id="browseLink">click here to browse</a>
                                 <input class="form-control w-100" type="file" id="fileInput" name="customizingImage" required accept="image/*" onchange="handleFileUpload(this)" disabled >
                             </div>
                         </div>
@@ -149,7 +149,7 @@
                             style="display:block;"
                         @endif  >
                             <p>Image Preview</p>
-                            <div class="canvasContainer p-0 form-control" id="canvasContainer" style="display: block; position: relative; width:300px; height:300px;" >
+                            <div class="canvasContainer p-0 form-control" id="canvasContainer" style="display: flex; align-items:center; justify-content:center;" >
                                 <img id="preview2" src="{{ asset('images/' . $product->customizing_image) }}" alt="Image Preview" style="display: block; max-width: 100%; max-height: 100%; border-radius: 10px;">
                                 <canvas id="canvas" class="canvas" style="position: absolute; display: block; height: {{ $product->customizable == 1 ? $product->canvas_height : 86 }}%; width: {{ $product->customizable == 1 ? $product->canvas_width : 60 }}%; top:{{ $product->customizable == 1 ? $product->canvas_top : 6 }}%; left: {{ $product->customizable == 1 ? $product->canvas_left : 21 }}%; border: dotted dimgray;"></canvas>
                                 <button id="deleteCustomizeImage" style="position: absolute; top: 5px; right: 5px; background: red; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;">×</button>

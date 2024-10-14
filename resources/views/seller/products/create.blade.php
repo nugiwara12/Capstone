@@ -68,7 +68,7 @@
                         <label><b>Product Price <span class="text-danger">*</span></b></label>
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon3">&#8369;</span>
-                            <input type="number" name="price" min="1" max="1000" class="form-control" placeholder="Enter Product Price" required>
+                            <input type="text" name="price" min="1" max="1000" class="form-control" placeholder="Enter Product Price" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                         </div>
                     </div>
                     <div class="col">
@@ -85,7 +85,7 @@
                                 <div class="text-center" id="textUpload">
                                     <div class="text-primary fs-1"><i class="bi bi-cloud-arrow-up"></i></div>
                                     <div class="text-muted">
-                                        Upload your <b>Main Product Image</b> <a href="#" id="upload-link-1">click here to browse</a>
+                                        Upload your <b>Main Product Image</b> <a href=javascript:void(0) id="upload-link-1">click here to browse</a>
                                         <input type="file" id="file-upload-1" accept="image/*" name="main_image" >
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                                 <div class="text-center small">
                                     <div class="text-primary fs-3"><i class="bi bi-cloud-arrow-up"></i></div>
                                     <div class="text-muted">
-                                        Upload your images here for <b>Product Gallery</b> <a href="#" id="upload-link-2">click to browse</a>
+                                        Upload your images here for <b>Product Gallery</b> <a href=javascript:void(0) id="upload-link-2">click to browse</a>
                                         <input type="file" id="file-upload-2" accept="image/*" multiple name="img_gallery[]">
                                     </div>
                                 </div>
@@ -127,7 +127,7 @@
                         <div class="text-center">
                             <div class="text-primary fs-1"><i class="bi bi-cloud-arrow-up"></i></div>
                             <div class="text-muted">
-                                Upload your <b>Customize Product Image</b> <a href="#" id="browseLink">click here to browse</a>
+                                Upload your <b>Customize Product Image</b> <a href=javascript:void(0) id="browseLink">click here to browse</a>
                                 <input class="form-control w-100" type="file" id="fileInput" name="customizingImage" required accept="image/*" onchange="handleFileUpload(this)" disabled >
                             </div>
                         </div>

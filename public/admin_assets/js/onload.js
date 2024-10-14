@@ -17,7 +17,7 @@ function handleFileUpload(input) {
         preview2.style.display = 'block';
         customizeBox.style.display = 'none';
         customizeImagePreview.style.display='block';
-        canvasContainer.style.display = 'block';
+        canvasContainer.style.display = 'flex';
         canvas.style.display = 'block';
         canvas.style.width = widthInput.value + '%';
         canvas.style.height = heightInput.value + '%';

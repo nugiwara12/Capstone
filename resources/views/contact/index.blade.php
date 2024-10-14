@@ -1,11 +1,11 @@
 @extends('layouts.app3')
-  
+
 @section('title', 'Contact Messages')
-  
+
 @section('contents')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-   
+
 
     <div class="d-flex align-items-center justify-content-between">
 
@@ -41,11 +41,16 @@
                         <td class="align-middle">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <!-- <a href="{{ route('contact.show', $rs->id) }}" type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="View Details">Detail</a> -->
-                                <form action="{{ route('contact.destroy', $rs->id) }}" method="POST" type="button" class="btn btn-danger p-0" onsubmit="return confirm('Delete?')"data-toggle="tooltip" data-placement="top" title="Delete">
+                                <form id="deleteForm-{{ $rs->id }}" action="{{ route('contact.destroy', $rs->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger m-0" href=javascript:void(0) onclick="confirmation(event, {{ $rs->id }})">Delete</button>
+                                </form>
+                                {{-- <form action="{{ route('contact.destroy', $rs->id) }}" method="POST" type="button" class="btn btn-danger p-0" onsubmit="return confirm('Delete?')"data-toggle="tooltip" data-placement="top" title="Delete">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger m-0">Delete</button>
-                                </form>
+                                </form> --}}
                             </div>
                         </td>
                     </tr>

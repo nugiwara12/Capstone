@@ -49,8 +49,9 @@ class ShopController extends Controller
         return view('product-details', compact('product', 'shuffle'));
     }
 
-    public function customize(){
-        return view('customize');
+    public function customize($id){
+        $product=Product::findOrFail($id);
+        return view('customize', compact('product'));
     }
 
 }

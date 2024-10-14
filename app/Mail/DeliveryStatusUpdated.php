@@ -24,7 +24,7 @@ class DeliveryStatusUpdated extends Mailable
 
     public function build()
     {
-        return $this->view('delivery_status_updated')
+        return $this->view('emails.delivery_status_updated')
                     ->with(['order' => $this->order]);
     }
 
@@ -34,7 +34,7 @@ class DeliveryStatusUpdated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'delivery_status_updated',
+            view: 'emails.delivery_status_updated',
         );
     }
 

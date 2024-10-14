@@ -126,7 +126,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group" hidden>
+                        <div class="form-group" type="hidden">
                             <fieldset class="form-group">
                                 <label for="exampleInputRole" class="form-label">Role</label><br>
                                 <div class="select-container">
@@ -149,7 +149,7 @@
 
                         <div class="form-group">
                             <label for="exampleInputPhone" class="form-label">Phone</label>
-                            <input name="phone" type="number" class="form-control form-control-user @error('phone') is-invalid @enderror" id="exampleInputPhone" placeholder="09XXXXXXXXX" required>
+                            <input name="phone" type="text" class="form-control form-control-user @error('phone') is-invalid @enderror" id="exampleInputPhone" placeholder="09XXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                             @error('phone')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror

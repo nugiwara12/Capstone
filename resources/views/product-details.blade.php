@@ -247,7 +247,11 @@
                                             <i class="fa fa-shopping-cart"></i> <span>Add To Cart</span>
                                         </button>
                                     </form>
-
+                                    @if ($product->customizable == true)
+                                    <a href="{{route('customize', $product->id)}}" class="btn btn-solid hover-solid btn-animation">
+                                        <i class="bi bi-palette"></i> <span>Customize</span>
+                                    </a>
+                                    @endif
                                 </div>
 
                                 {{-- <ul class="product-count shipping-order">

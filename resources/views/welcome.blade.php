@@ -33,8 +33,8 @@
 
         <div class="col-md-4 d-flex"> <!-- Use flex for horizontal alignment -->
             <div class="d-flex flex-column"> <!-- Create a column for promo images -->
-                <div class="lightblue-box1 mb-2"><img src="assets/images/first-promo.png" alt="FIRST PROMO" class="box1-image"></div>
-                <div class="lightblue-box2 mb-2"><img src="assets/images/second-promo.png" alt="SECOND PROMO" class="box1-image"></div>
+                <div class="lightblue-box1 mb-2"><img src="{{asset('assets/images/promos/4.png')}}" alt="FIRST PROMO" class="box1-image"></div>
+                <div class="lightblue-box2 mb-2"><img src="{{asset('assets/images/promos/5.png')}}" alt="SECOND PROMO" class="box1-image"></div>
             </div>
         </div>
     </div>
@@ -67,11 +67,11 @@
             <div class="col-lg-4 col-md-6">
                 <div class="collection-banner p-bottom p-center text-center">
                     <a href="{{route('shop')}}" class="banner-img">
-                        <img src="assets/images/fashion/banner/4.png" class="bg-img blur-up lazyload" alt="">
+                        <img src="{{asset('assets/images/3-categories/FORHIM.png')}}" class="bg-img blur-up lazyload" alt="">
                     </a>
-                    <div class="banner-detail">
+                    {{-- <div class="banner-detail">
                         <span class="font-dark-30">Buy <span>Now!</span></span>
-                    </div>
+                    </div> --}}
                     <a href="{{route('shop')}}" class="contain-banner">
                         <div class="banner-content with-big">
                             <h2 class="mb-2">For Him</h2>
@@ -84,11 +84,11 @@
             <div class="col-lg-4 col-md-6">
                 <div class="collection-banner p-bottom p-center text-center">
                     <a href="{{route('shop')}}" class="banner-img">
-                        <img src="assets/images/fashion/banner/4.png" class="bg-img blur-up lazyload" alt="">
+                        <img src="{{asset('assets/images/3-categories/FORHER.png')}}" class="bg-img blur-up lazyload" alt="">
                     </a>
-                    <div class="banner-detail">
+                    {{-- <div class="banner-detail">
                         <span class="font-dark-30">Buy <span>Now!</span></span>
-                    </div>
+                    </div> --}}
                     <a href="{{route('shop')}}" class="contain-banner">
                         <div class="banner-content with-big">
                             <h2 class="mb-2">For Her</h2>
@@ -100,11 +100,11 @@
             <div class="col-lg-4">
                 <div class="collection-banner p-bottom p-center text-center">
                     <a href="{{route('shop')}}" class="banner-img">
-                        <img src="assets/images/fashion/banner/5.jpg" class="bg-img blur-up lazyload" alt="">
+                        <img src="{{asset('assets/images/3-categories/spo.png')}}" class="bg-img blur-up lazyload" alt="">
                     </a>
-                    <div class="banner-detail">
+                    {{-- <div class="banner-detail">
                         <span class="font-dark-30">Buy <span>Now!</span></span>
-                    </div>
+                    </div> --}}
                     <a href="{{route('shop')}}" class="contain-banner">
                         <div class="banner-content with-big">
                             <h2 class="mb-2">Special Occasions</h2>
@@ -198,7 +198,7 @@
                 <div class="category-wrapper category-slider1 white-arrow category-arrow">
                     @foreach ($category as $cat)
                     <div>
-                        <a href="shop-left-sidebar.html" class="category-wrap category-padding">
+                        <a href="{{route('shop')}}" class="category-wrap category-padding">
                             <img src="{{ asset('images/' . $cat->image) }}" class="bg-img blur-up lazyload"
                                 alt="category image">
                             <div class="category-content category-text-1">

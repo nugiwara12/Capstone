@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Session;
 |
 */
 // ----------------------------- Start Backlog-----------------------//
-// Route::group(['middleware' => 'prevent-back-history'],function(){
+Route::group(['middleware' => 'prevent-back-history'],function(){
 
 
 Route::get('/', function () {
@@ -78,7 +78,7 @@ Route::controller(ShopController::class)->group(function () {
     Route::get( 'my_account', 'my_account')->name('my_account');
     Route::get( 'product-details/{id}', 'show')->name('product-details');
     Route::get( 'thankyou', 'thankYou')->name('thank-you');
-    Route::get( 'customize', 'customize')->name('customize');
+    Route::get( 'customize/{id}', 'customize')->name('customize');
 
 
  });
@@ -176,4 +176,4 @@ Route::delete('/contacts/{id}', [ContactUsFormController::class, 'destroy'])->na
 
 
 // ----------------------------- End Of Route Back Log -----------------------//
-// });
+});
