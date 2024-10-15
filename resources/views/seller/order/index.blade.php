@@ -31,19 +31,26 @@
                         <td class="align-middle">{{$rs->payment_status}}</td>
                         <td class="align-middle">
                             <div class="dropdown">
-                                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-light dropdown-toggle {{ $rs->delivery_status === 'Delivered' ? 'disabled' : '' }}"
+                                        type="button"
+                                        id="dropdownMenuButton"
+                                        data-bs-toggle="{{ $rs->delivery_status === 'Delivered' ? '' : 'dropdown' }}"
+                                        aria-expanded="false">
                                     {{$rs->delivery_status}}
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <li><a class="dropdown-item" href="{{route('order_shipped', $rs->id)}}">Shipped</a></li>
-                                  <li><a class="dropdown-item" href="{{route('order_delivered', $rs->id)}}">Delivered</a></li>
-                                  {{-- <li><form id="deleteForm-{{ $rs->id }}" action="{{ route('products.destroy', $rs->id) }}" method="POST" style="display: inline;">
-                                      @csrf
-                                      @method('DELETE')
-                                      <a class="dropdown-item" href="#" onclick="confirmation(event, {{ $rs->id }})">Delete</a>
-                                  </form></li> --}}
+                                    @if ($rs->delivery_status !== 'Delivered')
+                                        <li><a class="dropdown-item" href="{{route('order_shipped', $rs->id)}}">Shipped</a></li>
+                                        <li><a class="dropdown-item" href="{{route('order_delivered', $rs->id)}}">Delivered</a></li>
+                                    @endif
+                                    {{-- <li><form id="deleteForm-{{ $rs->id }}" action="{{ route('products.destroy', $rs->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <a class="dropdown-item" href="#" onclick="confirmation(event, {{ $rs->id }})">Delete</a>
+                                    </form></li> --}}
                                 </ul>
-                              </div>
+                            </div>
+
                         </td>
                     </tr>
                 @endforeach

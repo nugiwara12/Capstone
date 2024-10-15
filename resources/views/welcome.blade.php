@@ -1,7 +1,45 @@
 @extends('layouts.app2')
 
 @section('contents')
+@if(Session::has('success'))
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'center',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showCloseButton: true,
+        showConfirmButton: false,
+        timer: 2500,
+    });
 
+    Toast.fire({
+        icon: 'success',
+        title: "{{ Session::get('success') }}",
+    });
+</script>
+@endif
+
+@if(Session::has('error'))
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'center',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showCloseButton: true,
+        showConfirmButton: false,
+        timer: 2500,
+    });
+
+    Toast.fire({
+        icon: 'error',
+        title: "{{ Session::get('error') }}",
+    });
+</script>
+@endif
  {{-- CTA --}}
  <div class="container-fluid">
     <div class="row">
