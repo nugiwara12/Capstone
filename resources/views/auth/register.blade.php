@@ -79,133 +79,104 @@
 
 </html> -->
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Gawang Gamat</title>
+
+    <link href="{{ asset('admin_assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
 
- {{-- <!DOCTYPE html>
- <html lang="en">
- <head>
-   <meta charset="utf-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <meta name="description" content="">
-   <meta name="author" content="">
-   <title>Gawang Gamat</title>
+    <link href="{{ asset('admin_assets/css/register-logo.css') }}" rel="stylesheet">
+</head>
+<body class="bg-gray-200 min-h-screen flex items-center justify-center">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-center">
+            <div class="w-full max-w-lg">
+                <!-- Logo for login -->
+                <img class="mx-auto mb-4 w-32" src="{{ asset('admin_assets/img/logo/imglogo.png') }}" alt="logo">
+                <div class="bg-white shadow-md rounded-lg overflow-hidden mt-5">
+                    <div class="p-6">
+                        <div class="text-center">
+                            <h1 class="text-2xl font-semibold text-gray-900 mb-4">Register</h1>
+                        </div>
+                        <form action="{{ route('register') }}" method="POST" class="space-y-4">
+                            @csrf
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                                <input name="name" type="text" id="name" required placeholder="Full Name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('name') border-red-500 @enderror">
+                                @error('name')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                            </div>
 
-   <link href="{{ asset('admin_assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> --}}
+                            <div class="hidden">
+                                <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+                                <select name="role" id="role" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('role') border-red-500 @enderror">
+                                    <option selected disabled>User Types</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="User">User</option>
+                                </select>
+                                @error('role')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                            </div>
 
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                                <input name="phone" type="text" id="phone" placeholder="09XXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('phone') border-red-500 @enderror">
+                                @error('phone')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                            </div>
 
- @extends('layouts.app2')
-   <link href="{{ asset('admin_assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
-   <link href="{{ asset('admin_assets/css/register-logo.css') }}" rel="stylesheet">
-{{--
- </head>
- <body class="bg-gradient-primary" > --}}
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                                <input name="email" type="email" id="email" required placeholder="Email Address" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('email') border-red-500 @enderror">
+                                @error('email')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                            </div>
 
-    @section('contents')
-    <div class="container">
-     <div class="row justify-content-center">
-    {{--  Adjust the column width as needed --}}
-       <div class="col-xl-8 col-lg-8 col-md-9">
-         <div class="card o-hidden border-0 shadow-lg my-5">
-           <div class="card-body p-0">
-            <div class="row">
-               <div class="col-lg-12">
-                    <div class="p-5">
-                    <div class="text-center">
-                        {{-- <img class="title-logo" src="{{ asset('admin_assets/img/logo/imglogo.png') }}" alt="logo"> --}}
-                        <h1 class="h4 text-gray-900 mb-4">Register</h1>
+                            <div>
+                                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                                <input name="password" type="password" id="password" required placeholder="Password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('password') border-red-500 @enderror">
+                                <div class="text-sm text-gray-500">Must be 8-20 characters long, include at least 1 number and both upper and lower case letters.</div>
+                                @error('password')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                                <input name="password_confirmation" type="password" id="password_confirmation" placeholder="Confirm Password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('password_confirmation') border-red-500 @enderror">
+                                @error('password_confirmation')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Register Account
+                            </button>
+                        </form>
+                        <div class="text-center mt-4">
+                            <a class="text-sm text-indigo-600 hover:text-indigo-700" href="login">Already registered to an existing account?</a>
+                        </div>
+                        <hr class="my-4">
                     </div>
-                    <form action="{{ route('register') }}" method="POST" class="user">
-                        @csrf
-                        <div class="form-group">
-                            <label for="exampleInputName" class="form-label">Full Name</label>
-                            <input name="name" type="text" class="form-control form-control-user @error('name') is-invalid @enderror" id="exampleInputName" placeholder="Full Name">
-                            @error('name')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group" type="hidden">
-                            <fieldset class="form-group">
-                                <label for="exampleInputRole" class="form-label">Role</label><br>
-                                <div class="select-container">
-                                    <select class="form-select @error('role') is-invalid @enderror" name="role" id="role" required autofocus autocomplete="role">
-                                        {{-- <option selected disabled>User Types</option>
-                                        <option value="Admin">Admin</option> --}}
-                                        <option value="User">User</option>
-                                    </select>
-                                    <div class="form-control-icon">
-                                        <i class="bi bi-exclude"></i>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            @error('role')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="exampleInputPhone" class="form-label">Phone</label>
-                            <input name="phone" type="text" class="form-control form-control-user @error('phone') is-invalid @enderror" id="exampleInputPhone" placeholder="09XXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
-                            @error('phone')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                        <label for="exampleInputEmail" class="form-label">Email Address</label>
-                        <input name="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="exampleInputEmail" placeholder="Email Address">
-                        @error('email')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                        @enderror
-                        </div>
-
-                        <div class="form-group">
-                        <label for="exampleInputPassword" class="form-label">Password</label>
-                        <input name="password" type="password" class="form-control form-control-user @error('password') is-invalid @enderror" id="exampleInputPassword" placeholder="Password">
-                        <div id="passwordHelp" class="form-text">Must be 8-20 characters long, Input atleast 1 number and letters with Upper and Lower case.</div>
-                        @error('password')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                        @enderror
-                        </div>
-
-                        <div class="form-group">
-                        <label for="exampleInputPassword" class="form-label">Confirm Password</label>
-                        <input name="password_confirmation" type="password" class="form-control form-control-user @error('password_confirmation') is-invalid @enderror" id="exampleRepeatPassword" placeholder="Repeat Password">
-                        @error('password_confirmation')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                        @enderror
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-user btn-block">Register Account</button>
-                    </form>
-                    <div class="text-center">
-                        <a class="small" href="login">Already registered to an existing account.</a>
-                      </div>
-               <hr>
                 </div>
             </div>
-           </div>
-         </div>
-       </div>
-     </div>
-   </div>
-</div>
+        </div>
+    </div>
+</body>
+</html>
 
 
-   <!-- Bootstrap core JavaScript   -->
-   <script src="{{ asset('admin_assets/vendor/jquery/jquery.min.js') }}"></script>
-   <script src="{{ asset('admin_assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-   <!-- Core plugin JavaScript   -->
-   <script src="{{ asset('admin_assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-   <!-- Custom scripts for all pages   -->
-   <script src="{{ asset('admin_assets/js/sb-admin-2.min.js') }}"></script>
-
-   @endsection
- {{-- </body>
- </html> --}}

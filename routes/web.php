@@ -36,11 +36,8 @@ use App\Models\Category;
 
 
 Route::get('/', function () {
-    $featured = Product::where('featured', true)->get();
-    $best_seller = Product::where('best_seller', true)->get();
-    $category=Category::all();
-    return view('welcome', compact('featured', 'best_seller', 'category'));
-})->name('home');
+    return view('welcome');
+});
 
 //->middleware('redirect.authenticated');
 

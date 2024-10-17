@@ -6,7 +6,7 @@
                     <div class="col-xl-4 col-lg-5 col-md-6">
                         <div class="footer-contact">
                             <div class="brand-logo">
-                                <a href="{{route('home')}}" class="footer-logo float-start">
+                                <a href="/" class="footer-logo float-start">
                                     <img src="{{asset('assets/images/logo.png')}}" class="f-logo img-fluid blur-up lazyload" alt="logo">
                                 </a>
                             </div>
@@ -30,10 +30,10 @@
                             </div>
                             <div class="footer-content">
                                 <ul>
-                                    <li><a href="{{route('home')}}" class="font-dark">Home</a></li>
-                                    <li><a href="{{route('shop')}}" class="font-dark">Shop</a></li>
-                                    <li><a href="{{route('about_us')}}" class="font-dark">About Us</a></li>
-                                    <li><a href="{{route('contact')}}" class="font-dark">Contact Us</a></li>
+                                    <li><a href="#" class="font-dark">Home</a></li>
+                                    <li><a href="#" class="font-dark">Shop</a></li>
+                                    <li><a href="#" class="font-dark">About Us</a></li>
+                                    <li><a href="#" class="font-dark">Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -45,10 +45,10 @@
                             </div>
                             <div class="footer-content">
                                 <ul>
-                                    <li><a href="{{route('shop')}}" class="font-dark">For Him</a></li>
-                                    <li><a href="{{route('shop')}}" class="font-dark">For Her</a></li>
-                                    <li><a href="{{route('shop')}}" class="font-dark">Special Occasions</a></li>
-                                    <li><a href="{{route('shop')}}" class="font-dark">Customize</a></li>
+                                    <li><a href="#" class="font-dark">For Him</a></li>
+                                    <li><a href="#" class="font-dark">For Her</a></li>
+                                    <li><a href="#" class="font-dark">Special Occasions</a></li>
+                                    <li><a href="#" class="font-dark">Customize</a></li>
                                 </ul>
                             </div>
                         </div>

@@ -1,46 +1,8 @@
 @extends('layouts.app2')
 
 @section('contents')
-@if(Session::has('success'))
-<script>
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'center',
-        customClass: {
-            popup: 'colored-toast',
-        },
-        showCloseButton: true,
-        showConfirmButton: false,
-        timer: 2500,
-    });
 
-    Toast.fire({
-        icon: 'success',
-        title: "{{ Session::get('success') }}",
-    });
-</script>
-@endif
-
-@if(Session::has('error'))
-<script>
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'center',
-        customClass: {
-            popup: 'colored-toast',
-        },
-        showCloseButton: true,
-        showConfirmButton: false,
-        timer: 2500,
-    });
-
-    Toast.fire({
-        icon: 'error',
-        title: "{{ Session::get('error') }}",
-    });
-</script>
-@endif
- {{-- CTA --}}
+ <!-- CTA -->
  <div class="container-fluid">
     <div class="row">
         <div class="col-md-8">
@@ -77,9 +39,9 @@
         </div>
     </div>
 </div>
-{{-- End of CTA --}}
+<!-- End of CTA -->
 
-{{-- Welcome --}}
+<!-- Welcome -->
 <div class="container text-center mt-4">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-sm-12 box_2 p-4" style="background-color: #F7FBFD;">
@@ -91,12 +53,12 @@
                 today and make every moment unforgettable! Happy shopping!
             </div>
             <div class="button-row1">
-                <a href="{{route('shop')}}" class="btn btn-custom">Shop Now</a>
+                <a href="#" class="btn btn-custom">Shop Now</a>
             </div>
         </div>
     </div>
 </div>
-{{-- End of Welcome --}}
+<!-- End of Welcome -->
 
 <!-- banner section start -->
 <section class="ratio2_1 banner-style-2">
@@ -104,13 +66,13 @@
         <div class="row gy-4">
             <div class="col-lg-4 col-md-6">
                 <div class="collection-banner p-bottom p-center text-center">
-                    <a href="{{route('shop')}}" class="banner-img">
+                    <a href="#" class="banner-img">
                         <img src="{{asset('assets/images/3-categories/FORHIM.png')}}" class="bg-img blur-up lazyload" alt="">
                     </a>
-                    {{-- <div class="banner-detail">
+                    <div class="banner-detail">
                         <span class="font-dark-30">Buy <span>Now!</span></span>
-                    </div> --}}
-                    <a href="{{route('shop')}}" class="contain-banner">
+                    </div>
+                    <a href="#" class="contain-banner">
                         <div class="banner-content with-big">
                             <h2 class="mb-2">For Him</h2>
                             <span>Surprise him with a personalized treasure.
@@ -121,13 +83,13 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="collection-banner p-bottom p-center text-center">
-                    <a href="{{route('shop')}}" class="banner-img">
+                    <a href="#" class="banner-img">
                         <img src="{{asset('assets/images/3-categories/FORHER.png')}}" class="bg-img blur-up lazyload" alt="">
                     </a>
-                    {{-- <div class="banner-detail">
+                    <div class="banner-detail">
                         <span class="font-dark-30">Buy <span>Now!</span></span>
-                    </div> --}}
-                    <a href="{{route('shop')}}" class="contain-banner">
+                    </div>
+                    <a href="#" class="contain-banner">
                         <div class="banner-content with-big">
                             <h2 class="mb-2">For Her</h2>
                             <span>Delight her with a one-of-a-kind creation.</span>
@@ -137,13 +99,13 @@
             </div>
             <div class="col-lg-4">
                 <div class="collection-banner p-bottom p-center text-center">
-                    <a href="{{route('shop')}}" class="banner-img">
+                    <a href="#" class="banner-img">
                         <img src="{{asset('assets/images/3-categories/spo.png')}}" class="bg-img blur-up lazyload" alt="">
                     </a>
-                    {{-- <div class="banner-detail">
+                    <div class="banner-detail">
                         <span class="font-dark-30">Buy <span>Now!</span></span>
-                    </div> --}}
-                    <a href="{{route('shop')}}" class="contain-banner">
+                    </div>
+                    <a href="#" class="contain-banner">
                         <div class="banner-content with-big">
                             <h2 class="mb-2">Special Occasions</h2>
                             <span>Get the perfect gift for any celebration.</span>
@@ -156,7 +118,7 @@
 </section>
 <!-- banner section end -->
 
-{{-- Featured Products --}}
+<!-- Featured Products -->
 <section class="ratio_asos overflow-hidden">
     <div class="container p-sm-0">
         <div class="row m-0">
@@ -168,28 +130,28 @@
             </div>
         </div>
         <div class="row g-sm-4 g-3">
-            @foreach ($featured as $item)
+            <!-- foreach -->
             <div class="col-xl-2 col-lg-2 col-6">
                 <div class="product-box">
                     <div class="img-wrapper">
-                        <a href="{{route('product-details', $item->id)}}">
-                            <img src="{{ asset('images/' . $item->main_image) }}" class="w-100 bg-img blur-up lazyload" alt="{{$item->title}}">
+                        <a href="#">
+                            <img src="#" class="w-100 bg-img blur-up lazyload" alt="title">
                         </a>
                         <div class="circle-shape"></div>
-                        <span class="background-text">{{$item->category}}</span>
+                        <span class="background-text">title</span>
                         <div class="cart-wrap">
                             <ul>
-                                {{-- <li><input type="number"></li> --}}
-                                {{-- <li><a href="{{route('cart')}}" class="addtocart-btn"><i data-feather="shopping-cart"></i></a></li> --}}
-                                <li><a href="{{route('product-details', $item->id)}}"><i data-feather="eye"></i></a></li>
-                                {{-- <li><a href="javascript:void(0)" class="wishlist"><i data-feather="heart"></i></a></li> --}}
+                                <li><input type="number"></li>
+                                <li><a href="#" class="addtocart-btn"><i data-feather="shopping-cart"></i></a></li>
+                                <li><a href="#"><i data-feather="eye"></i></a></li>
+                                <li><a href="javascript:void(0)" class="wishlist"><i data-feather="heart"></i></a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="product-style-3 product-style-chair">
                         <div class="product-title d-block mb-0">
                             <div class="r-price">
-                                <div class="theme-color">&#8369;{{$item->price}}</div>
+                                <div class="theme-color">&#8369;</div>
                                 <div class="main-price">
                                     <ul class="rating mb-1 mt-0">
                                         <li><i class="fas fa-star theme-color"></i></li>
@@ -197,20 +159,19 @@
                                     </ul>
                                 </div>
                             </div>
-                            <p class="font-light mb-sm-2 mb-0">{{$item->category}}</p>
+                            <p class="font-light mb-sm-2 mb-0">categpry</p>
                             <a href="#" class="font-default">
-                                <h5>{{$item->title}}</h5>
+                                <h5>title</h5>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
-            @endforeach
-
+            <!-- endforeach -->
         </div>
     </div>
 </section>
-{{-- End of Featured Products --}}
+<!-- End of Featured Products -->
 <!-- category section start -->
 <section class="category-section ratio_40">
     <div class="container-fluid">
@@ -234,18 +195,18 @@
             </div>
             <div class="col-xxl-10 col-lg-9">
                 <div class="category-wrapper category-slider1 white-arrow category-arrow">
-                    @foreach ($category as $cat)
+                   <!-- foreach -->
                     <div>
-                        <a href="{{route('shop')}}" class="category-wrap category-padding">
-                            <img src="{{ asset('images/' . $cat->image) }}" class="bg-img blur-up lazyload"
+                        <a href="#" class="category-wrap category-padding">
+                            <img src="" class="bg-img blur-up lazyload"
                                 alt="category image">
                             <div class="category-content category-text-1">
-                                <h3 class="theme-color">{{$cat->category_name}}</h3>
-                                {{-- <span class="text-dark">Fashion</span> --}}
+                                <h3 class="theme-color">cayegory name</h3>
+                                <span class="text-dark">Fashion</span>
                             </div>
                         </a>
                     </div>
-                    @endforeach
+                    <!-- endforeach -->
                 </div>
             </div>
         </div>
@@ -266,7 +227,7 @@
                     <h2 class="banner-title">We are Gawang Gamat</h2>
                     <p>Your gateway to locally crafted treasures. Specializing in handcrafted, one-of-a-kind products, offering a wide range of unique items made with love and care. Bring beautifully crafted, customizable products to your home and discover the charm of handmade items, and create something truly special with us!</p>
                     <div class="btn-wrap">
-                        <a href="{{route('about_us')}}" class="btn btn-outline-warning">
+                        <a href="#" class="btn btn-outline-warning">
                             Read More
                             <i class="bi bi-arrow-right"></i> <!-- Bootstrap icon -->
                         </a>
@@ -284,8 +245,7 @@
 </section>
 <!-----End of about ---->
 
-{{-- Best Seller --}}
-
+<!-- Best Seller -->
 <section class="ratio_asos overflow-hidden pb-5">
     <div class="px-0 container-fluid p-sm-0">
         <div class="row m-0">
@@ -297,38 +257,37 @@
             </div>
 
             <div class="our-product products-c">
-                @foreach ($best_seller as $best)
+                <!-- foreach -->
                 <div>
                     <div class="product-box">
                         <div class="img-wrapper">
-                            <a href="{{route('product-details', $best->id)}}">
-                                <img src="{{ asset('images/' . $best->main_image) }}"
-                                    class="w-100 bg-img blur-up lazyload" alt="">
+                            <a href="#">
+                                <img src="#"
                             </a>
                             <div class="circle-shape"></div>
                             <span class="background-text">Hand</span>
                             <div class="cart-wrap">
                                 <ul>
-                                    {{-- <li>
-                                        <a href="{{route('cart')}}">
+                                    <li>
+                                        <a href="#">
                                             <i data-feather="shopping-cart"></i>
                                         </a>
-                                    </li> --}}
-                                    <li><a href="{{route('product-details', $best->id)}}"><i data-feather="eye"></i></a>
                                     </li>
-                                    {{-- <li>
+                                    <li><a href="#"><i data-feather="eye"></i></a>
+                                    </li>
+                                    <li>
                                         <a href="" class="wishlist">
                                             <i data-feather="heart"></i>
                                         </a>
-                                    </li> --}}
-                                    {{-- <li>
-                                        <a href="{{route('cart')}}" class="addtocart-btn" data-bs-toggle="modal"
+                                    </li>
+                                    <li>
+                                        <a href="#" class="addtocart-btn" data-bs-toggle="modal"
                                             data-bs-target="#addtocart">
                                             <i data-feather="shopping-cart"></i>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('product-details', $item->id)}}" data-bs-toggle="modal"
+                                        <a href="#" data-bs-toggle="modal"
                                             data-bs-target="#quick-view">
                                             <i data-feather="eye"></i>
                                         </a>
@@ -337,14 +296,14 @@
                                         <a href="" class="wishlist">
                                             <i data-feather="heart"></i>
                                         </a>
-                                    </li> --}}
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="product-style-3 product-style-chair">
                             <div class="product-title d-block mb-0">
                                 <div class="r-price">
-                                    <div class="theme-color">&#8369;{{$best->price}}</div>
+                                    <div class="theme-color">&#8369;</div>
                                     <div class="main-price">
                                         <ul class="rating mb-1 mt-0">
                                             <li>
@@ -365,22 +324,21 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <p class="font-light mb-sm-2 mb-0">{{$best->category}}</p>
+                                <p class="font-light mb-sm-2 mb-0">category</p>
                                 <a href="product/details.html" class="font-default">
-                                    <h5>{{$best->title}}</h5>
+                                    <h5>title</h5>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                @endforeach
-
+                <!-- endforeach -->
             </div>
         </div>
     </div>
 </section>
 
-{{-- <section class="ratio_asos overflow-hidden">
+<section class="ratio_asos overflow-hidden">
     <div class="container p-sm-0">
         <div class="row m-0">
             <div class="col-12 p-0">
@@ -391,19 +349,19 @@
             </div>
         </div>
         <div class="row g-sm-4 g-3">
-            @foreach ($best_seller as $best)
+            <!-- foreach -->
             <div class="col-xl-2 col-lg-2 col-6">
                 <div class="product-box">
                     <div class="img-wrapper">
                         <a href="#">
-                            <img src="{{ asset('images/' . $best->main_image) }}" class="w-100 bg-img blur-up lazyload" alt="{{$best->title}}">
+                            <img src="" class="w-100 bg-img blur-up lazyload" alt="title">
                         </a>
                         <div class="circle-shape"></div>
-                        <span class="background-text">{{$best->category}}</span>
+                        <span class="background-text">category</span>
                         <div class="cart-wrap">
                             <ul>
-                                <li><a href="{{route('cart')}}" class="addtocart-btn"><i data-feather="shopping-cart"></i></a></li>
-                                <li><a href="{{route('product-details', $best->id)}}"><i data-feather="eye"></i></a></li>
+                                <li><a href="#" class="addtocart-btn"><i data-feather="shopping-cart"></i></a></li>
+                                <li><a href="#"><i data-feather="eye"></i></a></li>
                                 <li><a href="" class="wishlist"><i data-feather="heart"></i></a></li>
                             </ul>
                         </div>
@@ -411,7 +369,7 @@
                     <div class="product-style-3 product-style-chair">
                         <div class="product-title d-block mb-0">
                             <div class="r-price">
-                                <div class="theme-color">&#8369;{{$best->price}}</div>
+                                <div class="theme-color">&#8369;</div>
                                 <div class="main-price">
                                     <ul class="rating mb-1 mt-0">
                                         <li><i class="fas fa-star theme-color"></i></li>
@@ -419,21 +377,20 @@
                                     </ul>
                                 </div>
                             </div>
-                            <p class="font-light mb-sm-2 mb-0">{{$best->category}}</p>
+                            <p class="font-light mb-sm-2 mb-0">category</p>
                             <a href="#" class="font-default">
-                                <h5>{{$best->title}}</h5>
+                                <h5>title</h5>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
-            @endforeach
-
+            <!-- endforeach -->
         </div>
     </div>
-</section> --}}
-{{-- End of Best Seller --}}
+</section>
+<!-- End of Best Seller -->
 
-{{-- <div id="qvmodal"></div> --}}
+<div id="qvmodal"></div>
 
 @endsection

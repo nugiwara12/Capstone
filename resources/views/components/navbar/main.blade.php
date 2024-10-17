@@ -6,7 +6,7 @@
                     <div class="main-menu">
                         <div class="menu-left">
                             <div class="brand-logo">
-                                <a href="{{route('home')}}">
+                                <a href="/">
                                     <img src="{{asset('assets/images/logo.png')}}" class="h-logo img-fluid blur-up lazyload"
                                         alt="logo">
                                 </a>
@@ -34,10 +34,10 @@
                                                     </span>
                                                 </div>
                                             </li>
-                                            <li><a href="{{route('home')}}" class="nav-link menu-title">Home</a></li>
-                                            <li><a href="{{route('shop')}}"class="nav-link menu-title">Shop</a></li>
-                                            <li><a href="{{route('about_us')}}" class="nav-link menu-title">About Us</a></li>
-                                            <li><a href="{{route('contact')}}" class="nav-link menu-title">Contact Us</a>
+                                            <li><a href="#" class="nav-link menu-title">Home</a></li>
+                                            <li><a href="#"class="nav-link menu-title">Shop</a></li>
+                                            <li><a href="#" class="nav-link menu-title">About Us</a></li>
+                                            <li><a href="#" class="nav-link menu-title">Contact Us</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -55,7 +55,7 @@
                                 </li> --}}
                                 <li class="onhover-dropdown wislist-dropdown">
                                     <div class="cart-media">
-                                        <a href="{{route('cart')}}">
+                                        <a href="#">
                                             <i data-feather="shopping-cart"></i>
                                             {{-- <span id="cart-count" class="label label-theme rounded-pill">
                                                     0
