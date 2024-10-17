@@ -50,23 +50,22 @@
               <div class="form-group">
                 <label for="exampleInputPassword" class="block text-sm font-medium text-gray-700">Password</label>
                 <input name="password" type="password" id="exampleInputPassword" placeholder="Password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                <div class="text-sm text-gray-500">Never share your password with anyone else.</div>
+                <div class="text-xs text-gray-500 italic">Never share your password with anyone else.</div>
               </div>
 
-              <div class="form-group flex items-center">
-                <input name="remember" type="checkbox" id="customCheck" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-                <label for="customCheck" class="ml-2 block text-sm text-gray-900">Remember Me</label>
+              <div class="flex justify-between items-center">
+                <div class="text-left">
+                  <a href="forgot-password" class="text-sm text-indigo-600 hover:text-indigo-700">Forgot Password</a>
+                  <div class="text-start ">
+                    <a href="register" class="text-sm text-indigo-600 hover:text-indigo-700">Sign Up</a>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <button type="submit" class="w-20 bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Login</button>
+                </div>
               </div>
-
-              <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Login</button>
-            </form><br>
-
-            <div class="text-center">
-              <a href="forgot-password" class="text-sm text-indigo-600 hover:text-indigo-700">Forgot Password?</a>
-              <span class="mx-2 text-sm">or</span>
-              <a href="register" class="text-sm text-indigo-600 hover:text-indigo-700">Sign Up</a>
-            </div>
-            <hr class="my-4">
+              <hr class="my-4">
+            </form>
           </div>
         </div>
       </div>
