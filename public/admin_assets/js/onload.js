@@ -17,7 +17,7 @@ function handleFileUpload(input) {
         preview2.style.display = 'block';
         customizeBox.style.display = 'none';
         customizeImagePreview.style.display='block';
-        canvasContainer.style.display = 'block';
+        canvasContainer.style.display = 'flex';
         canvas.style.display = 'block';
         canvas.style.width = widthInput.value + '%';
         canvas.style.height = heightInput.value + '%';
@@ -165,6 +165,7 @@ document.getElementById('file-upload-1').addEventListener('change', function(eve
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
+            const currentImage = document.getElementById('currentImage');
             const preview = document.getElementById('image-preview');
             const mainImage = document.getElementById('mainImagePreview');
             const deleteButton = document.getElementById('delete-button');
@@ -173,15 +174,18 @@ document.getElementById('file-upload-1').addEventListener('change', function(eve
             preview.src = e.target.result;
             preview.style.display = 'block'; // Show the image
             mainImage.style.display ='block';
-            largeBox.style.display='none';
-            preview.style.border = '2px solid #ddd';
             deleteButton.style.display = 'block'; // Show the delete button
+            largeBox.style.display='none';
+            currentImage.style.display='none';
+            preview.style.border = '2px solid #ddd';
+
         }
         reader.readAsDataURL(file);
     }
 });
 
-document.getElementById('delete-button').addEventListener('click', function() {
+document.getElementById('delete-button').addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent the default action
     const preview = document.getElementById('image-preview');
     const deleteButton = document.getElementById('delete-button');
     const mainImage = document.getElementById('mainImagePreview');

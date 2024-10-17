@@ -102,7 +102,7 @@
                     <div class="col mb-3">
                         <div class="row" id="showCustomizeImagePreview" style="display: block;">
                             <p>Image Preview</p>
-                            <div class="canvasContainer p-0 form-control" id="canvasContainer" style="display: block;" >
+                            <div class="canvasContainer p-0 form-control" id="canvasContainer" style="display: flex; align-items:center; justify-content:center;" >
                                 <img id="preview2" src="{{ asset('images/' . $product->customizing_image) }}" alt="Image Preview" style="display: block;">
                                 <canvas class="canvas" style="display: block; position: absolute; height: {{$product->canvas_height}}%; width: {{$product->canvas_width}}%; top: {{$product->canvas_top}}%; left: {{$product->canvas_left}}%; border: dotted dimgray;"></canvas>
                             </div>

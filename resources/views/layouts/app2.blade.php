@@ -19,7 +19,6 @@
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="{{asset('assets/images/favicon4.ico')}}">
     <link rel="icon" href="{{asset('assets/images/favicon4.ico')}}" type="image/x-icon">
-    <link rel="icon" href="{{asset('assets/images/favicon4.ico')}}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 
     <title>Gawang Gamat</title>
@@ -35,7 +34,9 @@
     <link id="color-link" rel="stylesheet" type="text/css" href="{{asset('assets/css/demo4.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
     <link id="color-link" rel="stylesheet" type="text/css" href="{{asset('assets/css/demo2.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 

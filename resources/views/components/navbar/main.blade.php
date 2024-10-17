@@ -12,13 +12,13 @@
                                 </a>
                             </div>
                         </div>
-                        <nav>
+                        {{-- <nav>
                             <li>
                                 <div class="search-box theme-bg-color">
                                     <i data-feather="search"></i>
                                 </div>
                             </li>
-                        </nav>
+                        </nav> --}}
                         <div class="menu-right">
                             <ul>
                                 <div class="main-navbar">
@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                                 <li><!-- For the space between the menu and icons--></li>
-                                <li class="onhover-dropdown wislist-dropdown">
+                                {{-- <li class="onhover-dropdown wislist-dropdown">
                                     <div class="cart-media">
                                         <a href="">
                                             <i data-feather="heart"></i>
@@ -52,28 +52,34 @@
                                             </span>
                                         </a>
                                     </div>
-                                </li>
+                                </li> --}}
                                 <li class="onhover-dropdown wislist-dropdown">
                                     <div class="cart-media">
                                         <a href="{{route('cart')}}">
                                             <i data-feather="shopping-cart"></i>
-                                            <span id="cart-count" class="label label-theme rounded-pill">
-                                                0
-                                            </span>
+                                            {{-- <span id="cart-count" class="label label-theme rounded-pill">
+                                                    0
+                                            </span> --}}
                                         </a>
                                     </div>
                                 </li>
                                 <li class="onhover-dropdown">
                                     <div class="cart-media name-usr">
-                                        @auth
+                                        {{-- @auth
                                             <span>{{ auth()->user()->name }}</span>
-                                        @endauth
+                                        @endauth --}}
                                         <i data-feather="user"></i>
                                     </div>
                                     <div class="onhover-div profile-dropdown">
                                         <ul>
                                             @auth
-                                                <li><a href="">My Acc</a></li>
+                                                @if (Auth::user()->role === 'Admin')
+                                                    <li><a href="{{ route('dashboard') }}">Admin Dashboard</a></li>
+                                                @elseif (Auth::user()->role === 'Seller')
+                                                    <li><a href="{{ route('seller_dashboard') }}">Seller Dashboard</a></li>
+                                                @else
+                                                    <li><a href="{{ route('my_account') }}">Profile</a></li>
+                                                @endif
                                                 <li><a href="{{ route('logout') }}">Logout</a></li>
                                             @else
                                                 @if (Route::has('login'))
@@ -83,6 +89,7 @@
                                             @endauth
                                         </ul>
                                     </div>
+
                                 </li>
 
                             </ul>

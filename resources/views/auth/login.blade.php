@@ -24,6 +24,25 @@
 <link href="{{ asset('admin_assets/css/login-logo.css') }}" rel="stylesheet">
 
 @section('contents')
+@if(Session::has('error'))
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'center',
+            customClass: {
+                popup: 'colored-toast',
+            },
+            showCloseButton: true,
+            showConfirmButton: false,
+            timer: 2500,
+        });
+
+        Toast.fire({
+            icon: 'error',
+            title: "{{ Session::get('error') }}",
+        });
+    </script>
+@endif
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-xl-6 col-lg-8 col-md-9"> <!-- Adjust the column width as needed -->

@@ -35,7 +35,7 @@ class ContactUsFormController extends Controller
         Contact::create($request->all());
 
         // Define multiple recipients
-        $recipients = ['sagcalkylakarylle@gmail.com', 'arthurleywin728@gmail.com'];
+        $recipients = ['gawanggamat1111@gmail.com'];
 
         // Send mail to admin(s)
         Mail::send('mail', array(

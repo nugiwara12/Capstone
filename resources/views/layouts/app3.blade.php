@@ -61,6 +61,26 @@
 
     </script>
     @endif
+    @if(Session::has('error'))
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'center',
+            iconColor: 'white',
+            customClass: {
+                popup: 'colored-toast',
+            },
+            showCloseButton: true,
+            showConfirmButton: false,
+            timer: 2500,
+        });
+
+        Toast.fire({
+            icon: 'error',
+            title: "{{ Session::get('error') }}",
+        });
+    </script>
+    @endif
   <!-- Page Wrapper -->
   <div id="wrapper">
 
@@ -112,7 +132,8 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-
+{{-- Sweet Alert Delete Js --}}
+<script src="{{asset('admin_assets/js/delete.js')}}"></script>
 
   <!-- Bootstrap core JavaScript-->
   <script src="{{ asset('admin_assets/vendor/jquery/jquery.min.js') }}"></script>

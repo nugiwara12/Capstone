@@ -1,7 +1,45 @@
 @extends('layouts.app2')
 
 @section('contents')
+@if(Session::has('success'))
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'center',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showCloseButton: true,
+        showConfirmButton: false,
+        timer: 2500,
+    });
 
+    Toast.fire({
+        icon: 'success',
+        title: "{{ Session::get('success') }}",
+    });
+</script>
+@endif
+
+@if(Session::has('error'))
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'center',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showCloseButton: true,
+        showConfirmButton: false,
+        timer: 2500,
+    });
+
+    Toast.fire({
+        icon: 'error',
+        title: "{{ Session::get('error') }}",
+    });
+</script>
+@endif
  {{-- CTA --}}
  <div class="container-fluid">
     <div class="row">
@@ -15,14 +53,14 @@
                     </div>
                 </div>
                 <div class="slide">
-                    <div class="lightblue-box"><img src="assets/images/slide.png" alt="SECOND IMAGE" class="box1-image"></div>
+                    <div class="lightblue-box"><img src="assets/images/first-promo.png" alt="SECOND IMAGE" class="box1-image"></div>
                 </div>
                 <div class="slide">
-                    <div class="lightblue-box"><img src="assets/images/slide.png" alt="THIRD IMAGE" class="box1-image"></div>
+                    <div class="lightblue-box"><img src="assets/images/second-promo.png" alt="THIRD IMAGE" class="box1-image"></div>
                 </div>
                 <!-- Next and previous buttons -->
-                <a class="prev" onclick="plusSlides(-1)" style="position: absolute; left: 10px; top: 50%; color: white;">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)" style="position: absolute; right: 10px; top: 50%; color: white;">&#10095;</a>
+                <a class="prev" onclick="plusSlides(-1)" style="font-size:30px; position: absolute; left: 10px; top: 50%; color: #61d1c7;">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)" style="font-size:30px; position: absolute; right: 10px; top: 50%; color: #61d1c7;">&#10095;</a>
                 <div class="dot-container">
                     <div class="dot" onclick="currentSlide(1)"></div>
                     <div class="dot" onclick="currentSlide(2)"></div>
@@ -33,8 +71,8 @@
 
         <div class="col-md-4 d-flex"> <!-- Use flex for horizontal alignment -->
             <div class="d-flex flex-column"> <!-- Create a column for promo images -->
-                <div class="lightblue-box1 mb-2"><img src="assets/images/img3.png" alt="FIRST PROMO" class="box1-image"></div>
-                <div class="lightblue-box2 mb-2"><img src="assets/images/img4.PNG" alt="SECOND PROMO" class="box1-image"></div>
+                <div class="lightblue-box1 mb-2"><img src="{{asset('assets/images/promos/4.png')}}" alt="FIRST PROMO" class="box1-image"></div>
+                <div class="lightblue-box2 mb-2"><img src="{{asset('assets/images/promos/5.png')}}" alt="SECOND PROMO" class="box1-image"></div>
             </div>
         </div>
     </div>
@@ -66,16 +104,13 @@
         <div class="row gy-4">
             <div class="col-lg-4 col-md-6">
                 <div class="collection-banner p-bottom p-center text-center">
-                    <a href="shop-left-sidebar.html" class="banner-img">
-                        <img src="assets/images/fashion/banner/4.png" class="bg-img blur-up lazyload" alt="">
+                    <a href="{{route('shop')}}" class="banner-img">
+                        <img src="{{asset('assets/images/3-categories/FORHIM.png')}}" class="bg-img blur-up lazyload" alt="">
                     </a>
-                    <div class="banner-detail">
-                        <a href="javacript:void(0)" class="heart-wishlist">
-                            <i class="far fa-heart"></i>
-                        </a>
+                    {{-- <div class="banner-detail">
                         <span class="font-dark-30">Buy <span>Now!</span></span>
-                    </div>
-                    <a href="shop-left-sidebar.html" class="contain-banner">
+                    </div> --}}
+                    <a href="{{route('shop')}}" class="contain-banner">
                         <div class="banner-content with-big">
                             <h2 class="mb-2">For Him</h2>
                             <span>Surprise him with a personalized treasure.
@@ -86,16 +121,13 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="collection-banner p-bottom p-center text-center">
-                    <a href="shop-left-sidebar.html" class="banner-img">
-                        <img src="assets/images/fashion/banner/4.png" class="bg-img blur-up lazyload" alt="">
+                    <a href="{{route('shop')}}" class="banner-img">
+                        <img src="{{asset('assets/images/3-categories/FORHER.png')}}" class="bg-img blur-up lazyload" alt="">
                     </a>
-                    <div class="banner-detail">
-                        <a href="javacript:void(0)" class="heart-wishlist">
-                            <i class="far fa-heart"></i>
-                        </a>
+                    {{-- <div class="banner-detail">
                         <span class="font-dark-30">Buy <span>Now!</span></span>
-                    </div>
-                    <a href="shop-left-sidebar.html" class="contain-banner">
+                    </div> --}}
+                    <a href="{{route('shop')}}" class="contain-banner">
                         <div class="banner-content with-big">
                             <h2 class="mb-2">For Her</h2>
                             <span>Delight her with a one-of-a-kind creation.</span>
@@ -105,16 +137,13 @@
             </div>
             <div class="col-lg-4">
                 <div class="collection-banner p-bottom p-center text-center">
-                    <a href="shop-left-sidebar.html" class="banner-img">
-                        <img src="assets/images/fashion/banner/5.jpg" class="bg-img blur-up lazyload" alt="">
+                    <a href="{{route('shop')}}" class="banner-img">
+                        <img src="{{asset('assets/images/3-categories/spo.png')}}" class="bg-img blur-up lazyload" alt="">
                     </a>
-                    <div class="banner-detail">
-                        <a href="javacript:void(0)" class="heart-wishlist">
-                            <i class="far fa-heart"></i>
-                        </a>
+                    {{-- <div class="banner-detail">
                         <span class="font-dark-30">Buy <span>Now!</span></span>
-                    </div>
-                    <a href="shop-left-sidebar.html" class="contain-banner">
+                    </div> --}}
+                    <a href="{{route('shop')}}" class="contain-banner">
                         <div class="banner-content with-big">
                             <h2 class="mb-2">Special Occasions</h2>
                             <span>Get the perfect gift for any celebration.</span>
@@ -151,9 +180,9 @@
                         <div class="cart-wrap">
                             <ul>
                                 {{-- <li><input type="number"></li> --}}
-                                <li><a href="{{route('cart')}}" class="addtocart-btn"><i data-feather="shopping-cart"></i></a></li>
+                                {{-- <li><a href="{{route('cart')}}" class="addtocart-btn"><i data-feather="shopping-cart"></i></a></li> --}}
                                 <li><a href="{{route('product-details', $item->id)}}"><i data-feather="eye"></i></a></li>
-                                <li><a href="javascript:void(0)" class="wishlist"><i data-feather="heart"></i></a></li>
+                                {{-- <li><a href="javascript:void(0)" class="wishlist"><i data-feather="heart"></i></a></li> --}}
                             </ul>
                         </div>
                     </div>
@@ -205,56 +234,18 @@
             </div>
             <div class="col-xxl-10 col-lg-9">
                 <div class="category-wrapper category-slider1 white-arrow category-arrow">
+                    @foreach ($category as $cat)
                     <div>
-                        <a href="shop-left-sidebar.html" class="category-wrap category-padding">
-                            <img src="assets/images/fashion/category/1.jpg" class="bg-img blur-up lazyload"
+                        <a href="{{route('shop')}}" class="category-wrap category-padding">
+                            <img src="{{ asset('images/' . $cat->image) }}" class="bg-img blur-up lazyload"
                                 alt="category image">
                             <div class="category-content category-text-1">
-                                <h3 class="theme-color">For Him</h3>
-                                <span class="text-dark">Fashion</span>
+                                <h3 class="theme-color">{{$cat->category_name}}</h3>
+                                {{-- <span class="text-dark">Fashion</span> --}}
                             </div>
                         </a>
                     </div>
-                    <div>
-                        <a href="shop-left-sidebar.html" class="category-wrap category-padding">
-                            <img src="assets/images/fashion/category/2.jpg" class="bg-img blur-up lazyload"
-                                alt="category image">
-                            <div class="category-content category-text-1">
-                                <h3 class="theme-color">For Her</h3>
-                                <span class="text-dark">Fashion</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="shop-left-sidebar.html" class="category-wrap category-padding">
-                            <img src="assets/images/fashion/category/3.jpg" class="bg-img blur-up lazyload"
-                                alt="category image">
-                            <div class="category-content category-text-1">
-                                <h3 class="theme-color">Special Occasions</h3>
-                                <span class="text-dark">Fashion</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="shop-left-sidebar.html" class="category-wrap category-padding">
-                            <img src="assets/images/fashion/category/4.jpg" class="bg-img blur-up lazyload"
-                                alt="category image">
-                            <div class="category-content category-text-1">
-                                <h3 class="theme-color">Customized</h3>
-                                <span class="text-dark">Fashion</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="shop-left-sidebar.html" class="category-wrap category-padding">
-                            <img src="assets/images/fashion/category/3.jpg" class="bg-img blur-up lazyload"
-                                alt="category image">
-                            <div class="category-content category-text-1">
-                                <h3 class="theme-color">For Parents</h3>
-                                <span class="text-dark">Fashion</span>
-                            </div>
-                        </a>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -273,11 +264,9 @@
                 <!-- Text Section on the Left -->
                 <div class="banner-content md:w-1/2 flex flex-col justify-center">
                     <h2 class="banner-title">We are Gawang Gamat</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero
-                        ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend. Amet, quis
-                        urna, a eu.</p>
+                    <p>Your gateway to locally crafted treasures. Specializing in handcrafted, one-of-a-kind products, offering a wide range of unique items made with love and care. Bring beautifully crafted, customizable products to your home and discover the charm of handmade items, and create something truly special with us!</p>
                     <div class="btn-wrap">
-                        <a href="about-us.html" class="btn btn-outline-warning">
+                        <a href="{{route('about_us')}}" class="btn btn-outline-warning">
                             Read More
                             <i class="bi bi-arrow-right"></i> <!-- Bootstrap icon -->
                         </a>
@@ -320,18 +309,18 @@
                             <span class="background-text">Hand</span>
                             <div class="cart-wrap">
                                 <ul>
-                                    <li>
+                                    {{-- <li>
                                         <a href="{{route('cart')}}">
                                             <i data-feather="shopping-cart"></i>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li><a href="{{route('product-details', $best->id)}}"><i data-feather="eye"></i></a>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="" class="wishlist">
                                             <i data-feather="heart"></i>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     {{-- <li>
                                         <a href="{{route('cart')}}" class="addtocart-btn" data-bs-toggle="modal"
                                             data-bs-target="#addtocart">

@@ -1,11 +1,11 @@
 @extends('layouts.app3')
-  
+
 @section('title', 'Activity Logs')
-  
+
 @section('contents')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-   
+
 
 <div id="main">
     <header class="mb-3">
@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
                 </div>
-                
+
         <section class="section">
             <div class="card">
                 <div class="card-header">
@@ -33,7 +33,7 @@
                                 <th>Email</th>
                                 <th>Description</th>
                                 <th>Date Time</th>
-                            </tr>    
+                            </tr>
                         </thead>
                         <tbody>
                             @foreach ($activityLog as $key => $item)
@@ -60,7 +60,7 @@
                             ]
                         });
                     </script>
-                
+
                     </footer>
                 </div>
             </div>

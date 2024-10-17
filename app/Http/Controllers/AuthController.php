@@ -30,7 +30,7 @@ class AuthController extends Controller
     {
         Validator::make($request->all(), [
             'name' => ['required','regex:/^[A-z a-z]+$/','string','max:255'],
-            'role' => 'required',
+            'role' => 'required|in:User',
             'email' => ['required','regex:/^[A-z a-z 0-9 @_.]+$/','string','max:255','email','unique:users'],
             'password' => ['required', 'confirmed', Password::min(8)
                     ->mixedCase()
@@ -38,20 +38,20 @@ class AuthController extends Controller
                     ->numbers(1)
                     ->uncompromised(),
             'password_confirmation' => 'required',
-            'phone' => ['required', 'regex:/^\d{11}$/'], // Adjusted for 11-digit phone numbers
-            'address' => ['required', 'string', 'max:255'], // Adjust as needed
+            'phone' => ['required', 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11'], // Adjusted for 11-digit phone numbers
             ],
         ])->validate();
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'role' => $request->role,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'level' => 'Admin',
             'phone' => $request->phone, // Add phone field
-            'address' => $request->address, // Add address field
         ]);
+
+        Auth::login($user);
 
         if ($request->role === 'Admin') {
             return redirect()->route('dashboard');
@@ -65,35 +65,49 @@ class AuthController extends Controller
 
     public function login()
     {
+        if (Auth::check()) {
+            $userRole = Auth::user()->role;
+            return redirect()->route($userRole === 'Admin' ? 'dashboard' : ($userRole === 'Seller' ? 'seller_dashboard' : 'home'));
+        }
+
         return view('auth/login');
     }
 
+    // public function login()
+    // {
+    //     return view('auth/login');
+    // }
+
     public function loginAction(Request $request)
     {
+        // Validate the request
         Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required'
         ])->validate();
 
+        // Attempt authentication
         if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed')
-            ]);
+            // Redirect back with an error message if authentication fails
+            return redirect()->back()->withErrors(['email' => trans('auth.failed')])->withInput();
         }
 
+        // Regenerate session to prevent session fixation attacks
         $request->session()->regenerate();
 
+        // Get the user's role
         $userRole = Auth::user()->role;
 
         // Redirect based on role
         if ($userRole === 'Admin') {
             return redirect()->route('dashboard'); // Admin dashboard
-        } else if ($userRole === 'Seller') {
-            return redirect()->route('seller_dashboard');
-        } elseif ($userRole === 'User') {
+        } elseif ($userRole === 'Seller') {
+            return redirect()->route('seller_dashboard'); // Seller dashboard
+        } else {
             return redirect()->route('home'); // User dashboard
         }
     }
+
 
     public function logout(Request $request)
     {
@@ -122,12 +136,14 @@ class AuthController extends Controller
 
         $request->session()->invalidate();
 
+        $request->session()->regenerateToken(); // Regenerate CSRF token
+
         return redirect('login')->with('success','Successfully Log out');
 
 
     }
 
-    //OTP notifications
+        //OTP notifications
     public function profile()
     {
         return view('profile');
