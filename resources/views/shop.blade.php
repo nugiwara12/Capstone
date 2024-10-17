@@ -37,9 +37,6 @@
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body category-scroll">
                                     <ul class="category-list">
-                                        @foreach ($category as $cat)
-
-                                        @endforeach
                                         <li>
                                             <div class="form-check ps-0 custome-form-check">
                                                 <input class="checkbox_animated check-it" id="br1" name="brands"
