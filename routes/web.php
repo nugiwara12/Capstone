@@ -51,19 +51,14 @@ Route::get('/', function () {
 
 require __DIR__.'/auth.php';
 
-
-
 // ----------------------------- LOGIN AND RESITER -----------------------//
-
-    Route::controller(AuthController::class)->group(function () {
-        Route::get('register', 'register')->name('register');
-        Route::post('register', 'registerSave')->name('register.save');
-
-        Route::get('login', 'login')->name('login');
-        Route::post('login', 'loginAction')->name('login.action');
-
-        Route::get('logout', 'logout')->middleware('auth')->name('logout');
-    });
+Route::controller(AuthController::class)->group(function () {
+    Route::get('register', 'register')->name('register');
+    Route::post('register', 'registerSave')->name('register.save');
+    Route::get('login', 'login')->name('login');
+    Route::post('login', 'loginAction')->name('login.action');
+    Route::get('logout', 'logout')->middleware('auth')->name('logout');
+});
 
 // ----------------------------- SHOP -----------------------//
 Route::controller(ShopController::class)->group(function () {
@@ -82,42 +77,42 @@ Route::delete('/contacts/{id}', [ContactUsFormController::class, 'destroy'])->na
 
 // ----------------------------- ADMIN ACCESS -----------------------//
 Route::middleware(['auth', 'role:Admin', 'prevent-back-history'])->group(function () {
-    // ----------------------------- ADMIN DASHBOARD -----------------------//
-    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+// ----------------------------- ADMIN DASHBOARD -----------------------//
+Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    // ----------------------------- Category -----------------------//
-    Route::controller(CategoryController::class)->prefix('categories')->group(function () {
-        Route::get('', 'index') ->name('category');
-        Route::get('create', 'create')->name('category.create');
-        Route::post('store', 'store')->name('category.store');
-        Route::get('show/{id}', 'show')->name('category.show');
-        Route::get('edit/{id}', 'edit')->name('category.edit');
-        Route::put('edit/{id}', 'update')->name('category.update');
-        Route::delete('destroy/{id}', 'destroy')->name('category.destroy');
-    });
+// ----------------------------- Category -----------------------//
+Route::controller(CategoryController::class)->prefix('categories')->group(function () {
+    Route::get('', 'index') ->name('category');
+    Route::get('create', 'create')->name('category.create');
+    Route::post('store', 'store')->name('category.store');
+    Route::get('show/{id}', 'show')->name('category.show');
+    Route::get('edit/{id}', 'edit')->name('category.edit');
+    Route::put('edit/{id}', 'update')->name('category.update');
+    Route::delete('destroy/{id}', 'destroy')->name('category.destroy');
+});
 
-    // ----------------------------- User management -----------------------//
-    Route::controller(UserManagementController::class)->prefix('usermanagement')->group(function () {
-        Route::get('', 'index')->name('usermanagement');
-        Route::get('create', 'create')->name('usermanagement.create');
-        Route::post('store', 'store')->name('usermanagement.store');
-        Route::get('show/{id}', 'show')->name('usermanagement.show');
-        Route::get('edit/{id}', 'edit')->name('usermanagement.edit');
-        Route::put('edit/{id}', 'update')->name('usermanagement.update');
-        Route::delete('destroy/{id}', 'destroy')->name('usermanagement.destroy');
-    });
+// ----------------------------- User management -----------------------//
+Route::controller(UserManagementController::class)->prefix('usermanagement')->group(function () {
+    Route::get('', 'index')->name('usermanagement');
+    Route::get('create', 'create')->name('usermanagement.create');
+    Route::post('store', 'store')->name('usermanagement.store');
+    Route::get('show/{id}', 'show')->name('usermanagement.show');
+    Route::get('edit/{id}', 'edit')->name('usermanagement.edit');
+    Route::put('edit/{id}', 'update')->name('usermanagement.update');
+    Route::delete('destroy/{id}', 'destroy')->name('usermanagement.destroy');
+});
 
-    // ----------------------------- ACTIVITY-LOGS -----------------------//
-    Route::get('activity/log', [UserManagementController::class, 'activity'])->name('activity/log');
+// ----------------------------- ACTIVITY-LOGS -----------------------//
+Route::get('activity/log', [UserManagementController::class, 'activity'])->name('activity/log');
 });
 
  // ----------------------------- SELLER ACCESS -----------------------//
 Route::middleware(['auth', 'role:Seller', 'prevent-back-history'])->group(function () {
-     // ----------------------------- SELLER DASHBOARD -----------------------//
-    Route::get('seller_dashboard', [DashboardController::class, 'sellerDashboard'])->name('seller_dashboard');
-     // ----------------------------- ORDER -----------------------//
-    Route::get('orders', [OrderController::class, 'index'])->name('showOrder');
-    // ----------------------------- PRODUCT -----------------------//
+    // ----------------------------- SELLER DASHBOARD -----------------------//
+Route::get('seller_dashboard', [DashboardController::class, 'sellerDashboard'])->name('seller_dashboard');
+    // ----------------------------- ORDER -----------------------//
+Route::get('orders', [OrderController::class, 'index'])->name('showOrder');
+// ----------------------------- PRODUCT -----------------------//
     Route::controller(ProductController::class)->prefix('products')->group(function () {
         Route::get('', 'index')->name('products');
         Route::get('create', 'create')->name('products.create');
