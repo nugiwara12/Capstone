@@ -1,7 +1,6 @@
 @extends('layouts.app2')
 
 @section('contents')
-
     <section class="site-banner jarallax" id="site-banner" style="background-image: url('{{ asset('assets/images/banner.png') }}');">
     <div class="overlay"></div> <!-- Overlay div -->
     <div class="container">
@@ -55,26 +54,83 @@
     <!-- team leader section End -->
     <!-- Subscribe Section Start -->
     <section class="subscribe-section section-b-space subscribe-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-6">
-                    <div class="subscribe-details">
-                        <h2 class="mb-3">Sign up for Newsletters!</h2>
-                        <h6 class="font-light">SGet e-mail updates about our special offers and receive our
-                            newsletters to stay informed about our fresh and exciting products.</h6>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-6">
+                <div class="subscribe-details">
+                    <h2 class="mb-3">Sign up for Newsletters!</h2>
+                    <h6 class="font-light">SGet e-mail updates about our special offers and receive our
+                        newsletters to stay informed about our fresh and exciting products.</h6>
                 </div>
-
-                    <div class="col-lg-4 col-md-6 mt-md-0 mt-3">
-                        <div class="subsribe-input">
-                            <div class="input-group">
-                                <input type="text" class="form-control subscribe-input" placeholder="Your Email Address">
-                                <button class="btn btn-solid-default" type="button">Sign in</button>
-                            </div>
-                        </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-md-0 mt-3">
+                <div class="subscribe-input">
+                    <div class="input-group">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            class="form-control subscribe-input @error('email') border-red-500 @enderror" 
+                            placeholder="Your Email Address" 
+                            required>
+                        <button class="btn btn-solid-default" id="subscribe-btn" type="button">Sign in</button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<script>
+document.getElementById('subscribe-btn').addEventListener('click', function() {
+    // Get the email input value
+    const email = document.getElementById('email').value;
+
+    // Send the data using Axios
+    axios.post("{{ route('subscribe.store') }}", {
+        email: email,
+        _token: "{{ csrf_token() }}"
+    })
+    .then(function(response) {
+        swal({
+            title: "Success!",
+            text: response.data.message,
+            icon: "success",
+            button: {
+                text: "OK",
+                className: "bg-blue-500 text-white p-2 px-4 rounded hover:bg-blue-800 transition duration-200",
+            },
+        }).then(() => {
+            location.reload();
+        });
+    })
+    .catch(function(error) {
+        // Prepare the error message
+        let errorMessage = "An error occurred. Please try again later."; 
+
+        if (error.response) {
+            if (error.response.status === 422 && error.response.data.errors) {
+                const errors = error.response.data.errors;
+                errorMessage = errors.email ? errors.email[0] : 'Invalid email address.';
+            } else {
+                errorMessage = "An unexpected error occurred.";
+            }
+        }
+        
+        swal({
+            title: "Error!",
+            content: {
+                element: "div",
+                attributes: {
+                    innerHTML: `<div class="text-black">${errorMessage}</div>`, 
+                },
+            },
+            icon: "error",
+            button: {
+                text: "OK",
+                className: "bg-blue-500 text-white p-2 px-4 rounded hover:bg-blue-600 transition duration-200",
+            },
+        });
+    });
+});
+</script>
 @endsection

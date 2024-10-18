@@ -13,6 +13,7 @@ use App\Http\Controllers\ContactUsFormController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendVerificationMailer;
 use Illuminate\Support\Facades\Session;
@@ -176,6 +177,11 @@ route::get('test-mail',function(){
     Mail::to('gawanggamat1111@gmail.com')->send(new SendVerificationMailer());
 });
 Route::get('/new-password', [AuthController::class, 'newPassword'])->name('new-password');
+
+
+// Subsription
+Route::post('/subscribe', [SubscriptionController::class, 'store'])->name('subscribe.store');
+
 
 
 // ----------------------------- End Of Route Back Log -----------------------//
