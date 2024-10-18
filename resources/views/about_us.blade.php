@@ -58,9 +58,8 @@
         <div class="row">
             <div class="col-lg-8 col-md-6">
                 <div class="subscribe-details">
-                    <h2 class="mb-3">Sign up for Newsletters!</h2>
-                    <h6 class="font-light">SGet e-mail updates about our special offers and receive our
-                        newsletters to stay informed about our fresh and exciting products.</h6>
+                    <h2 class="mb-3">Subscribe with Your Email!</h2>
+                    <h6 class="font-light">Sign up to receive email updates on our special offers, exclusive promotions, and the latest news about our exciting products.</h6>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 mt-md-0 mt-3">
