@@ -72,21 +72,7 @@
                                     </div>
                                     <div class="onhover-div profile-dropdown">
                                         <ul>
-                                            @auth
-                                                @if (Auth::user()->role === 'Admin')
-                                                    <li><a href="{{ route('dashboard') }}">Admin Dashboard</a></li>
-                                                @elseif (Auth::user()->role === 'Seller')
-                                                    <li><a href="{{ route('seller_dashboard') }}">Seller Dashboard</a></li>
-                                                @else
-                                                    <li><a href="{{ route('my_account') }}">Profile</a></li>
-                                                @endif
-                                                <li><a href="{{ route('logout') }}">Logout</a></li>
-                                            @else
-                                                @if (Route::has('login'))
-                                                    <li><a href="{{ route('login') }}" class="d-block">Login</a></li>
-                                                    <li><a href="{{ route('register') }}" class="d-block">Register</a></li>
-                                                @endif
-                                            @endauth
+                                            <!-- profile name -->
                                         </ul>
                                     </div>
 

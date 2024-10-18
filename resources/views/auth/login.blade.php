@@ -32,16 +32,6 @@
 
             <form action="{{ route('login') }}" method="POST" class="space-y-4">
               @csrf
-              @if ($errors->any())
-              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-                <ul>
-                  @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-                  @endforeach
-                </ul>
-              </div>
-              @endif
-
               <div class="form-group">
                 <label for="exampleInputEmail" class="block text-sm font-medium text-gray-700">Email Address</label>
                 <input name="email" type="email" id="exampleInputEmail" placeholder="Enter Email Address..." class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">

@@ -12,12 +12,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Mail;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
-use App\Models\activityLog;
-use App\Models\Product;
 
 class AuthController extends Controller
 {
@@ -29,189 +26,142 @@ class AuthController extends Controller
     public function registerSave(Request $request)
     {
         Validator::make($request->all(), [
-            'name' => ['required','regex:/^[A-z a-z]+$/','string','max:255'],
-            'role' => 'required|in:User',
-            'email' => ['required','regex:/^[A-z a-z 0-9 @_.]+$/','string','max:255','email','unique:users'],
+            'name' => ['required', 'regex:/^[A-z a-z]+$/', 'string', 'max:255'],
+            'role' => 'required',
+            'email' => ['required', 'regex:/^[A-z a-z 0-9 @_.]+$/', 'string', 'max:255', 'email', 'unique:users'],
             'password' => ['required', 'confirmed', Password::min(8)
-                    ->mixedCase()
-                    ->letters()
-                    ->numbers(1)
-                    ->uncompromised(),
+                ->mixedCase()
+                ->letters()
+                ->numbers(1)
+                ->uncompromised()],
             'password_confirmation' => 'required',
-            'phone' => ['required', 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11'], // Adjusted for 11-digit phone numbers
-            ],
+            'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:11'], // Adjusted for 11-digit phone numbers
         ])->validate();
 
-        $user = User::create([
+        User::create([
             'name' => $request->name,
             'role' => $request->role,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'level' => 'Admin',
             'phone' => $request->phone, // Add phone field
+            'level' => 'Admin',
         ]);
 
-        Auth::login($user);
-
-        if ($request->role === 'Admin') {
-            return redirect()->route('dashboard');
-        }
-        else if ($request->role === 'User') {
-            $product = Product::all();
-            return redirect()->route('home');
-        }
-
+        return redirect()->route('dashboard');
     }
 
     public function login()
     {
-        if (Auth::check()) {
-            $userRole = Auth::user()->role;
-            return redirect()->route($userRole === 'Admin' ? 'dashboard' : ($userRole === 'Seller' ? 'seller_dashboard' : 'home'));
-        }
-
         return view('auth/login');
     }
 
-    // public function login()
-    // {
-    //     return view('auth/login');
-    // }
-
     public function loginAction(Request $request)
     {
-        // Validate the request
         Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ])->validate();
 
-        // Attempt authentication
+        // Check login credentials
         if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
-            // Redirect back with an error message if authentication fails
-            return redirect()->back()->withErrors(['email' => trans('auth.failed')])->withInput();
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
         }
 
-        // Regenerate session to prevent session fixation attacks
         $request->session()->regenerate();
 
-        // Get the user's role
-        $userRole = Auth::user()->role;
-
-        // Redirect based on role
-        if ($userRole === 'Admin') {
-            return redirect()->route('dashboard'); // Admin dashboard
-        } elseif ($userRole === 'Seller') {
-            return redirect()->route('seller_dashboard'); // Seller dashboard
-        } else {
-            return redirect()->route('home'); // User dashboard
-        }
-    }
-
-
-    public function logout(Request $request)
-    {
-        //process activity log
-        $user = Auth::User();
-        Session::put('user', $user);
-        $user=Session::get('user');
-
-
-        $name       = $user->name;
-        $email      = $user->email;
-        $dt         = Carbon::now('Asia/Manila');
-        $todayDate  = $dt->toDayDateTimeString();
+        // Log activity after successful login
+        $dt = Carbon::now('Asia/Manila');
+        $todayDate = $dt->toDayDateTimeString();
 
         $activityLog = [
-
-            'name'        => $name,
-            'email'       => $email,
-            'description' => 'last log in and log out',
-            'date_time'   => $todayDate,
+            'email' => $request->email,
+            'description' => 'has logged in',
+            'date_time' => $todayDate,
         ];
         DB::table('activity_logs')->insert($activityLog);
 
-
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken(); // Regenerate CSRF token
-
-        return redirect('login')->with('success','Successfully Log out');
-
-
+        return redirect()->route('dashboard'); // Redirect to the dashboard or desired page
     }
 
-        //OTP notifications
+    public function logout(Request $request)
+    {
+        // Process activity log
+        if (Auth::check()) {
+            $user = Auth::user();
+            $dt = Carbon::now('Asia/Manila');
+            $todayDate = $dt->toDayDateTimeString();
+
+            $activityLog = [
+                'name' => $user->name,
+                'email' => $user->email,
+                'description' => 'Last logged out',
+                'date_time' => $todayDate,
+            ];
+            DB::table('activity_logs')->insert($activityLog);
+        }
+
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+
+        return redirect('login')->with('success', 'Successfully logged out');
+    }
+
     public function profile()
     {
         return view('profile');
     }
-    public  function  findUserToChangePass(Request $request){
+
+    public function findUserToChangePass(Request $request)
+    {
         $request->validate([
             'email' => 'required|email|exists:users,email',
         ]);
 
         // Inside your function/method
         Session::put('reset_email', $request->input('email'));
-        Session::put('reset_otp_code', random_int(000000,999999));
+        Session::put('reset_otp_code', random_int(000000, 999999));
         Session::put('otp_expiration', Carbon::now()->addSecond(180));
         Mail::to(Session::get('reset_email'))->send(new SendVerificationMailer());
 
         return view('new-password');
     }
-    public function resetPassword(Request $request){
+
+    public function resetPassword(Request $request)
+    {
         $request->validate([
-            'password'=>'required | min:5 | max:16 | confirmed',
-            'password_confirmation' => 'required',
-            'otp'=>'required'
+            'password' => 'required|min:5|max:16|confirmed',
+            'otp' => 'required',
         ]);
+        
         $otp_expiration = Session::get('otp_expiration');
 
-        if(Session::get('reset_otp_code') != $request->input('otp')){
-            return redirect('re-new-password')->with('failed','The otp is invalid');
+        if (Session::get('reset_otp_code') != $request->input('otp')) {
+            return redirect('re-new-password')->with('failed', 'The OTP is invalid');
+        } else if ($otp_expiration < Carbon::now()) {
+            return redirect('re-new-password')->with('failed', 'The OTP is expired');
+        } else if (Session::get('reset_otp_code') == $request->input('otp')) {
+            $user = User::where('email', Session::get('reset_email'))->first();
+            if ($user) {
+                $user->password = Hash::make($request->input('password'));
+                $user->save();
+            } else {
+                return redirect('login')->with('failed', 'We can\'t seem to find that user');
+            }
+            return redirect('login')->with('success', 'You changed your password successfully');
+        } else {
+            return redirect('re-new-password')->with('failed', 'Invalid OTP code');
         }
-        else if($otp_expiration < Carbon::now()){
-            return redirect('re-new-password')->with('failed','The otp is expired');
-
-        }
-        else if(Session::get('reset_otp_code') == $request->input('otp')){
-            $selectedUser = new user;
-            $user = user::where('email', Session::get('reset_email'))
-                ->first();
-        if($user){
-            $user->password = $request->input('password');
-            $user->save();
-        }else{
-            return redirect('login')->with('failed','We can\'t seem to find that user');
-
-        }
-            return redirect('login')->with('success','You changed your password successfully');
-        }else{
-            return redirect('re-new-password')->with('failed','Invalid OTP code');
-
-        }
-
-
     }
 
     public function newPassword()
     {
         // Your logic for the /new-password route goes here
         if (!auth()->check()) {
-            // Redirect to the login page if not authenticated
             return redirect('/login')->with('error', 'You must be logged in to access this page.');
         }
 
-        // Retrieve the reset email from the session
-        $resetEmail = Session::get('reset_password');
-
-        // You can add more logic here based on your requirements
-
-        // Example: Pass data to the view and render it
-        return view('new-password', ['resetEmail' => $resetEmail]);
+        return view('new-password');
     }
 }
-
-

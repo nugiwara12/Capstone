@@ -4,63 +4,65 @@
 <head>
     <title>T-Shirt</title>
     <link rel="shortcut icon" href="{{ URL::to('admin_assets/img/title-logo/tabun.png') }}">
-    <link rel="shortcut icon" href="{{ URL::to('admin_assets/img/title-logo/tabun.png') }}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-
-<body>
-<div class="container">
-    <div class="text-center">
-    <img src="admin_assets/img/title-logo/tabun.png" alt="logo" width="100" height="50%">
-    <h2 class="text-center">New password</h2>
-    <div class="text-center">
-        <p class="mb-4">Requirements</p>
+<body class="bg-gray-200 min-h-screen flex items-center justify-center">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-center">
+      <div class="w-full max-w-lg"> <!-- Adjusted the column width -->
+        <!-- Logo for login -->
+        <img class="mx-auto mb-4 w-32" src="{{ asset('admin_assets/img/logo/imglogo.png') }}" alt="logo">
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden my-5">
+          <div class="p-6">
+            <div class="text-center">
+              @if(Session::has('success'))
+              <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                {{ Session::get('success') }}
+              </div>
+              @endif
+              <h1 class="text-2xl font-semibold text-gray-900 mb-4">New Password</h1>
             </div>
-            <form class="user" method="post" action="reset_password">
 
-                @if($errors->any())
-                    <div class="alert alert-danger" role="alert">
+            <form class="user" method="post" action="reset_password">
+            @if($errors->any())
+                <div class="mb-4 text-red-600">
+                    <ul>
                         @foreach($errors->all() as $err)
                             <li>{{ $err }}</li>
                         @endforeach
-                    </div>
+                    </ul>
+                </div>
                 @endif
 
                 @if(isset($error))
-                    <div class="alert alert-danger" role="alert">{{ $error }}</div>
+                    <div class="mb-4 text-red-600">{{ $error }}</div>
                 @endif
+
                 @csrf
-    {{--        <div class="form-group">--}}
-    {{--           <input type="email" class="form-control form-control-user"--}}
-    {{--           id="exampleInputEmail" aria-describedby="emailHelp"--}}
-    {{--           placeholder="Retype password" name="email" value="{{ $email }}" readonly>--}}
-    {{--        </div>--}}
-                <div class="form-group">
-                    <div class="form-group">
-                        <input type="text" class="form-control form-control-user"
-                            id="inputOTP" aria-describedby="otpcode"
-                            placeholder="OTP Code" name="otp" @error('otp') style="border: 3px solid #F19E9EFF;" @enderror required>
-                        </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control form-control-user"
-                            id="exampleInputPassword" aria-describedby="emailHelp"
-                            placeholder="Password" name="password" @error('password') style="border: 3px solid #F19E9EFF;" @enderror required>
-                        </div>
 
-                <div class="form-group">
-                    <input type="password" class="form-control form-control-user"
-                            id="exampleInputPassword" aria-describedby="emailHelp"
-                            placeholder="Retype password" name="password_confirmation" @error('password') style="border: 3px solid #F19E9EFF;" @enderror required>
+                <div class="mb-4">
+                    <input type="text" class="form-control form-control-user border rounded-lg w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                        id="inputOTP" aria-describedby="otpcode" placeholder="OTP Code" name="otp" @error('otp') style="border: 2px solid #F19E9EFF;" @enderror required>
                 </div>
 
-                <input type= "submit" class="btn btn-primary btn-user btn-block" value="Reset password">
+                <div class="mb-4">
+                    <input type="password" class="form-control form-control-user border rounded-lg w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                        id="exampleInputPassword" aria-describedby="emailHelp" placeholder="Password" name="password" @error('password') style="border: 2px solid #F19E9EFF;" @enderror required>
                 </div>
+
+                <div class="mb-4">
+                    <input type="password" class="form-control form-control-user border rounded-lg w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                        id="exampleInputPasswordConfirmation" aria-describedby="emailHelp" placeholder="Retype Password" name="password_confirmation" @error('password') style="border: 2px solid #F19E9EFF;" @enderror required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-user btn-block bg-blue-500 text-white rounded-lg p-2 hover:bg-blue-600 transition duration-200 w-full">Reset Password</button>
             </form>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </body>
+
 </html>
-
-
-
-
