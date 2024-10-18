@@ -22,21 +22,18 @@
                     <div class="accordion category-name" id="accordionExample">
                         <div class="accordion-item category-rating">
                             <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                                     Category
                                 </button>
                             </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse show"
-                                data-bs-parent="#accordionExample">
+                            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                 <div class="accordion-body category-scroll">
                                     <ul class="category-list">
                                         @foreach ($category as $cat)
                                         <li>
                                             <div class="form-check ps-0 custome-form-check">
-                                                <input class="checkbox_animated check-it" id="br1" name="brands"
-                                                    value="1" type="checkbox">
-                                                <label class="form-check-label">{{$cat->category_name}}</label>
+                                                <input class="checkbox_animated check-it" id="cat_{{ $cat->id }}" name="brands" value="{{ $cat->id }}" type="checkbox">
+                                                <label class="form-check-label" for="cat_{{ $cat->id }}">{{ $cat->category_name }}</label>
                                                 <p class="font-light">(1)</p>
                                             </div>
                                         </li>
@@ -46,137 +43,87 @@
                             </div>
                         </div>
 
-                         <div class="accordion-item category-color">
-                            <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree">
+                        <!-- Color Selection Accordion -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingColor">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseColor" aria-expanded="false" aria-controls="collapseColor">
                                     Color
                                 </button>
                             </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse show"
-                                aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <ul class="category-list">
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <i class="fas fa-check"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <i class="fas fa-check"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <i class="fas fa-check"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <i class="fas fa-check"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <i class="fas fa-check"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <i class="fas fa-check"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <i class="fas fa-check"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <i class="fas fa-check"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <i class="fas fa-check"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
+                            <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <!-- Your existing input fields -->
+
+                                <!-- Hidden input for selected colors -->
+                                <input type="hidden" id="selected-colors" name="color" value="">
+
+                                <div id="collapseColor" class="accordion-collapse collapse" aria-labelledby="headingColor" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <div class="relative inline-block text-left">
+                                            <div>
+                                                <button type="button" class="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                                    Select a color
+                                                    <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06 0L10 10.146l3.71-2.936a.75.75 0 111.06 1.12l-4.25 3.25a.75.75 0 01-1.06 0l-4.25-3.25a.75.75 0 010-1.12z" clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+
+                                            <!-- Dropdown -->
+                                            <div class="absolute right-0 z-10 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                                                <div class="py-1 flex flex-col items-center" role="none"> <!-- Center alignment -->
+                                                    @foreach (['red', 'blue', 'green', 'yellow', 'black', 'white', 'purple', 'orange', 'pink'] as $color)
+                                                    <a href="#" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200" role="menuitem" data-color="{{ $color }}">
+                                                        <span class="w-4 h-4 mr-2 rounded-full bg-{{ $color }}-500"></span> {{ ucfirst($color) }}
+                                                    </a>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <button type="submit" class="mt-4 btn btn-primary">Submit</button>
+                            </form>
                         </div>
 
-                         <div class="accordion-item category-price">
+                        <!-- Size Selection Accordion -->
+                        <div class="accordion-item category-price">
                             <h2 class="accordion-header" id="headingFive">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseFive">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
                                     Size
                                 </button>
                             </h2>
-
-                            <div id="collapseFive" class="accordion-collapse collapse show"
-                                aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <ul class="category-list">
+                                        @foreach (['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as $size)
                                         <li>
-                                            <a href="javascript:void(0)">xs</a>
+                                            <a href="javascript:void(0)">{{ $size }}</a>
                                         </li>
-                                        <li>
-                                            <a href="javascript:void(0)">sm</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">md</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">lg</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">xl</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">xxl</a>
-                                        </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Discount Range Accordion -->
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingSeven">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseSeven">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
                                     Discount Range
                                 </button>
                             </h2>
-                            <div id="collapseSeven" class="accordion-collapse collapse show"
-                                aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
+                            <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <ul class="category-list">
+                                        @foreach ([5, 10, 20] as $discount)
                                         <li>
                                             <div class="form-check ps-0 custome-form-check">
-                                                <input class="checkbox_animated check-it" type="checkbox"
-                                                    id="flexCheckDefault19">
-                                                <label class="form-check-label" for="flexCheckDefault19">5% and
-                                                    above</label>
+                                                <input class="checkbox_animated check-it" type="checkbox" id="flexCheckDefault{{ $discount }}">
+                                                <label class="form-check-label" for="flexCheckDefault{{ $discount }}">{{ $discount }}% and above</label>
                                             </div>
                                         </li>
-                                        <li>
-                                            <div class="form-check ps-0 custome-form-check">
-                                                <input class="checkbox_animated check-it" type="checkbox"
-                                                    id="flexCheckDefault20">
-                                                <label class="form-check-label" for="flexCheckDefault20">10% and
-                                                    above</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="form-check ps-0 custome-form-check">
-                                                <input class="checkbox_animated check-it" type="checkbox"
-                                                    id="flexCheckDefault21">
-                                                <label class="form-check-label" for="flexCheckDefault21">20% and
-                                                    above</label>
-                                            </div>
-                                        </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -195,123 +142,104 @@
                                     <select class="form-select" name="size" id="pagesize">
                                         <option value="12" selected="">12 Products Per Page</option>
                                         <option value="24">24 Products Per Page</option>
-                                        <option value="52">52 Products Per Page</option>
-                                        <option value="100">100 Products Per Page</option>
+                                        <option value="36">36 Products Per Page</option>
+                                        <option value="48">48 Products Per Page</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="grid-options d-sm-inline-block d-none">
-                                <ul class="d-flex">
-                                    <li class="two-grid">
-                                        <a href="javascript:void(0)">
-                                            <img src="{{asset('assets/svg/grid-2.svg')}}" class="img-fluid blur-up lazyload"
-                                                alt="">
-                                        </a>
-                                    </li>
-                                    <li class="three-grid d-md-inline-block d-none">
-                                        <a href="javascript:void(0)">
-                                            <img src="{{asset('assets/svg/grid-3.svg')}}" class="img-fluid blur-up lazyload"
-                                                alt="">
-                                        </a>
-                                    </li>
-                                    <li class="grid-btn active d-lg-inline-block d-none">
-                                        <a href="javascript:void(0)">
-                                            <img src="{{asset('assets/svg/grid.svg')}}" class="img-fluid blur-up lazyload"
-                                                alt="">
-                                        </a>
-                                    </li>
-                                    <li class="list-btn">
-                                        <a href="javascript:void(0)">
-                                            <img src="{{asset('assets/svg/list.svg')}}" class="img-fluid blur-up lazyload"
-                                                alt="">
-                                        </a>
-                                    </li>
-                                </ul>
+                            <div class="filter-button">
+                                <button type="button" class="btn btn-light">Filter</button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- label and featured section -->
 
-                <!-- Prodcut section -->
-                <div class="row g-sm-4 g-3 row-cols-lg-4 row-cols-md-3 row-cols-2 mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section">
                     @foreach ($product as $product)
-                    <div>
+                    <div class="col-xl-4 col-sm-6 col-6">
                         <div class="product-box">
-                            <div class="img-wrapper">
-                                <div class="front">
-                                    <a href="{{route('product-details', $product->id)}}">
-                                        <img src="{{ asset('images/' . $product->main_image) }}"
-                                            class="bg-img blur-up lazyload" alt="">
-                                    </a>
+                            <div class="product-image">
+                                <a href="{{ route('shop.product', $product->id) }}">
+                                    <img src="{{ asset('assets/images/products/' . $product->image) }}" class="img-fluid" alt="{{ $product->name }}">
+                                </a>
+                                <div class="product-label">
+                                    @if ($product->discount)
+                                    <span class="label3">-{{ $product->discount }}%</span>
+                                    @endif
                                 </div>
-                                 <div class="back">
-                                    <a href="product/nihil-beatae-sit-sed.html">
-                                        <img src="assets/images/fashion/product/back/12.jpg"
-                                            class="bg-img blur-up lazyload" alt="">
-                                    </a>
-                                </div>
-                                <div class="cart-wrap">
-                                    <ul>
-                                         <li><a href="{{route('cart')}}" class="addtocart-btn"><i data-feather="shopping-cart"></i></a></li>
-                                        <li><a href="{{route('product-details', $product->id)}}"><i data-feather="eye"></i></a></li>
-                                         <li><a href="javascript:void(0)" class="wishlist"><i data-feather="heart"></i></a></li>
-
-                                    </ul>
+                                <div class="product-buttons">
+                                    <a href="javascript:void(0)" class="btn-wishlist"><i data-feather="heart"></i></a>
+                                    <a href="javascript:void(0)" class="btn-quickview" data-bs-toggle="modal" data-bs-target="#quick-view"><i data-feather="eye"></i></a>
                                 </div>
                             </div>
-                            <div class="product-details">
-                                <div class="rating-details">
-                                    <span class="font-light grid-content">{{$product->category}}</span>
-                                    <ul class="rating mt-0">
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                    </ul>
+                            <div class="product-content">
+                                <div class="product-title">
+                                    <a href="{{ route('shop.product', $product->id) }}">{{ $product->name }}</a>
                                 </div>
-                                <div class="main-price">
-                                    <a href="product/nihil-beatae-sit-sed.html" class="font-default">
-                                        <h5 class="ms-0">{{$product->title}}</h5>
-                                    </a>
-                                    <div class="listing-content">
-                                        <span class="font-light">{{$product->category}}</span>
-                                        <p class="font-light">{{$product->description}}</p>
-                                    </div>
-                                    <h3 class="theme-color">&#8369;{{$product->price}}</h3>
-                                    <button class="btn listing-content"><a class="text-white" href="{{route('product-details', $product->id)}}">Add To Cart </a></button>
+                                <div class="product-price">
+                                    <span class="new-price">${{ $product->price }}</span>
+                                    @if ($product->discount)
+                                    <span class="old-price">${{ $product->old_price }}</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
                     @endforeach
                 </div>
-              <!-- pagination -->
             </div>
         </div>
     </div>
 </section>
 
-<div id="qvmodal"></div>
+<script>
+let selectedColors = [];
 
-<form id="frmFilter" method="GET">
-    <input type="hidden" id="page" name="page" value="1">
-    <input type="hidden" id="size" name="size" value="12">
-    <input type="hidden" id="prange" name="prange" value="">
-    <input type="hidden" id="order" name="order" value="-1">
-    <input type="hidden" id="brands" name="brands" value="">
-    <input type="hidden" id="categories" name="categories" value="">
-</form>
+// Event listener for color selection
+document.querySelectorAll('a[role="menuitem"]').forEach(item => {
+    item.addEventListener('click', (event) => {
+        event.preventDefault();
+        const selectedColor = event.target.getAttribute('data-color');
+        const button = document.getElementById('menu-button');
 
+        // Check if the color is already selected
+        if (selectedColors.includes(selectedColor)) {
+            // Remove the color from the selection
+            selectedColors = selectedColors.filter(color => color !== selectedColor);
+        } else {
+            // Add the color to the selection
+            selectedColors.push(selectedColor);
+        }
+
+        // Update button text and background color
+        if (selectedColors.length > 0) {
+            button.textContent = selectedColors.join(', ').replace(/(?:^|\s)\S/g, a => a.toUpperCase()); // Capitalize the first letter of each color
+            button.style.background = `linear-gradient(135deg, ${selectedColors.map(color => `rgba(${getColorRGB(color)}, 0.5)`).join(', ')})`;
+
+            // Update hidden input with selected colors
+            document.getElementById('selected-colors').value = selectedColors.join(',');
+        } else {
+            button.textContent = 'Select a color'; // Reset text if no colors are selected
+            button.style.backgroundColor = ''; // Reset background if no colors are selected
+            
+            // Clear hidden input
+            document.getElementById('selected-colors').value = '';
+        }
+    });
+});
+
+// Function to get RGB values for colors
+function getColorRGB(color) {
+    switch (color) {
+        case 'red': return '255, 0, 0';
+        case 'blue': return '0, 0, 255';
+        case 'green': return '0, 128, 0';
+        case 'yellow': return '255, 255, 0';
+        case 'black': return '0, 0, 0';
+        case 'white': return '255, 255, 255';
+        case 'purple': return '128, 0, 128';
+        case 'orange': return '255, 165, 0';
+        case 'pink': return '255, 192, 203';
+        default: return '255, 255, 255'; // Fallback to white
+    }
+}
+</script>
 @endsection

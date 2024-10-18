@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('canvas_height')->nullable();
             $table->integer('canvas_top')->nullable();
             $table->integer('canvas_left')->nullable();
+            $table->string('color')->nullable();
             $table->timestamps();
         });
     }
