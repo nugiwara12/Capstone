@@ -108,7 +108,7 @@
                         <div class="text-center">
                             <h1 class="text-2xl font-semibold text-gray-900 mb-4">Register</h1>
                         </div>
-                        <form action="{{ route('register') }}" method="POST" class="space-y-4">
+                        <form action="{{ route('register.save') }}" method="POST" class="space-y-4">
                             @csrf
                             <div>
                                 <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
