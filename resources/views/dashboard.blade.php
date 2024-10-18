@@ -1,8 +1,8 @@
 @extends('layouts.app3')
 
 @section('contents')
-<div class="flex flex-1 p-4 bg-gray-100">
-    <section class="flex flex-wrap gap-4 w-full">
+<div class="flex flex-1 bg-gray-100">
+    <section class="flex flex-wrap gap-3 w-full">
         <!-- Gawang Gamat Email Record Card -->
         <div class="w-full lg:w-1/4 md:w-1/2">
             <div class="card bg-white shadow-lg rounded-lg">

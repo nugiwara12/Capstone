@@ -105,15 +105,36 @@
                     </div>
                     <!-- DASHBOARD -->
                     <div class="flex-1 px-4 space-y-2 overflow-hidden hover:overflow-auto">
-                        <a href="{{ route('dashboard') }}" 
-                           class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black">
-                            <span aria-hidden="true" class="p-2 rounded-lg"><i class="bi bi-house"></i></span>
+                        <a href="{{ route('dashboard') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
+                            {{ request()->routeIs('dashboard') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
+                            <span aria-hidden="true" class="p-2 py-2 rounded-lg {{ request()->routeIs('dashboard') ? 'bg-blue-800' : 'bg-blue-200' }}">
+                                <i class="bi bi-house"></i>
+                            </span>
                             <span>HOME</span>
                         </a>
-                        <a href="{{ route('usermanagement') }}" 
-                           class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black">
-                            <span aria-hidden="true" class="p-2 rounded-lg"><i class="bi bi-people"></i></span>
+                        <!-- USER MANAGEMENT -->
+                        <a href="{{ route('usermanagement') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
+                            {{ request()->routeIs('usermanagement') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
+                            <span aria-hidden="true" class="p-2 py-2 rounded-lg {{ request()->routeIs('usermanagement') ? 'bg-blue-800' : 'bg-blue-200' }}">
+                                <i class="bi bi-people"></i>
+                            </span>
                             <span>USER MANAGEMENT</span>
+                        </a>
+                        <!-- PRODUCT -->
+                        <a href="{{ route('products') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
+                            {{ request()->routeIs('products') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
+                            <span aria-hidden="true" class="p-2 py-2 rounded-lg {{ request()->routeIs('products') ? 'bg-blue-800' : 'bg-blue-200' }}">
+                                <i class="bi bi-journals"></i>
+                            </span>
+                            <span>PRODUCT</span>
+                        </a>
+                         <!-- ACTIVITY LOGS -->
+                         <a href="{{ route('activity/log') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
+                            {{ request()->routeIs('activity/log') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
+                            <span aria-hidden="true" class="p-2 py-2 rounded-lg {{ request()->routeIs('activity/log') ? 'bg-blue-800' : 'bg-blue-200' }}">
+                                <i class="bi bi-calendar-day"></i>
+                            </span>
+                            <span>ACTIVITY LOGS</span>
                         </a>
                     </div>
                 </nav>
