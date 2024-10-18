@@ -35,7 +35,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    @include('layouts.sidebar')
+    @include('components.sidebar')
     
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -56,13 +56,7 @@
                 @yield('contents')
             </main>
           </div>
-
-          <!-- Content Row -->
-
-
         </div>
-        <!-- /.container-fluid -->
-
       </div>
     </div>
   </div>

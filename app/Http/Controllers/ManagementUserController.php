@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rules\Password;
-use App\Rules\MatchOldPassword;
-use Auth;
-use DB;
+// use App\Models\MatchOldPassword;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Session;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 
-class UserManagementController extends Controller
+class ManagementUserController extends Controller
 {
     public function index()
     {
