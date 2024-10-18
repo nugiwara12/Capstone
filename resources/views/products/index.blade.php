@@ -1,4 +1,4 @@
-@extends('layouts.app1')
+@extends('layouts.app3')
 
 @section('title', 'List Product')
 <link rel="stylesheet" href="{{asset('admin_assets/css/dropdown.css')}}">

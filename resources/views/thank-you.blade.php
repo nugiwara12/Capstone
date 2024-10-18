@@ -1,4 +1,4 @@
-@extends('layouts.app2')
+@extends('layouts.app3')
 <style>
     .thank-you-message {
         background-color: #fff;

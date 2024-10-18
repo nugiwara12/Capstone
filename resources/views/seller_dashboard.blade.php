@@ -1,4 +1,4 @@
-@extends('layouts.app1')
+@extends('layouts.app3')
 
 @section('title', 'Seller Dashboard')
 

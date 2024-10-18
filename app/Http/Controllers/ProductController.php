@@ -22,7 +22,7 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::orderBy('created_at', 'DESC')->get();
-        return view('seller.products.index', compact('product'));
+        return view('products.index', compact('product'));
     }
 
     // Display All Product in User page
@@ -40,7 +40,7 @@ class ProductController extends Controller
     public function create()
     {
         $category = Category::all();
-        return view('seller.products.create', compact('category'));
+        return view('products.create', compact('category'));
     }
 
     /**
@@ -132,6 +132,42 @@ class ProductController extends Controller
         return redirect()->route('products')->with('success', 'Product added successfully');
     }
 
+    // In ProductController
+    public function addToCart(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'customizingImage' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        ]);
+
+        // Get the product
+        $product = Product::findOrFail($request->product_id);
+
+        // Prepare cart item
+        $cartItem = [
+            'product_id' => $product->id,
+            'price' => $product->price,
+            'name' => $product->name,
+            'customizing_image' => null,
+        ];
+
+        // Handle customizing image
+        if ($request->hasFile('customizingImage')) {
+            $customizingImage = $request->file('customizingImage');
+            $customizingImageName = time() . '_customizing.' . $customizingImage->getClientOriginalExtension();
+            $customizingImage->move(public_path('images'), $customizingImageName);
+            $cartItem['customizing_image'] = $customizingImageName;
+        }
+
+        // Assuming you have a cart session
+        $cart = session()->get('cart', []);
+        $cart[] = $cartItem;
+        session()->put('cart', $cart);
+
+        return response()->json(['message' => 'Product added to cart successfully!']);
+    }
+
+
     /**
      * Display the specified resource.
      */
@@ -141,7 +177,7 @@ class ProductController extends Controller
         $category = Category::all();
         $product->img_gallery = json_decode($product->img_gallery);
 
-        return view('seller.products.show', compact('product', 'category'));
+        return view('products.show', compact('product', 'category'));
     }
 
     /**
@@ -152,7 +188,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $category = Category::all();
 
-        return view('seller.products.edit', compact('product', 'category'));
+        return view('products.edit', compact('product', 'category'));
     }
 
     // chatgpt new update function

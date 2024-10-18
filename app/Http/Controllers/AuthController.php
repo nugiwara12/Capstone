@@ -36,6 +36,7 @@ class AuthController extends Controller
                 ->uncompromised()],
             'password_confirmation' => 'required',
             'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:11'], // Adjusted for 11-digit phone numbers
+            'description' => ['required', 'string', 'max:255'],
         ])->validate();
 
         User::create([
@@ -43,6 +44,7 @@ class AuthController extends Controller
             'role' => $request->role,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'description' => $request->description,
             'phone' => $request->phone, // Add phone field
             'level' => 'Admin',
         ]);

@@ -1,11 +1,6 @@
 @extends('layouts.app3')
 
-@section('title', 'Dashboard')
-
 @section('contents')
-
-<link rel="stylesheet" href="{{ asset('admin_assets/css/dashboard.css') }}">
-
 
 <div class="page-content">
     <section class="row">
