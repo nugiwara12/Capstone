@@ -8,12 +8,6 @@
         <div class="row">
             <div class="col-md-12 d-flex flex-column justify-content-center align-items-center" style="height: 100%;">
                 <h1 class="page-title">About Us</h1>
-                <div class="breadcrumbs">
-                    <span class="item">
-                        <a href="{{route('home')}}">Home /</a>
-                    </span>
-                    <span class="item">About</span>
-                </div>
             </div>
         </div>
     </div>
@@ -76,6 +70,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control subscribe-input" placeholder="Your Email Address">
                                 <button class="btn btn-solid-default" type="button">Sign in</button>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -36,7 +36,7 @@
                                             </li>
                                             <li><a href="/" class="nav-link menu-title">Home</a></li>
                                             <li><a href="{{(route('shop'))}}"class="nav-link menu-title">Shop</a></li>
-                                            <li><a href="#" class="nav-link menu-title">About Us</a></li>
+                                            <li><a href="{{(route('about_us'))}}" class="nav-link menu-title">About Us</a></li>
                                             <li><a href="#" class="nav-link menu-title">Contact Us</a>
                                             </li>
                                         </ul>
