@@ -90,6 +90,19 @@ Route::controller(CategoryController::class)->prefix('categories')->group(functi
     Route::delete('destroy/{id}', 'destroy')->name('category.destroy');
 });
 
+// ----------------------------- PRODUCT -----------------------//
+Route::controller(ProductController::class)->prefix('products')->group(function () {
+    Route::get('', 'index')->name('products');
+    Route::get('create', 'create')->name('products.create');
+    Route::post('store', 'store')->name('products.store');
+    Route::get('show/{id}', 'show')->name('products.show');
+    Route::get('edit/{id}', 'edit')->name('products.edit');
+    Route::put('edit/{id}', 'update')->name('products.update');
+    Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
+    Route::post('add-to-cart','addToCart')->name('add.to.cart');
+
+});
+
 // ----------------------------- User management -----------------------//
 Route::controller(UserManagementController::class)->prefix('usermanagement')->group(function () {
     Route::get('', 'index')->name('usermanagement');
