@@ -40,6 +40,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
 //->middleware('redirect.authenticated');
 
 // Route::middleware('auth')->group(function () {
@@ -75,12 +79,6 @@ Route::get('/index', [ContactUsFormController::class, 'index'])->name('contacts.
 Route::get('/contacts/{id}', [ContactUsFormController::class, 'show'])->name('contact.show');
 Route::delete('/contacts/{id}', [ContactUsFormController::class, 'destroy'])->name('contact.destroy');
 
-
-// ----------------------------- ADMIN ACCESS -----------------------//
-Route::middleware(['auth', 'role:Admin', 'prevent-back-history'])->group(function () {
-// ----------------------------- ADMIN DASHBOARD -----------------------//
-Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-
 // ----------------------------- Category -----------------------//
 Route::controller(CategoryController::class)->prefix('categories')->group(function () {
     Route::get('', 'index') ->name('category');
@@ -105,55 +103,6 @@ Route::controller(UserManagementController::class)->prefix('usermanagement')->gr
 
 // ----------------------------- ACTIVITY-LOGS -----------------------//
 Route::get('activity/log', [UserManagementController::class, 'activity'])->name('activity/log');
-});
-
- // ----------------------------- SELLER ACCESS -----------------------//
-Route::middleware(['auth', 'role:Seller', 'prevent-back-history'])->group(function () {
-    // ----------------------------- SELLER DASHBOARD -----------------------//
-Route::get('seller_dashboard', [DashboardController::class, 'sellerDashboard'])->name('seller_dashboard');
-    // ----------------------------- ORDER -----------------------//
-Route::get('orders', [OrderController::class, 'index'])->name('showOrder');
-// ----------------------------- PRODUCT -----------------------//
-    Route::controller(ProductController::class)->prefix('products')->group(function () {
-        Route::get('', 'index')->name('products');
-        Route::get('create', 'create')->name('products.create');
-        Route::post('store', 'store')->name('products.store');
-        Route::get('show/{id}', 'show')->name('products.show');
-        Route::get('edit/{id}', 'edit')->name('products.edit');
-        Route::put('edit/{id}', 'update')->name('products.update');
-        Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
-    });
-});
-
-// ----------------------------- AUTHENTICATED USER ACCESS -----------------------//
-Route::middleware(['auth.guest', 'prevent-back-history'])->group(function () {
-
-    Route::controller(ShopController::class)->group(function () {
-        Route::get( 'my_account', 'my_account')->name('my_account');
-        Route::get( 'thankyou', 'thankYou')->name('thank-you');
-        Route::get( 'customize/{id}', 'customize')->name('customize');
-    });
-
-    // ----------------------------- CART -----------------------//
-    Route::controller(CartController::class)->group(function () {
-        Route::get( 'cart', 'cart')->name('cart');
-        Route::post('cart/{id}', 'add_to_cart')->name('add_to_cart');
-        Route::get( 'checkout', 'checkout')->name('checkout');
-        Route::delete('destroy/{id}', 'destroy')->name('remove_product');
-    });
-
-    // ----------------------------- ORDER -----------------------//
-    Route::controller(OrderController::class)->group(function () {
-        Route::post( 'order', 'placeOrder')->name('order');
-        Route::get( 'shipped/{id}', 'shipped')->name('order_shipped');
-        Route::get( 'delivered/{id}', 'delivered')->name('order_delivered');
-    });
-
-    // ----------------------------- STRIPE PAYMENT -----------------------//
-    Route::controller(StripePaymentController::class)->group(function(){
-        Route::post('stripe', 'stripePost')->name('stripe.post');
-    });
-});
 
 
 // ----------------------------- OTP -----------------------//

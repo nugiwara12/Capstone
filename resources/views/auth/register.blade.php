@@ -118,14 +118,16 @@
                                 @enderror
                             </div>
 
-                            <div class="hidden">
-                                <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-                                <select name="role" id="role" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('role') border-red-500 @enderror">
-                                    <option selected disabled>User Types</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="User">User</option>
+                            <!-- Role Selection -->
+                            <div class="mt-4">
+                                <label for="name" class="block text-sm font-medium text-gray-700">Role</label>
+                                <select id="role" name="role" class="block mt-1 w-full px-2 py-2 border border-gray-400 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                                    <option value="" disabled selected>Role</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="users">Users</option>
+                                    <option value="seller">Seller</option>
                                 </select>
-                                @error('role')
+                                @error('name')
                                     <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
