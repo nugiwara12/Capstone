@@ -1,4 +1,4 @@
-@extends('layouts.app3')
+@extends('layouts.app2')
 
 @section('contents')
     <section class="site-banner jarallax" id="site-banner" style="background-image: url('{{ asset('assets/images/banner.png') }}');">
