@@ -43,7 +43,7 @@
             <nav aria-label="Options" class="z-20 flex-col items-center flex-shrink-0 hidden w-16 py-4 bg-white border-r-2 border-blue-100 shadow-md sm:flex rounded-tr-3xl rounded-br-3xl">
                 <div class="flex-shrink-0 py-4">
                     <a href="#">
-                        <img class="w-20 h-auto" src="{{ URL::asset('admin_assets/img/logo/Logo.png') }}" alt="Gawang Gamat" />
+                        <img class="w-20 h-auto rounded-full" src="{{ URL::asset('admin_assets/img/logo/Logo.png') }}" alt="Gawang Gamat" />
                     </a>
                 </div>
                 <div class="flex flex-col items-center flex-1 p-2 space-y-4">
