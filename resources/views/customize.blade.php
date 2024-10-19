@@ -1,4 +1,4 @@
-@extends('layouts.app3')
+@extends('layouts.app2')
 <link rel="stylesheet" href="{{asset('assets/css/customize.css')}}">
 
 @section('contents')
@@ -6,18 +6,32 @@
 
 <div class="row justify-content-center">
     <div id="fcol">
-        <div id="container" style="display: flex; align-items:center; justify-content:center;">
-            <img src="{{ asset('images/' . $product->customizing_image) }}" id="preview2" alt="Image Preview" style="display:block; :absolute; max-width:100%; max-height:100%;">
-            <div id="canvasContainer">
-                <canvas id="canvas"></canvas>
-            </div>
-        </div>
-        <div class="mb-3 mt-12">
-            <label for="customText" class="mb-10">Benchmark</label>
-            <label class="pb-12" for="customText">Minimum of 10 letters. Additional charges apply for any letters beyond this limit.</label>
-            <label for="customText">Text Charge (3Php each Letter) :</label>
-            <div id="textCharge" class="mt-2"></div>
-        </div>
+    <div id="container" style="display: flex; align-items: center; justify-content: center; background-color: transparent; position: relative;">
+    <img src="{{ asset('images/' . $product->customizing_image) }}" id="preview2" alt="Image Preview" style="display: block; position: absolute; max-width: 100%; max-height: 100%; background-color: transparent;">
+    <div id="canvasContainer">
+        <canvas id="canvas"></canvas>
+    </div>
+</div>
+
+    <div class="container mx-auto px-4"> 
+    <div class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md mt-12 mb-3">
+        <label for="customText" class="block text-xl font-semibold mb-4">Benchmark</label>
+        <p class="text-gray-700 mb-4">
+            Text Charge (5 Php per letter); minimum of 10 letters. Additional charges apply for any letters beyond this limit:
+        </p>
+        <div id="textCharge" class="mt-2 p-2 bg-gray-100 border border-gray-300 rounded">No additional charge</div>
+        
+        <label for="imageCharge" class="mt-6 block text-gray-700">
+            Image Charge (Minimum of 1 photo; additional charges of 15 Php apply for any photos beyond this limit):
+        </label>
+        <div id="imageCharge" class="mt-2 p-2 bg-gray-100 border border-gray-300 rounded">No additional charge</div>
+        
+        <div id="totalCharge" class="mt-6 font-bold text-lg text-blue-600">Total Charge: 0 Php</div>
+    </div>
+</div>
+
+
+        
 
     </div>
 
@@ -40,16 +54,25 @@
         <div class="edit-text align-items-center d-flex justify-content-start mb-3 p-3 rounded" >
         <button id="eyedropperBtn" class="btn"><b>A</b><i class="bi bi-eyedropper"></i></button>
         <input type="color" id="textColorPicker" value="#000000" style="display:none;">
-
-
         <select id="fontFamily" class="form-select mx-3" style="width:100px;">
             <option selected value="Arial">Arial</option>
             <option value="Courier New">Courier New</option>
             <option value="Georgia">Georgia</option>
             <option value="Times New Roman">Times New Roman</option>
             <option value="Verdana">Verdana</option>
+            <option value="Helvetica">Helvetica</option> <!-- Added -->
+            <option value="Tahoma">Tahoma</option> <!-- Added -->
+            <option value="Trebuchet MS">Trebuchet MS</option> <!-- Added -->
+            <option value="Impact">Impact</option> <!-- Added -->
+            <option value="Comic Sans MS">Comic Sans MS</option> <!-- Added -->
+            <option value="Lucida Console">Lucida Console</option> <!-- Added -->
+            <option value="Palatino Linotype">Palatino Linotype</option> <!-- Added -->
+            <option value="Garamond">Garamond</option> <!-- Added -->
+            <option value="Segoe UI">Segoe UI</option> <!-- Added -->
+            <option value="Montserrat">Montserrat</option> <!-- Added -->
+            <option value="Open Sans">Open Sans</option> <!-- Added -->
+            <option value="Lato">Lato</option> <!-- Added -->
         </select>
-
         <select id="fontSize" class="form-select" style="width:100px;" title="Text Size">
             <option value="8">8 pt</option>
             <option value="10">10 pt</option>
@@ -84,13 +107,11 @@
         </div>
 
 
-      <h6>Printable Area Background</h6>
-      <div class="d-flex shapes-and-graphics align-items-center justify-content-start mb-3 p-3 rounded">
-        <img class="rounded-circle" id="transparentBgToggle" src="{{asset('assets/images/transparent.png')}}" style="width: 25px; height: 25px; cursor: pointer;" alt="Transparent Background">
-         <input type="color" id="backgroundColorPicker" class="form-control form-control-color mx-2" value="#ffffff"
-       style="width: 25px; height: 25px; padding: 0; border: 2px solid black; border-radius: 50%; -webkit-appearance: none;">
-       <select id="backgroundColorDropdown" class="form-select mx-2" 
-            style="width: 100px; height: 35px; padding: 5px; border: 2px solid black; border-radius: 10px;">
+        <h6>Printable Area Background</h6>
+<div class="d-flex shapes-and-graphics align-items-center justify-content-start mb-3 p-3 rounded">
+    <img class="rounded-circle" id="transparentBgToggle" src="{{ asset('assets/images/transparent.png') }}" style="width: 25px; height: 25px; cursor: pointer;" alt="Transparent Background">
+    <input type="color" id="backgroundColorPicker" class="form-control form-control-color mx-2" value="#ffffff" style="width: 25px; height: 25px; padding: 0; border: 2px solid black; border-radius: 50%; -webkit-appearance: none;">
+    <select id="backgroundColorDropdown" class="form-select mx-2" style="width: 100px; height: 35px; padding: 5px; border: 2px solid black; border-radius: 10px;">
         <option value="#ffffff" selected>White</option>
         <option value="#f28b82">Light Red</option>
         <option value="#fbbc04">Yellow</option>
@@ -99,11 +120,11 @@
         <option value="#aa00ff">Purple</option>
         <option value="#000000">Black</option>
     </select>
-      </div>
+</div>
 
       <div class="mt-4">
-        <button id="downloadBtn" class="btn btn-success w-100">Download</button>
-      </div>
+      <button onclick="downloadCanvas()" class="btn btn-success w-100">Download Design</button>
+        </div>
 </div>
 
 
@@ -116,11 +137,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.0/jquery-ui.min.js" integrity="sha512-MlEyuwT6VkRXExjj8CdBKNgd+e2H+aYZOCUaCrt9KRk6MlZDOs91V1yK22rwm8aCIsb5Ec1euL8f0g58RKT/Pg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- FileSaver -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <script>
+     // Get the elements
+        const container = document.getElementById('container');
+        const colorPicker = document.getElementById('backgroundColorPicker');
+        const colorDropdown = document.getElementById('backgroundColorDropdown');
+        const transparentBgToggle = document.getElementById('transparentBgToggle');
+
         let canvas;
         let textObjects = [];
         let shapeObjects = [];
         let activeTextIndex = -1;
+        let imageCount = 0; 
+        let totalTextCharge = 0; // Initialize total text charge
+let totalImageCharge = 0; // Initialize total image charge
+
+
+function updateTotalCharge() {
+    const totalCharge = totalTextCharge + totalImageCharge;
+    $('#totalCharge').text(`Total Charge: ₱${totalCharge}`); // Update the total charge display
+}
+
 
         const element = document.getElementById('canvasContainer');
         const parent = element.parentElement;
@@ -137,7 +176,7 @@
         $(document).ready(function() {
             canvas = new fabric.Canvas("canvas");
             setCanvasSize(canWidth, canHeight); // Set canvas size
-
+            
             // Add Text to Canvas
             $('#addTextBtn').click(() => addTextToCanvas());
 
@@ -187,21 +226,25 @@
                 event.preventDefault();
             });
 
-            // Canvas background color change via color picker
-            $('#backgroundColorPicker').on('input', function() {
-                canvas.setBackgroundColor($(this).val(), canvas.renderAll.bind(canvas));
-            });
-
-            // Canvas background color change via dropdown
-            $('#backgroundColorDropdown').on('change', function() {
-                const selectedColor = $(this).val();
-                setCanvasBackgroundColor(selectedColor);  // Call the function to change the canvas background color
-            });
-
-            // Function to set the canvas background color
-            function setCanvasBackgroundColor(color) {
-                canvas.setBackgroundColor(color, canvas.renderAll.bind(canvas));  // Render canvas with new background
+            // Function to change background color
+            function changeBackgroundColor(color) {
+                container.style.backgroundColor = color;
             }
+
+            // Event listener for color picker
+            colorPicker.addEventListener('input', function() {
+                changeBackgroundColor(this.value);
+            });
+
+            // Event listener for dropdown
+            colorDropdown.addEventListener('change', function() {
+                changeBackgroundColor(this.value);
+            });
+
+            // Event listener for transparent background toggle
+            transparentBgToggle.addEventListener('click', function() {
+                container.style.backgroundColor = 'transparent'; // Reset to transparent
+            });
 
             // Show/hide text editor and delete button
             canvas.on('object:selected', handleObjectSelected);
@@ -262,15 +305,18 @@
 
             if (length > benchmark) {
                 // Calculate additional charge for characters beyond the benchmark
-                charge = (length - benchmark) * 3; // 3 pesos for each character beyond 10
+                charge = (length - benchmark) * 5; // 5 pesos for each character beyond 10
             }
-
+            totalTextCharge = charge;
             // Update the text charge display
             if (charge > 0) {
                 $('#textCharge').text(`₱${charge}`); // Display additional charge
             } else {
                 $('#textCharge').text('No additional charge'); // No charge if within benchmark
             }
+
+            updateTotalCharge(); // Call to update the total charge display
+
         }
 
 
@@ -341,6 +387,7 @@
         }
 
         // Add image to canvas
+
         function addImageToCanvas() {
             const fileInput = $('<input type="file" accept="image/*" style="display:none;">');
 
@@ -351,7 +398,11 @@
                     reader.onload = function(e) {
                         const imgElement = new Image();
                         imgElement.src = e.target.result;
-                        imgElement.onload = () => addImageToCanvasFromSrc(imgElement);
+                        imgElement.onload = () => {
+                            addImageToCanvasFromSrc(imgElement);
+                            imageCount++; // Increment the image count
+                            updateImageCharge(); // Update the charge for images
+                        };
                     };
                     reader.readAsDataURL(file);
                 }
@@ -359,6 +410,19 @@
 
             fileInput.appendTo('body').trigger('click');
         }
+        function updateImageCharge() {
+            if (imageCount > 1) {
+                totalImageCharge = (imageCount - 1) * 15; // 15 pesos for each additional image beyond the first
+                $('#imageCharge').text(`₱${totalImageCharge}`);
+            } else {
+                totalImageCharge = 0; // No charge for the first image
+                $('#imageCharge').text('No additional charge'); // No charge for the first image
+            }
+
+            updateTotalCharge(); // Call to update the total charge display
+
+        }
+
 
         // Add image to canvas from img element
         function addImageToCanvasFromSrc(imgElement) {
@@ -382,13 +446,17 @@
                 if (activeObject.type === 'textbox') {
                     textObjects.splice(activeTextIndex, 1);
                     activeTextIndex = -1;
+                } else if (activeObject.type === 'image') {
+                    imageCount--; // Decrement the image count if an image is deleted
+                    updateImageCharge(); // Update the charge after deleting the image
                 }
                 $('#textEditor, #deleteBtn').hide();
                 canvas.renderAll();
             }
         }
 
-        // Handle selection events for canvas objects
+
+
         // Handle selection events for canvas objects
         function handleObjectSelected(e) {
             const activeObject = e.target;
@@ -427,16 +495,32 @@
                 canvas.setBackgroundColor('rgba(0,0,0,0)', canvas.renderAll.bind(canvas)); // Set background to transparent
             });
 
-        // Download canvas content as PNG
+        // Function to download the #container content (image + canvas) as a PNG
         function downloadCanvas() {
-            const dataURL = canvas.toDataURL({ format: 'png', quality: 1 });
-            const link = document.createElement('a');
-            link.href = dataURL;
-            link.download = 'my_design.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-    }
+            // Select the container div to capture (image + canvas)
+            const container = document.getElementById('container');
+            
+            // Use html2canvas to take a screenshot of the container div
+            html2canvas(container, {
+                allowTaint: true,
+                useCORS: true,
+                scale: 2 // Increase resolution of the output image
+            }).then(canvas => {
+                // Convert the captured screenshot to a PNG data URL
+                const dataURL = canvas.toDataURL('image/png');
+                
+                // Create a download link
+                const link = document.createElement('a');
+                link.href = dataURL;
+                link.download = 'my_design.png'; // Set the downloaded file name
+                
+                // Trigger the download
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        }
+
 
 
 
