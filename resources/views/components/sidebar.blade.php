@@ -19,7 +19,7 @@
                     <i class="bi bi-text-right text-2xl"></i>
                 </button>
                 <a href="#">
-                    <img class="w-20 h-auto" src="{{ asset('admin_assets/img/logo/imglogo.png') }}" alt="Gawang Gamat" />
+                    <img class="w-20 h-auto" src="{{ URL::asset('admin_assets/img/logo/imglogo.png') }}" alt="Gawang Gamat" />
                 </a>
                 <div class="relative flex items-center flex-shrink-0 p-2" x-data="{ isOpen: false }">
                     <button @click="isOpen = !isOpen; $nextTick(() => {isOpen ? $refs.userMenu.focus() : null})" 
