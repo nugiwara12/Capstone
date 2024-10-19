@@ -34,7 +34,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.1.1/css/buttons.dataTables.min.css">
-  <!-- title-logo -->
+  @yield('styles')
 
 </head>
 <body id="page-top">
@@ -51,7 +51,7 @@
       <div id="content">
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <!-- <div class="container-fluid"> -->
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -63,24 +63,10 @@
                 @yield('contents')
             </main>
           </div>
-        </div>
+        <!-- </div> -->
       </div>
     </div>
   </div>
-
-  <!-- Sweet Alert Delete Js  -->
-  <script src="{{asset('admin_assets/js/delete.js')}}"></script>
-  <!-- Sweet alert  -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- Bootstrap core JavaScript-->
-  <script src="{{ asset('admin_assets/vendor/jquery/jquery.min.js') }}"></script>
-  <script src="{{ asset('admin_assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="{{ asset('admin_assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-  <!-- Custom scripts for all pages-->
-  <script src="{{ asset('admin_assets/js/sb-admin-2.min.js') }}"></script>
-  <!-- Page level plugins -->
-  <script src="{{ asset('admin_assets/vendor/chart.js/Chart.min.js') }}"></script>
 
   <!-- Custom fonts print template-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -96,5 +82,15 @@
   <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
+  </script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  @yield('scripts')
 </body>
 </html>

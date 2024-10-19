@@ -1,89 +1,203 @@
 @extends('layouts.app3')
 
-@section('title', 'User Management')
-<link rel="stylesheet" href="{{asset('admin_assets/css/dropdown.css')}}">
 @section('contents')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <div class="d-flex align-items-center justify-content-between">
-        <a href="{{ route('usermanagement.create') }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add Users">Add User</a>
-    </div>
-    <hr />
-    <table class="table table-hover" id="example">
-        <thead class="table-primary">
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Roles</th>
-                <th>Email Address</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if($users->count() > 0)
-                @foreach($users as $rs)
+<div class="w-full">
+    <x-card.usermanagement />
+    <div class="min-h-full mt-4">
+        <!-- Success Message -->
+        <x-modals.usermanagement.add-user />
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-400 border border-gray-300">
+                <thead class="bg-gray-50">
                     <tr>
-                        <td class="align-middle">{{ $loop->iteration }}</td>
-                        <td class="align-middle">{{ $rs->name }}</td>
-                        <td class="align-middle">{{ $rs->role }}</td>
-                        <td class="align-middle">{{ $rs->email }}</td>
-                        <td class="align-middle">
-                            <div class="dropdown">
-                                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                  . . .
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <li><a class="dropdown-item" href="{{ route('usermanagement.show', $rs->id) }}">Show</a></li>
-                                  <li><a class="dropdown-item" href="{{ route('usermanagement.edit', $rs->id)}}">Edit</a></li>
-                                  <li><form id="deleteForm-{{ $rs->id }}" action="{{ route('usermanagement.destroy', $rs->id) }}" method="POST" style="display: inline;">
-                                      @csrf
-                                      @method('DELETE')
-                                      <a class="dropdown-item" href="#" onclick="confirmation(event, {{ $rs->id }})">Delete</a>
-                                  </form></li>
-                                </ul>
-                              </div>
-                            {{-- <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="{{ route('usermanagement.show', $rs->id) }}" type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="View Details">Detail</a>
-                                <a href="{{ route('usermanagement.edit', $rs->id)}}" type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Edit">Edit</a>
-                                <form id="deleteForm-{{ $rs->id }}" action="{{ route('usermanagement.destroy', $rs->id) }}" method="POST">
+                        <th class="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">#</th>
+                        <th class="px-6 py-3 text-left text-xs font-normal text-black font-bold uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-normal text-black font-bold uppercase tracking-wider">Role</th>
+                        <th class="px-6 py-3 text-left text-xs font-normal text-black font-bold uppercase tracking-wider">Email</th>
+                        <th class="px-4 py-3 text-left text-xs font-normal text-black font-bold uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-400">
+                    @forelse ($users as $user)
+                    <tr class="{{ $loop->even ? 'bg-gray-50' : 'bg-white' }} hover:bg-gray-200">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-black">{{ $loop->iteration + (($users->currentPage() - 1) * $users->perPage()) }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $user->name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $user->role }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $user->email }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-black text-left relative">
+                            <div class="flex items-center space-x-2">
+                                <a href="javascript:void(0)" class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white hover:bg-blue-500 focus:outline-none" data-toggle="modal" data-target="#editUserModal{{ $user->id }}" title="Edit">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <form id="deleteForm{{ $user->id }}" action="{{ route('usermanagement.destroy', $user->id) }}" method="POST" class="block delete-form" role="menuitem">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="button" class="btn btn-danger m-0" onclick="confirmation(event, {{ $rs->id }})">Delete</button>
+                                    <button type="button" class="flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white hover:bg-red-500 focus:outline-none" onclick="confirmDelete('{{ $user->id }}')" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                 </form>
-                            </div> --}}
+                            </div>
                         </td>
                     </tr>
-                @endforeach
-            @else
-            @endif
-        </tbody>
-    </table>
-    <footer>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#example').DataTable( {
-                // dom: 'Bfrtip',
-                // buttons: [
-                //     'print',
-                //     'excel'
-                // ]
-            } );
-        } );
-    </script>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="py-2 px-4 text-center">No users found</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <!-- Include DataTables Buttons extension CSS and JS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.1.1/css/buttons.dataTables.min.css">
-    <script src="https://cdn.datatables.net/buttons/2.1.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.html5.min.js"></script>
+    <!-- Show Entries Form -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+        <div class="flex items-center mb-2 md:mb-0">
+            <form method="GET" action="{{ route('usermanagement') }}" class="flex items-center">
+                <label for="per_page" class="mr-2 text-sm mt-2">Show</label>
+                <select name="per_page" id="per_page" class="border border-gray-300 rounded px-2 py-1 text-sm" onchange="this.form.submit()">
+                    <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
+                    <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                    <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                    <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                </select>
+            </form>
+            <span class="text-sm ml-2">of <strong>{{ $users->total() }}</strong> entries</span>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <!-- Include ExcelJS library for Excel export -->
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
-    </footer>
+        <!-- Pagination Section -->
+        <div class="md:mt-0">
+            <x-pagination :users="$users" />
+        </div>
+    </div>
+</div>
+
+@foreach ($users as $user)
+    @include('components.modals.usermanagement.edit-user', ['user' => $user])
+@endforeach
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/58y5KZJ1G2Rn0ILU35h/Xo/2H45Ebg9hcz8Z7e" crossorigin="anonymous"></script>
+<script>
+// Handle dropdown toggle
+(document).ready(function() {
+    $('[id^="dropdownMenuButton"]').on('click', function(event) {
+        event.stopPropagation(); // Prevent event from bubbling up
+        const dropdownMenu = $(this).next('.dropdown-menu');
+
+        // Toggle the dropdown menu
+        dropdownMenu.toggleClass('hidden');
+
+        // Close other dropdowns if needed
+        $('.dropdown-menu').not(dropdownMenu).addClass('hidden');
+    });
+
+    // Close the dropdown if clicking outside
+    $(document).on('click', function() {
+        $('.dropdown-menu').addClass('hidden');
+    });
+
+    // AJAX request to update user
+    $(`form[id^="editUserForm"]`).on('submit', function(e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        var userId = $(this).data('user-id'); // This gets the user ID from the form
+        var formData = $(this).serialize(); // Serialize the form data
+
+        $.ajax({
+            url: `/usermanagement/${userId}`, // Update the URL to include the user ID
+            type: "PUT", // Use PUT for updating
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token
+            },
+            success: function(response) {
+                // Show success message
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'User updated successfully.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    location.reload(); // Reload the page or update the UI
+                });
+            },
+            error: function(xhr) {
+                // Show error message
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to update user: ' + (xhr.responseJSON.message || 'Unknown error'),
+                    icon: 'error',
+                    confirmButtonText: 'Try Again'
+                });
+            }
+        });
+    });
+});
+
+// Use SweetAlert to confirm deletion
+function confirmDelete(userId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Proceed with AJAX delete request
+            const form = document.getElementById(`deleteForm${userId}`);
+            const formData = new FormData(form);
+
+            $.ajax({
+                url: form.action,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    // Handle success response
+                    Swal.fire('Deleted!', 'The user has been deleted.', 'success').then(() => {
+                        location.reload(); // Reload the page or update the UI
+                    });
+                },
+                error: function(xhr) {
+                    // Handle error response
+                    Swal.fire('Error!', 'There was a problem deleting the user.', 'error');
+                }
+            });
+        }
+    });
+}
+
+// Add Users modal function
+const openModalButton = document.getElementById('openAddModalButton');
+const closeModalButton = document.getElementById('closeAddModalButton');
+const modal = document.getElementById('addModal');
+const modalContent = document.getElementById('addModalContent');
+
+// Open the modal
+openModalButton.addEventListener('click', () => {
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modalContent.classList.remove('scale-175', 'opacity-50');
+    }, 10);
+});
+
+// Close the modal
+closeModalButton.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => {
+    if (!modalContent.contains(e.target)) {
+        closeModal();
+    }
+});
+
+// Function to close the modal
+function closeModal() {
+    modalContent.classList.add('scale-175', 'opacity-0');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300);
+}
+</script>
 @endsection

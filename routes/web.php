@@ -95,15 +95,15 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
 
 });
 
-// ----------------------------- User management -----------------------//
+// USERMANAGEMENT ROUTES
 Route::controller(ManagementUserController::class)->prefix('usermanagement')->group(function () {
-    Route::get('', 'index')->name('usermanagement');
-    Route::get('create', 'create')->name('usermanagement.create');
-    Route::post('store', 'store')->name('usermanagement.store');
-    Route::get('show/{id}', 'show')->name('usermanagement.show');
-    Route::get('edit/{id}', 'edit')->name('usermanagement.edit');
-    Route::put('edit/{id}', 'update')->name('usermanagement.update');
-    Route::delete('destroy/{id}', 'destroy')->name('usermanagement.destroy');
+    Route::get('/', 'index')->name('usermanagement'); 
+    Route::get('create', 'create')->name('usermanagement.create');  
+    Route::post('/', 'store')->name('usermanagement.store');   
+    Route::get('{id}', 'show')->name('usermanagement.show');   
+    Route::get('{id}/edit', 'edit')->name('usermanagement.edit');   
+    Route::put('{id}', 'update')->name('usermanagement.update');  
+    Route::delete('{id}', 'destroy')->name('usermanagement.destroy');
 });
 
 // ----------------------------- ACTIVITY-LOGS -----------------------//

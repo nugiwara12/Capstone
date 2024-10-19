@@ -1,5 +1,5 @@
 <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');" @resize.window="watchScreen()">
-    <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
+    <div class="flex min-h-screen h-full antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
         <!-- Loading screen -->
         <div x-ref="loading" class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-blue-800">
             Loading.....
@@ -142,7 +142,7 @@
         </div>
 
         <!-- Main content area -->
-        <div class="flex flex-col flex-1">
+        <div class="">
             <header class="relative flex items-center justify-between flex-shrink-0 p-2">
                 <form action="#" class="flex-1"></form>
                 <button @click="isSubHeaderOpen = !isSubHeaderOpen" class="p-2 text-black bg-white rounded-lg shadow-md mr-7 sm:hidden hover:text-gray-800">
@@ -157,9 +157,8 @@
             </header>
 
             <!-- Your main content goes here -->
-            <main class="flex-1 p-4 bg-gray-100 dark:bg-dark">
-                <!-- Your content -->
-            </main>
+            <!-- <main class="flex-1 p-4 bg-gray-100 dark:bg-dark">
+            </main> -->
         </div>
     </div>
 </div>
