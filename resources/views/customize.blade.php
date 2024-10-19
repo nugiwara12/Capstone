@@ -1,4 +1,4 @@
-@extends('layouts.app2')
+@extends('layouts.app3')
 <link rel="stylesheet" href="{{asset('assets/css/customize.css')}}">
 
 @section('contents')

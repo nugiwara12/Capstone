@@ -1,27 +1,40 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rules\Password;
-use App\Rules\MatchOldPassword;
-use Auth;
-use DB;
+// use App\Models\MatchOldPassword;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Session;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 
-class UserManagementController extends Controller
+class ManagementUserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        return view('usermanagement.index', compact('users'));
-    }
+        // Get the search query if any
+        $search = $request->input('search');
+    
+        // Get the per-page value (default to 10 if not provided)
+        $entriesPerPage = $request->input('per_page', 10);
+    
+        // Query the users based on the search input
+        $users = User::when($search, function ($query, $search) {
+            return $query->where('name', 'like', '%' . $search . '%')
+                         ->orWhere('email', 'like', '%' . $search . '%')
+                         ->orWhere('role', 'like', '%' . $search . '%');
+        })
+        ->paginate($entriesPerPage);
+    
+        // Pass the users, search query, and perPage value to the view
+        return view('usermanagement.index', compact('users', 'search', 'entriesPerPage'));
+    }      
 
     public function create()
     {
@@ -30,17 +43,23 @@ class UserManagementController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name'      => ['required','regex:/^[A-z a-z]+$/','string','max:255'],
-            'role'       => 'required|string|max:255',
-            'email' => ['required','regex:/^[A-z a-z 0-9 @_.]+$/','string','max:255','email','unique:users'],
+        $validatedData = $request->validate([
+            'name' => ['required', 'regex:/^[A-z a-z]+$/', 'string', 'max:255'],
+            'role' => 'required|string|max:255',
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => 'required|confirmed',
-            'password_confirmation' => 'required',
-            
+            'description' => ['required', 'string', 'max:255'],
         ]);
-        User::create($request->all());
+
+        User::create([
+            'name' => $validatedData['name'],
+            'role' => $validatedData['role'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+            'description' => $validatedData['description'],
+        ]);
  
-        return redirect()->route('usermanagement')->with('success', 'UserManagement Users added successfully');
+        return redirect()->route('usermanagement')->with('success', 'User added successfully');
     }
 
     public function show(string $id)
@@ -60,23 +79,19 @@ class UserManagementController extends Controller
     
     public function update(Request $request, string $id)
     {
-        // Validate the request data
         $validatedData = $request->validate([
-            'name'  => ['required','regex:/^[A-z a-z]+$/','string','max:255'],
-            'role'  => ['required','string','max:255'],
-            'email' => ['required','regex:/^[A-z a-z 0-9 @_.]+$/','string','max:255','email'],
+            'name' => ['required', 'regex:/^[A-z a-z]+$/', 'string', 'max:255'],
+            'role' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
         ]);
     
-        // Fetch the user instance to update
         $user = User::findOrFail($id);
-    
-        // Update the user with the validated data
         $user->update($validatedData);
     
-        // Return a JSON response
         return response()->json([
             'message' => 'User updated successfully.',
-            'user' => $user
+            'user' => $user,
         ]);
     }
 

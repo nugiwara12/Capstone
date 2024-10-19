@@ -72,7 +72,8 @@
                                     </div>
                                     <div class="onhover-div profile-dropdown">
                                         <ul>
-                                            <!-- profile name -->
+                                            <li><a href="{{ route('login') }}" class="d-block">Login</a></li>
+                                            <li><a href="{{ route('register') }}" class="d-block">Register</a></li>
                                         </ul>
                                     </div>
 

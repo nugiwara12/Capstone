@@ -41,7 +41,6 @@
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- CDN of AXIOS AND SWAL ALERT -->
@@ -49,11 +48,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Include SweetAlert library -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    
-
-
-
-
 </head>
 
 <body class="theme-color4 light ltr" id="page-top">

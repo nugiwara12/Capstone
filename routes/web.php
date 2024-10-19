@@ -7,7 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\ManagementUserController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ContactUsFormController;
 use App\Http\Controllers\StripePaymentController;
@@ -45,14 +45,6 @@ Route::get('dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 //->middleware('redirect.authenticated');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
- Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
 
 require __DIR__.'/auth.php';
 
@@ -103,19 +95,19 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
 
 });
 
-// ----------------------------- User management -----------------------//
-Route::controller(UserManagementController::class)->prefix('usermanagement')->group(function () {
-    Route::get('', 'index')->name('usermanagement');
-    Route::get('create', 'create')->name('usermanagement.create');
-    Route::post('store', 'store')->name('usermanagement.store');
-    Route::get('show/{id}', 'show')->name('usermanagement.show');
-    Route::get('edit/{id}', 'edit')->name('usermanagement.edit');
-    Route::put('edit/{id}', 'update')->name('usermanagement.update');
-    Route::delete('destroy/{id}', 'destroy')->name('usermanagement.destroy');
+// USERMANAGEMENT ROUTES
+Route::controller(ManagementUserController::class)->prefix('usermanagement')->group(function () {
+    Route::get('/', 'index')->name('usermanagement'); 
+    Route::get('create', 'create')->name('usermanagement.create');  
+    Route::post('/', 'store')->name('usermanagement.store');   
+    Route::get('{id}', 'show')->name('usermanagement.show');   
+    Route::get('{id}/edit', 'edit')->name('usermanagement.edit');   
+    Route::put('{id}', 'update')->name('usermanagement.update');  
+    Route::delete('{id}', 'destroy')->name('usermanagement.destroy');
 });
 
 // ----------------------------- ACTIVITY-LOGS -----------------------//
-Route::get('activity/log', [UserManagementController::class, 'activity'])->name('activity/log');
+Route::get('activity/log', [ManagementUserController::class, 'activity'])->name('activity/log');
 
 
 // ----------------------------- OTP -----------------------//
