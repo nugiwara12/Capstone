@@ -33,7 +33,7 @@ use App\Models\Category;
 |
 */
 // ----------------------------- Start Backlog-----------------------//
-// Route::group(['middleware' => 'prevent-back-history'],function(){
+Route::group(['middleware' => 'prevent-back-history'],function(){
 
 
 Route::get('/', function () {
@@ -139,5 +139,5 @@ Route::post('/subscribe', [SubscriptionController::class, 'store'])->name('subsc
 
 
 // ----------------------------- End Of Route Back Log -----------------------//
-// });
+});
 

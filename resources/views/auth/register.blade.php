@@ -108,7 +108,7 @@
                         <div class="text-center">
                             <h1 class="text-2xl font-semibold text-gray-900 mb-4">Register</h1>
                         </div>
-                        <form action="{{ route('register') }}" method="POST" class="space-y-4">
+                        <form action="{{ route('register.save') }}" method="POST" class="space-y-4">
                             @csrf
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4"> <!-- Grid for two columns -->
                                 <div>

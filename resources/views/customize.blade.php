@@ -12,6 +12,13 @@
                 <canvas id="canvas"></canvas>
             </div>
         </div>
+        <div class="mb-3 mt-12">
+            <label for="customText" class="mb-10">Benchmark</label>
+            <label class="pb-12" for="customText">Minimum of 10 letters. Additional charges apply for any letters beyond this limit.</label>
+            <label for="customText">Text Charge (3Php each Letter) :</label>
+            <div id="textCharge" class="mt-2"></div>
+        </div>
+
     </div>
 
     <div class="col-md-4 m-5 customization-options">
@@ -42,6 +49,7 @@
             <option value="Times New Roman">Times New Roman</option>
             <option value="Verdana">Verdana</option>
         </select>
+
         <select id="fontSize" class="form-select" style="width:100px;" title="Text Size">
             <option value="8">8 pt</option>
             <option value="10">10 pt</option>
@@ -81,11 +89,20 @@
         <img class="rounded-circle" id="transparentBgToggle" src="{{asset('assets/images/transparent.png')}}" style="width: 25px; height: 25px; cursor: pointer;" alt="Transparent Background">
          <input type="color" id="backgroundColorPicker" class="form-control form-control-color mx-2" value="#ffffff"
        style="width: 25px; height: 25px; padding: 0; border: 2px solid black; border-radius: 50%; -webkit-appearance: none;">
-
+       <select id="backgroundColorDropdown" class="form-select mx-2" 
+            style="width: 100px; height: 35px; padding: 5px; border: 2px solid black; border-radius: 10px;">
+        <option value="#ffffff" selected>White</option>
+        <option value="#f28b82">Light Red</option>
+        <option value="#fbbc04">Yellow</option>
+        <option value="#34a853">Green</option>
+        <option value="#4285f4">Blue</option>
+        <option value="#aa00ff">Purple</option>
+        <option value="#000000">Black</option>
+    </select>
       </div>
 
       <div class="mt-4">
-        <button id="downloadBtn" class="btn btn-success w-100">ORDER</button>
+        <button id="downloadBtn" class="btn btn-success w-100">Download</button>
       </div>
 </div>
 
@@ -170,10 +187,21 @@
                 event.preventDefault();
             });
 
-            // Canvas background color change
+            // Canvas background color change via color picker
             $('#backgroundColorPicker').on('input', function() {
                 canvas.setBackgroundColor($(this).val(), canvas.renderAll.bind(canvas));
             });
+
+            // Canvas background color change via dropdown
+            $('#backgroundColorDropdown').on('change', function() {
+                const selectedColor = $(this).val();
+                setCanvasBackgroundColor(selectedColor);  // Call the function to change the canvas background color
+            });
+
+            // Function to set the canvas background color
+            function setCanvasBackgroundColor(color) {
+                canvas.setBackgroundColor(color, canvas.renderAll.bind(canvas));  // Render canvas with new background
+            }
 
             // Show/hide text editor and delete button
             canvas.on('object:selected', handleObjectSelected);
@@ -181,7 +209,8 @@
 
             // Initially hide the color picker input
             $('#textColorPicker').hide();
-        });
+
+                    });
 
         // Set canvas size dynamically
         function setCanvasSize(width, height) {
@@ -206,15 +235,44 @@
             textObjects.push(text);
             canvas.add(text).setActiveObject(text);
             activeTextIndex = textObjects.length - 1;
+
             updateTextEditorValues(text);
+
+            // Add input event to track text changes and update benchmark charge
+            text.on('changed', function() {
+                updateTextCharge(text.text);
+            });
         }
 
-        // Update text editor with current text properties
         function updateTextEditorValues(text) {
             $("#textColorPicker").val(text.fill);
             $("#fontSize").val(text.fontSize);
             $("#fontFamily").val(text.fontFamily);
+            updateTextCharge(text.text); // Update charge when text is added
         }
+
+        // Function to calculate and display the additional charge
+        function updateTextCharge(text) {
+            const filteredText = text.replace(/[0-9\s]/g, ''); // Remove digits and spaces
+            const length = filteredText.length; // Calculate length of filtered text
+
+            // Minimum character benchmark
+            const benchmark = 10;
+            let charge = 0;
+
+            if (length > benchmark) {
+                // Calculate additional charge for characters beyond the benchmark
+                charge = (length - benchmark) * 3; // 3 pesos for each character beyond 10
+            }
+
+            // Update the text charge display
+            if (charge > 0) {
+                $('#textCharge').text(`₱${charge}`); // Display additional charge
+            } else {
+                $('#textCharge').text('No additional charge'); // No charge if within benchmark
+            }
+        }
+
 
         // Set up text property listeners
         $('#fontSize').on('input', function() {
@@ -380,5 +438,8 @@
             document.body.removeChild(link);
     }
 
+
+
     </script>
+
 @endsection
