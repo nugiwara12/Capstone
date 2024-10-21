@@ -178,3 +178,4 @@ const setup = () => {
     }
 }
 </script>
+@include('components.profile-modal')
