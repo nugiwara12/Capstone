@@ -104,48 +104,59 @@
                 <div id="image-gallery" class="grid grid-cols-2 gap-4 mt-4"></div>
             </div>
 
-            <div class="mb-4">
-                <div class="flex items-start">
-                    <input type="hidden" name="customizable" value="0">
-                    <input class="mr-2" type="checkbox" id="customizableCheckbox" name="customizable" value="1" onchange="togglePrintingArea(this)">
-                    <label for="customizableCheckbox" class="font-bold">Product Customizable</label>
-                </div>
-                <p class="text-gray-500">Enabling this option will allow customers to customize the product by adding images or text to the printing area.</p>
-            </div>
+            
 
-            <div id="printingArea" class="hidden">
-                <label class="font-bold">Printing Area</label>
-                <div class="w-full border border-dashed border-gray-400 rounded p-4 text-center">
-                    <div class="text-primary text-4xl"><i class="bi bi-cloud-arrow-up"></i></div>
-                    <p class="text-gray-500">Upload your <b>Customize Product Image</b> <a href="javascript:void(0)" class="text-blue-500 underline" id="browseLink">click here to browse</a></p>
-                    <input type="file" id="fileInput" class="hidden" name="customizingImage" accept="image/*" onchange="handleFileUpload(this)" disabled>
+            <div class="col mt-3">
+                    <div class="form-check form-switch">
+                        <input type="hidden" name="customizable" value="0">
+                        <input class="form-check-input" type="checkbox" id="customizableCheckbox" name="customizable" value="1" onchange="togglePrintingArea(this)">
+                        <label class="form-check-label" for="customizableCheckbox">Product Customizable</label>
+                    </div>
+                    <p class="form-text text-muted">
+                        Enabling this option will allow customers to customize the product by adding images or text to the printing area.
+                    </p>
                 </div>
-                <div class="mt-4" id="customizeImagePreview">
-                    <p>Image Preview</p>
-                    <div class="border rounded p-2">
-                        <img id="preview2" src="" alt="Image Preview" class="w-full h-auto">
-                        <canvas id="canvas" class="hidden"></canvas>
+                <div id="printingArea">
+                    <div class="row mt-3">
+                        <label class="form-label"><b>Printing Area</b></label>
+                    </div>
+                    <div class="upload-box large-box w-100" id="customizeBox" >
+                        <div class="text-center">
+                            <div class="text-primary fs-1"><i class="bi bi-cloud-arrow-up"></i></div>
+                            <div class="text-muted">
+                                Upload your <b>Customize Product Image</b> <a href=javascript:void(0) id="browseLink">click here to browse</a>
+                                <input class="form-control w-100" type="file" id="fileInput" name="customizingImage" required accept="image/*" onchange="handleFileUpload(this)" disabled >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-3">
+                        <div class="row" id="customizeImagePreview">
+                            <p>Image Preview</p>
+                            <div class="canvasContainer p-0 form-control" id="canvasContainer" >
+                                <img id="preview2" src="" alt="Image Preview" >
+                                <canvas id="canvas" class="canvas" ></canvas>
+                            </div>
+                        </div>
+                        <div class="row w-100 mt-3">
+                            <div class="col">
+                                <label>Width (%)</label>
+                                <input type="number" id="widthInput" value="100" min="0" max="100" class="form-control mb-3" name="customization_width" disabled>
+                            </div>
+                            <div class="col">
+                                <label>Height (%)</label>
+                                <input type="number" id="heightInput" value="100" min="0" max="100" class="form-control mb-3" name="customization_height" disabled>
+                            </div>
+                            <div class="col">
+                                <label>Top (%)</label>
+                                <input type="number" id="topInput" value="0" min="0" max="100" class="form-control mb-3" name="customization_top" disabled>
+                            </div>
+                            <div class="col">
+                                <label>Left (%)</label>
+                                <input type="number" id="leftInput" value="0" min="0" max="100" class="form-control mb-3" name="customization_left" disabled>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="grid grid-cols-4 gap-4 mt-4">
-                    <div>
-                        <label>Width (%)</label>
-                        <input type="number" id="widthInput" value="60" min="0" max="100" class="w-full p-2 border border-gray-300 rounded" name="customization_width" disabled>
-                    </div>
-                    <div>
-                        <label>Height (%)</label>
-                        <input type="number" id="heightInput" value="86" min="0" max="100" class="w-full p-2 border border-gray-300 rounded" name="customization_height" disabled>
-                    </div>
-                    <div>
-                        <label>Top (%)</label>
-                        <input type="number" id="topInput" value="6" min="0" max="100" class="w-full p-2 border border-gray-300 rounded" name="customization_top" disabled>
-                    </div>
-                    <div>
-                        <label>Left (%)</label>
-                        <input type="number" id="leftInput" value="21" min="0" max="100" class="w-full p-2 border border-gray-300 rounded" name="customization_left" disabled>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -153,4 +164,5 @@
         <button type="submit" class="w-full p-3 bg-green-600 text-white rounded hover:bg-green-700">Submit</button>
     </div>
 </form>
+
 @endsection
