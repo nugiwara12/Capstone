@@ -120,30 +120,9 @@
                                 </div>
 
                                 <div>
-                                    <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-                                    <select id="role" name="role" class="block mt-1 w-full px-2 py-2 border border-gray-400 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                                        <option value="" disabled selected>Role</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="users">Users</option>
-                                        <option value="seller">Seller</option>
-                                    </select>
-                                    @error('role') <!-- Changed from 'name' to 'role' -->
-                                        <span class="text-red-500 text-sm">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div>
                                     <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
                                     <input name="phone" type="text" id="phone" placeholder="09XXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('phone') border-red-500 @enderror">
                                     @error('phone')
-                                        <span class="text-red-500 text-sm">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-                                    <input name="email" type="email" id="email" required placeholder="Email Address" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('email') border-red-500 @enderror">
-                                    @error('email')
                                         <span class="text-red-500 text-sm">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -153,6 +132,14 @@
                                     <input name="password" type="password" id="password" required placeholder="Password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('password') border-red-500 @enderror">
                                     <div class="text-xs text-gray-500 italic">Must be 8-20 characters long, include at least 1 number and both upper and lower case letters.</div>
                                     @error('password')
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                                    <input name="email" type="email" id="email" required placeholder="Email Address" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('email') border-red-500 @enderror">
+                                    @error('email')
                                         <span class="text-red-500 text-sm">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -172,6 +159,10 @@
                                 @error('description')
                                     <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
+                            </div>
+
+                            <div>
+                                <input type="hidden" name="role" value="users" style="display:none;">
                             </div>
 
                             <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

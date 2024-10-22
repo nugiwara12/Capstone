@@ -3,6 +3,7 @@
 @section('contents')
 <div class="flex flex-1 bg-gray-100">
     <section class="flex flex-wrap gap-3 w-full">
+        @if (Auth::user()->role == 'admin')
         <!-- Gawang Gamat Email Record Card -->
         <div class="w-full lg:w-1/4 md:w-1/2">
             <div class="card bg-white shadow-lg rounded-lg">
@@ -22,11 +23,13 @@
                                 <span class="badge badge-danger badge-counter" id="notification-badge">1</span>
                             </h6>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
-
+        @endif
+        @if (Auth::user()->role == 'admin')
         <!-- User Activity Log Card -->
         <div class="w-full lg:w-1/4 md:w-1/2">
             <div class="card bg-white shadow-lg rounded-lg">
@@ -51,7 +54,8 @@
                 </div>
             </div>
         </div>
-
+        @endif
+        @if (Auth::user()->role == 'admin')
         <!-- User Total Card -->
         <div class="w-full lg:w-1/4 md:w-1/2">
             <div class="card bg-white shadow-lg rounded-lg">
@@ -74,7 +78,8 @@
                 </div>
             </div>
         </div>
-
+        @endif
+        @if (Auth::user()->role == 'admin')
         <!-- Project Posts Card -->
         <div class="w-full lg:w-1/4 md:w-1/2">
             <div class="card bg-white shadow-lg rounded-lg">
@@ -98,6 +103,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </section>
 </div>
 @endsection

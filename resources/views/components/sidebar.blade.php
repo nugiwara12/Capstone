@@ -112,6 +112,7 @@
                             </span>
                             <span>HOME</span>
                         </a>
+                        @if (Auth::user()->role == 'admin')
                         <!-- USER MANAGEMENT -->
                         <a href="{{ route('usermanagement') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
                             {{ request()->routeIs('usermanagement') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
@@ -120,6 +121,8 @@
                             </span>
                             <span>USER MANAGEMENT</span>
                         </a>
+                        @endif
+                        @if (Auth::user()->role == 'seller')
                         <!-- PRODUCT -->
                         <a href="{{ route('products') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
                             {{ request()->routeIs('products') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
@@ -128,6 +131,8 @@
                             </span>
                             <span>PRODUCT</span>
                         </a>
+                        @endif
+                        @if (Auth::user()->role == 'admin')
                          <!-- Category Link -->
                         <a href="{{ route('category') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
                             {{ request()->routeIs('category.index') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
@@ -136,6 +141,8 @@
                             </span>
                             <span>CATEGORY</span>
                         </a>
+                        @endif
+                        @if (Auth::user()->role == 'admin')
                         <!-- Sales -->
                         <a href="{{ route('products.sold.index') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
                             {{ request()->routeIs('products.sold.index') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
@@ -144,7 +151,8 @@
                             </span>
                             <span>SALES</span>
                         </a>
-
+                        @endif
+                        @if (Auth::user()->role == 'admin')
                          <!-- ACTIVITY LOGS -->
                          <a href="{{ route('activity/log') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
                             {{ request()->routeIs('activity/log') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
@@ -153,6 +161,7 @@
                             </span>
                             <span>ACTIVITY LOGS</span>
                         </a>
+                        @endif
                     </div>
                 </nav>
             </div>
