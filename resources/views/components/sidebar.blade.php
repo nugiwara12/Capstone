@@ -128,6 +128,23 @@
                             </span>
                             <span>PRODUCT</span>
                         </a>
+                         <!-- Category Link -->
+                        <a href="{{ route('category') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
+                            {{ request()->routeIs('category.index') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
+                            <span aria-hidden="true" class="p-2 py-2 rounded-lg {{ request()->routeIs('category') ? 'bg-blue-800' : 'bg-blue-200' }}">
+                                <i class="bi bi-layers"></i>
+                            </span>
+                            <span>CATEGORY</span>
+                        </a>
+                        <!-- Sales -->
+                        <a href="{{ route('products.sold.index') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
+                            {{ request()->routeIs('products.sold.index') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
+                            <span aria-hidden="true" class="p-2 py-2 rounded-lg {{ request()->routeIs('products.sold.index') ? 'bg-blue-800' : 'bg-blue-200' }}">
+                                <i class="bi bi-list-ol"></i>
+                            </span>
+                            <span>SALES</span>
+                        </a>
+
                          <!-- ACTIVITY LOGS -->
                          <a href="{{ route('activity/log') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
                             {{ request()->routeIs('activity/log') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">

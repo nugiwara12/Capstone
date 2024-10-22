@@ -28,5 +28,8 @@ class Product extends Model
         'customizing_image',
         'best_seller',
         'featured',
+        'item_sold',
+        'total_revenue',
+
     ];
 }

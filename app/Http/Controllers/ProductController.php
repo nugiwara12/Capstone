@@ -19,6 +19,12 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function listSoldProducts()
+    {
+        $product = Product::where('item_sold', '>', 0)->get();
+
+        return view('sales.products.index', compact('product'));
+    }
     public function index()
     {
         $product = Product::orderBy('created_at', 'DESC')->get();

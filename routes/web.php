@@ -19,6 +19,9 @@ use App\Mail\SendVerificationMailer;
 use Illuminate\Support\Facades\Session;
 use App\Models\Product;
 use App\Models\Category;
+use App\Http\Controllers\SalesReportController;
+
+
 
 
 
@@ -94,6 +97,8 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
     Route::post('add-to-cart','addToCart')->name('add.to.cart');
 
 });
+Route::get('products/sold/index', [ProductController::class, 'listSoldProducts'])->name('products.sold.index');
+
 
 // USERMANAGEMENT ROUTES
 Route::controller(ManagementUserController::class)->prefix('usermanagement')->group(function () {
@@ -135,7 +140,9 @@ Route::get('/new-password', [AuthController::class, 'newPassword'])->name('new-p
 
 // Subsription
 Route::post('/subscribe', [SubscriptionController::class, 'store'])->name('subscribe.store');
+// ----------------------------- Sales Report -----------------------//
 
+Route::get('/sales-report', [SalesReportController::class, 'generateSalesReport'])->name('sales.report');
 
 
 // ----------------------------- End Of Route Back Log -----------------------//
