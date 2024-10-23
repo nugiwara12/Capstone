@@ -28,10 +28,6 @@ class ShopController extends Controller
 
     public function my_account()
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'You cannot access My Account if you are not logged in');
-        }
-        $id = Auth::user()->id;
         $order = Order::where('user_id', $id)->get();
         $orderCount = Order::where('user_id', $id)->count();
         $orderPendingCount = Order::where('user_id', $id)->where('delivery_status', 'Pending')->count();
