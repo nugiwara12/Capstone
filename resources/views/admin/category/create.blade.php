@@ -1,4 +1,4 @@
-@extends('layouts.app3')
+<!-- @extends('layouts.app3')
 
 @section('title', 'Create Category')
 
@@ -72,4 +72,4 @@
             });
         };
     </script>
-@endsection
+@endsection -->

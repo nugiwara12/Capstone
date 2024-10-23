@@ -122,7 +122,7 @@
                             <span>USER MANAGEMENT</span>
                         </a>
                         @endif
-                        @if (Auth::user()->role == 'seller')
+                        @if (in_array(Auth::user()->role, ['admin', 'seller']))
                         <!-- PRODUCT -->
                         <a href="{{ route('products') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
                             {{ request()->routeIs('products') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">

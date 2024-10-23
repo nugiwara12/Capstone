@@ -1,4 +1,4 @@
-@extends('layouts.app3')
+<!-- @extends('layouts.app3')
 
 @section('title', 'Show Category')
 
@@ -14,4 +14,4 @@
                 </div>
             </div>
         </div>
-@endsection
+@endsection -->

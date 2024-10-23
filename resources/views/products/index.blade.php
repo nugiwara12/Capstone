@@ -1,74 +1,73 @@
 @extends('layouts.app3')
 
-@section('title', 'List Product')
-<link rel="stylesheet" href="{{ asset('admin_assets/css/dropdown.css') }}">
-
 @section('contents')
-    <div class="d-flex align-items-center justify-content-between">
-        <a href="{{ route('products.create') }}" class="btn btn-primary">Add Product</a>
-    </div>
-    <hr />
 
-    <table class="table table-hover">
-        <thead class="table-primary">
-            <tr>
-                <th>#</th>
-                <th>Image</th>
-                <th>Product Code</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if($product->count() > 0)
-                @foreach($product as $rs)
+<div class="w-full">
+    <div class="min-h-full mt-4">
+        <!-- Success Message -->
+        <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center">
+                <form method="GET" action="{{ route('products') }}" class="flex items-center">
+                    <input type="text" name="search" class="border border-gray-300 rounded px-2 py-1 text-sm" placeholder="Search products" value="{{ request('search') }}">
+                    <button type="submit" class="ml-2 px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-500">Search</button>
+                </form>
+            </div>
+            <a href="{{ route('products.create') }}" class="btn btn-primary">Add Product</a>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-400 border border-gray-300">
+                <thead class="bg-gray-50">
                     <tr>
-                        <td class="align-middle">{{ $loop->iteration }}</td>
-                        <td class="align-middle"><img src="{{ asset('images/' . $rs->main_image) }}" width="100"></td>
-                        <td class="align-middle">{{ $rs->product_code }}</td>
-                        <td class="align-middle">{{ $rs->title }}</td>
-                        <td class="align-middle">{{ $rs->category }}</td>
-                        <td class="align-middle">&#8369; {{ $rs->price }}</td>
-                        <td class="align-middle">
-                            <div class="dropdown">
-                                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton-{{ $rs->id }}" data-bs-toggle="dropdown" aria-expanded="false">
-                                    . . .
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ $rs->id }}">
-                                    <li><a class="dropdown-item" href="{{ route('products.show', $rs->id) }}">Show</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('products.edit', $rs->id) }}">Edit</a></li>
-                                    <li>
-                                        <form id="deleteForm-{{ $rs->id }}" action="{{ route('products.destroy', $rs->id) }}" method="POST" style="display: inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <a class="dropdown-item" href="#" onclick="confirmation(event, {{ $rs->id }})">Delete</a>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">#</th>
+                        <th scope="col" class="px-6 py-3 text-center text-xs font-bold text-black uppercase tracking-wider">Image</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">Product Code</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">Title</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">Category</th>
+                        <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-black uppercase tracking-wider">Price</th>
+                        <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-black uppercase tracking-wider">Action</th>
                     </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td class="text-center" colspan="7">Product not found</td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-400">
+                    @if($product->count() > 0)
+                        @foreach($product as $rs)
+                        <tr class="{{ $loop->even ? 'bg-gray-50' : 'bg-white' }} hover:bg-gray-200">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $loop->iteration }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                <img src="{{ asset('images/' . $rs->main_image) }}" width="50" alt="{{ $rs->title }}">
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $rs->product_code }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $rs->title }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $rs->category }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-black text-right">&#8369; {{ number_format($rs->price, 2) }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-black text-right relative">
+                                <div class="flex justify-end space-x-2">
+                                    <a href="{{ route('products.show', $rs->id) }}" class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white hover:bg-blue-500" title="Show">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{{ route('products.edit', $rs->id) }}" class="flex items-center justify-center w-8 h-8 rounded-full bg-green-600 text-white hover:bg-green-500" title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <form id="deleteForm{{ $rs->id }}" action="{{ route('products.destroy', $rs->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white hover:bg-red-500" onclick="confirmDelete('{{ $rs->id }}')" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="7" class="py-2 px-4 text-center">No products found</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- pagination -->
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script> <!-- Add this line -->
-    
-    <script>
-        function confirmation(event, id) {
-            event.preventDefault(); // Prevent the default link behavior
-            const form = document.getElementById(`deleteForm-${id}`);
-            if (confirm("Are you sure you want to delete this product?")) {
-                form.submit(); // Submit the form if confirmed
-            }
-        }
-    </script>
 @endsection
