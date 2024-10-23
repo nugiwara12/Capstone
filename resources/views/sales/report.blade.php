@@ -39,7 +39,7 @@
                     @foreach($products as $rs)
                     <tr class="hover:bg-gray-50">
                         <td class="px-4 py-2">{{ $loop->iteration }}</td>
-                        <td class="px-4 py-2">{{ $rs->product->title }}</td>
+                        <td class="px-4 py-2">{{ $rs->title }}</td>
                         <td class="px-4 py-2">{{ $rs->total_sold }}</td>
                         <td class="px-4 py-2">&#8369; {{ number_format($rs->total_revenue, 2) }}</td>
                         <td class="px-4 py-2">{{ $startDate->format('Y-m-d') }} to {{ $endDate->format('Y-m-d') }}</td>
