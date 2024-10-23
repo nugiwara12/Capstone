@@ -17,39 +17,57 @@
     @yield('styles')
 </head>
 
-<body>
+<body class="bg-gray-100">
     <!-- Navbar section -->
-    <nav>
-        <div class="nav-middle">
-            <a href="{{ route('best-sellers') }}">
-                <i class="">Best Seller</i>
-            </a>
-
-            <a href="{{ route('shops') }}">
-                <i class="">Products</i>
-            </a>
-
-
-            <a href="{{ route('featured') }}">
-                <i class="">Features</i>
-            </a>
+    <nav class="flex items-center justify-between p-4 bg-white shadow-md">
+        <div class="flex items-center">
+            <img class="h-10 w-auto" src="{{ URL::asset('admin_assets/img/logo/imglogo.png') }}" alt="Logo">
         </div>
 
-        <div class="nav-right">
-            <span class="profile"></span>
-
-            <a href="#">
-                <i class="fa fa-bell"></i>
-            </a>
-
-            <a href="#">
-                <i class="fas fa-ellipsis-h"></i>
-            </a>
+        <div class="hidden md:flex space-x-4">
+            <a href="{{ route('best-sellers') }}" class="text-gray-700 hover:text-blue-500">Best Seller</a>
+            <a href="{{ route('shops') }}" class="text-gray-700 hover:text-blue-500">Products</a>
+            <a href="{{ route('featured') }}" class="text-gray-700 hover:text-blue-500">Features</a>
         </div>
+
+        <div class="relative inline-block text-left">
+        <div class="relative inline-block text-left">
+    <div>
+        <button type="button" class="inline-flex flex-col items-start w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            id="options-menu" aria-haspopup="true" aria-expanded="true" onclick="toggleDropdown()">
+            <span>{{ Auth::user()->name }}</span>
+            <i class="fas fa-chevron-down mt-1"></i>
+        </button>
+    </div>
+
+    <div id="dropdown-menu" class="hidden z-10 absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div class="py-1" role="none">
+            <span class="block px-4 py-2 text-sm text-gray-700 font-bold">{{ Auth::user()->role }}</span>
+            <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown-menu');
+        dropdown.classList.toggle('hidden');
+    }
+</script>
+
     </nav>
 
+    <!-- Mobile Menu -->
+    <div class="md:hidden flex justify-between p-4 bg-white shadow-md">
+        <div class="space-y-4">
+            <a href="{{ route('best-sellers') }}" class="block text-gray-700 hover:text-blue-500">Best Seller</a>
+            <a href="{{ route('shops') }}" class="block text-gray-700 hover:text-blue-500">Products</a>
+            <a href="{{ route('featured') }}" class="block text-gray-700 hover:text-blue-500">Features</a>
+        </div>
+    </div>
+
     <!-- Content section -->
-    <div class="container">
+    <div class="container mx-auto p-4">
         <div>
             @yield('content')
         </div>
