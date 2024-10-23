@@ -155,21 +155,3 @@ Route::get('/sales-report', [SalesReportController::class, 'generateSalesReport'
 // ----------------------------- End Of Route Back Log -----------------------//
 });
 
-
-
-
-Route::get('/', function () {
-    $featured = Product::where('featured', true)->get();
-    $best_seller = Product::where('best_seller', true)->get();
-    $category=Category::all();
-    return view('welcome', compact('featured', 'best_seller', 'category'));
-})->name('/');
-
-
-// ----------------------------- CART -----------------------//
-Route::controller(CartController::class)->group(function () {
-    Route::get( 'cart', 'cart')->name('cart');
-    Route::post('cart/{id}', 'add_to_cart')->name('add_to_cart');
-    Route::get( 'checkout', 'checkout')->name('checkout');
-    Route::delete('destroy/{id}', 'destroy')->name('remove_product');
-});
