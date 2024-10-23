@@ -98,9 +98,10 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
     Route::get('edit/{id}', 'edit')->name('products.edit');
     Route::put('edit/{id}', 'update')->name('products.update');
     Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
-    Route::post('add-to-cart','addToCart')->name('add.to.cart');
-
+    Route::post('restore/{id}', 'restore')->name('products.restore'); // Add restore route here
+    Route::post('add-to-cart', 'addToCart')->name('add.to.cart');
 });
+
 Route::get('products/sold/index', [ProductController::class, 'listSoldProducts'])->name('products.sold.index');
 Route::get('/best-sellers', [ProductController::class, 'bestSellers'])->name('best-sellers');
 Route::get('/featured', [ProductController::class, 'featured'])->name('featured');

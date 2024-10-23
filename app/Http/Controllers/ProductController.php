@@ -25,11 +25,27 @@ class ProductController extends Controller
 
         return view('sales.products.index', compact('product'));
     }
-    public function index()
+    public function index(Request $request)
     {
-        $product = Product::orderBy('created_at', 'DESC')->get();
-        return view('products.index', compact('product'));
-    }
+        $query = Product::query();
+        
+        if ($request->filled('search')) {
+            $searchTerm = '%' . $request->search . '%';
+            
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('id', 'like', $searchTerm)                // Search by ID
+                  ->orWhere('product_code', 'like', $searchTerm)   // Search by Product Code
+                  ->orWhere('title', 'like', $searchTerm)           // Search by Title
+                  ->orWhere('category', 'like', $searchTerm)        // Search by Category
+                  ->orWhere('price', 'like', $searchTerm);          // Search by Price
+            });
+        }
+        
+        // Get only non-deleted products
+        $products = $query->whereNull('deleted_at')->get();
+    
+        return view('products.index', compact('products'));
+    }     
 
     // Display All Product in User page
     public function showProduct()
@@ -321,23 +337,31 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        // Delete images if they exist
-        if ($product->main_image) {
-            unlink(public_path('images/' . $product->main_image));
-        }
-        if ($product->img_gallery) {
-            $galleryImages = json_decode($product->img_gallery);
-            foreach ($galleryImages as $image) {
-                unlink(public_path('images/' . $image));
-            }
-        }
-        if ($product->customizing_image) {
-            unlink(public_path('images/' . $product->customizing_image));
-        }
-        // Delete the product
-        $product->delete();
+        // Find the product by ID
+        $product = Product::find($id);
 
-        return redirect()->route('products')->with('success', 'Product deleted successfully');
+        if (!$product) {
+            return response()->json(['error' => 'Unable to locate the product'], 404);
+        }
+
+        // Set the status to 0 (soft delete)
+        $product->status = 0;
+        $product->save();
+
+        return response()->json(['id' => $id]);
+    }
+
+    public function restore($id)
+    {
+        $product = Product::findOrFail($id);
+        
+        // Check if the product is already marked as deleted
+        if ($product->status === 0) {
+            // Restore the product by setting the status back to 1
+            $product->status = 1;
+            $product->save();
+        }
+
+        return response()->json(['success' => true]);
     }
 }

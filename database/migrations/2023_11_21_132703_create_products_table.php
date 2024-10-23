@@ -29,6 +29,7 @@ return new class extends Migration
             $table->integer('canvas_left')->nullable();
             $table->string('color')->nullable();
             $table->string('total_revenue')->nullable();
+            $table->tinyInteger('status')->default(1); 
             $table->timestamps();
         });
     }
