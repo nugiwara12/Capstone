@@ -42,9 +42,7 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="{{route('home')}}">
-                                <i class="fas fa-home"></i>
-                            </a>
+                           <!-- home -->
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">{{$product->title}}</li>
                     </ol>
@@ -115,23 +113,6 @@
 
                         <div class="col-md-6">
                             <div class="cloth-details-size">
-                                {{-- <div class="product-count">
-                                    <ul>
-                                        <li>
-                                            <img src="../assets/images/gif/fire.gif"
-                                                class="img-fluid blur-up lazyload" alt="image">
-                                            <span class="p-counter">37</span>
-                                            <span class="lang">orders in last 24 hours</span>
-                                        </li>
-                                        <li>
-                                            <img src="../assets/images/gif/person.gif"
-                                                class="img-fluid user_img blur-up lazyload" alt="image">
-                                            <span class="p-counter">44</span>
-                                            <span class="lang">active view this</span>
-                                        </li>
-                                    </ul>
-                                </div> --}}
-
                                 <div class="details-image-concept">
                                     <h2>{{$product->title}}</h2>
                                 </div>
@@ -140,113 +121,31 @@
                                     <span class="label-text">#1 Best seller in</span>
                                     <span class="badge badge-grey-color"> {{$product->category}}</span>
                                 </div>
-
                                 <h3 class="price-detail">&#8369;{{$product->price}}</h3>
-
-                                {{-- <div class="color-image">
-                                    <div class="image-select">
-                                        <h5>Color :</h5>
-                                        <ul class="image-section">
-                                            <li>
-                                                <a href="javascript:void(0)">
-                                                    <img src="../assets/images/fashion/product/front/5.jpg"
-                                                        class="img-fluid blur-up lazyload" alt="">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)">
-                                                    <img src="../assets/images/fashion/product/front/6.jpg"
-                                                        class="img-fluid blur-up lazyload" alt="">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)">
-                                                    <img src="../assets/images/fashion/product/front/7.jpg"
-                                                        class="img-fluid blur-up lazyload" alt="">
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div> --}}
-
                                 <div id="selectSize" class="addeffect-section product-description border-product">
-                                    {{-- <h6 class="product-title size-text">select size
-                                        <a href="javascript:void(0)" data-bs-toggle="modal"
-                                            data-bs-target="#sizemodal">size chart</a>
-                                    </h6>
-
-                                    <h6 class="error-message">please select size</h6>
-
-                                    <div class="size-box">
-                                        <ul>
-                                            <li>
-                                                <a href="javascript:void(0)">s</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)">m</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)">l</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)">xl</a>
-                                            </li>
-                                        </ul>
-                                    </div> --}}
                                     <form method="POST" action="{{ route('add_to_cart', $product->id) }}">
-                                        @csrf
-                                    <h6 class="product-title product-title-2 d-block">quantity</h6>
+                                    @csrf
+                                        <h6 class="product-title product-title-2 d-block">quantity</h6>
 
-                                    <div class="qty-box">
-                                        <div class="input-group">
-                                            <span class="input-group-prepend">
-                                                <button type="button" class="btn quantity-left-minus"
-                                                    onclick="updateQuantity()" data-type="minus" data-field="">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>
-                                            </span>
-                                            <input type="text" name="quantity" id="quantity"
-                                                class="form-control input-number" value="1">
-                                            <span class="input-group-prepend">
-                                                <button type="button" class="btn quantity-right-plus"
-                                                    onclick="updateQuantity()" data-type="plus" data-field="">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
-                                            </span>
+                                        <div class="qty-box">
+                                            <div class="input-group">
+                                                <span class="input-group-prepend">
+                                                    <button type="button" class="btn quantity-left-minus" onclick="updateQuantity()" data-type="minus" data-field="">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </span>
+                                                <input type="text" name="quantity" id="quantity" class="form-control input-number" value="1">
+                                                <span class="input-group-prepend">
+                                                    <button type="button" class="btn quantity-right-plus" onclick="updateQuantity()" data-type="plus" data-field="">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
 
                                 <div class="product-buttons">
-                                    {{-- <a href="javascript:void(0)" class="btn btn-solid">
-                                        <i class="fa fa-bookmark fz-16 me-2"></i>
-                                        <span>Wishlist</span>
-                                    </a> --}}
-                                    {{-- <a href="javascript:void(0)"
-                                        id="cartEffect" class="btn btn-solid hover-solid btn-animation">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        <span>Add To Cart</span>
-                                        <form id="addtocart" method="post"
-                                            action="http://localhost:8000/cart/store">
-                                            <input type="hidden" name="_token"
-                                                value="MkRqEzTGuoSx6LqJUm0OAKxSgNUYt26wTT7RMUZY"> <input
-                                                type="hidden" name="id" value="1">
-                                            <input type="hidden" name="name"
-                                                value="Autem Repudiandae Accusantium Blanditiis">
-                                            <input type="hidden" name="price" value="13">
-                                            <input type="hidden" name="quantity" id="qty" value="1">
-                                        </form>
-                                    </a> --}}
-
-                                    {{-- <x-add-to-cart.cart :product="$product" /> --}}
-
-                                        <!-- Include your product details here -->
-                                        {{-- <input type="hidden" name="product_id" value="{{ $product->id }}"> --}}
-                                        {{-- <input type="number" name="quantity" value="1" hidden> --}}
-                                        <button type="submit" class="btn btn-solid hover-solid btn-animation">
-                                            <i class="fa fa-shopping-cart"></i> <span>Add To Cart</span>
-                                        </button>
-                                    </form>
                                     @if ($product->customizable == true)
                                     <a href="{{route('customize', $product->id)}}" class="btn btn-solid hover-solid btn-animation">
                                         <i class="bi bi-palette"></i> <span>Customize</span>
@@ -254,71 +153,13 @@
                                     @endif
                                 </div>
 
-                                {{-- <ul class="product-count shipping-order">
-                                    <li>
-                                        <img src="../assets/images/gif/truck.png" class="img-fluid blur-up lazyload"
-                                            alt="image">
-                                        <span class="lang">Free shipping for orders above $500 USD</span>
-                                    </li>
-                                </ul> --}}
-
                                 <div class="mt-2 mt-md-3 border-product">
                                     <h6 class="product-title hurry-title d-block">Hurry Up! Left <span>10</span> in
                                         stock</h6>
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" style="width: 78%"></div>
                                     </div>
-                                    {{-- <div class="font-light timer-5">
-                                        <h5>Order in the next to get</h5>
-                                        <ul class="timer1">
-                                            <li class="counter">
-                                                <h5 id="days">&#9251;</h5> Days :
-                                            </li>
-                                            <li class="counter">
-                                                <h5 id="hours">&#9251;</h5> Hour :
-                                            </li>
-                                            <li class="counter">
-                                                <h5 id="minutes">&#9251;</h5> Min :
-                                            </li>
-                                            <li class="counter">
-                                                <h5 id="seconds">&#9251;</h5> Sec
-                                            </li>
-                                        </ul>
-                                    </div> --}}
                                 </div>
-
-                                {{-- <div class="border-product">
-                                    <h6 class="product-title d-block">share it</h6>
-                                    <div class="product-icon">
-                                        <ul class="product-social">
-                                            <li>
-                                                <a href="https://www.facebook.com/">
-                                                    <i class="fab fa-facebook-f"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.google.com/">
-                                                    <i class="fab fa-google-plus-g"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://twitter.com/">
-                                                    <i class="fab fa-twitter"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.instagram.com/">
-                                                    <i class="fab fa-instagram"></i>
-                                                </a>
-                                            </li>
-                                            <li class="pe-0">
-                                                <a href="https://www.google.com/">
-                                                    <i class="fas fa-rss"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -334,15 +175,6 @@
 
                             <button class="nav-link" id="nav-speci-tab" data-bs-toggle="tab" data-bs-target="#speci"
                                 type="button">Specifications</button>
-
-                            {{-- <button class="nav-link" id="nav-size-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-guide" type="button">Sizing Guide</button>
-
-                            <button class="nav-link" id="nav-question-tab" data-bs-toggle="tab"
-                                data-bs-target="#question" type="button">Q & A</button>
-
-                            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab"
-                                data-bs-target="#review" type="button">Review</button> --}}
                         </div>
                     </nav>
 
@@ -438,27 +270,6 @@
                                             class="bg-img blur-up lazyload" alt="">
                                     </a>
                                 </div>
-                                <div class="cart-wrap">
-                                    <ul>
-                                        {{-- <li>
-                                            <a href="javascript:void(0)" class="addtocart-btn"
-                                                data-bs-toggle="modal" data-bs-target="#addtocart">
-                                                <i data-feather="shopping-bag"></i>
-                                            </a>
-                                        </li> --}}
-                                        <li>
-                                            <a href="{{route('product-details', $ap->id)}}">
-                                                <i data-feather="eye"></i>
-                                            </a>
-                                        </li>
-
-                                        {{-- <li>
-                                            <a href="javascript:void(0)" class="wishlist">
-                                                <i data-feather="heart"></i>
-                                            </a>
-                                        </li> --}}
-                                    </ul>
-                                </div>
                             </div>
                             <div class="product-details">
                                 <div class="rating-details">
@@ -485,12 +296,6 @@
                                     <a href="details.php" class="font-default">
                                         <h5>{{$ap->title}}</h5>
                                     </a>
-                                    {{-- <div class="listing-content">
-                                        <span class="font-light">Regular Fit</span>
-                                        <p class="font-light">Dolorem nihil quia qui laudantium expedita aut dolor.
-                                            Qui eligendi voluptatem autem ullam et. Voluptas nemo eum nihil aliquam
-                                            eos aperiam. Numquam dolorum veniam non magnam illum odit deleniti.</p>
-                                    </div> --}}
                                     <h3 class="theme-color">&#8369;{{$ap->price}}</h3>
                                     <button onclick="location.href = 'cart.html';" class="btn listing-content">Add
                                         To Cart</button>

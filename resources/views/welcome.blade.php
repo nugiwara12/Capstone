@@ -131,48 +131,44 @@
             </div>
         </div>
         <div class="row g-sm-4 g-3">
-            <!-- foreach -->
+            @foreach ($featured as $item)
             <div class="col-xl-2 col-lg-2 col-6">
                 <div class="product-box">
                     <div class="img-wrapper">
-                        <a href="#">
-                            <img src="#" class="w-100 bg-img blur-up lazyload" alt="title">
+                        <a href="{{route('product-details', $item->id)}}">
+                            <img src="{{ asset('images/' . $item->main_image) }}" class="w-100 bg-img blur-up lazyload" alt="{{$item->title}}">
                         </a>
                         <div class="circle-shape"></div>
-                        <span class="background-text">title</span>
+                        <span class="background-text">{{$item->category}}</span>
                         <div class="cart-wrap">
                             <ul>
-                                <li><input type="number"></li>
-                                <li><a href="#" class="addtocart-btn"><i data-feather="shopping-cart"></i></a></li>
-                                <li><a href="#"><i data-feather="eye"></i></a></li>
-                                <li><a href="javascript:void(0)" class="wishlist"><i data-feather="heart"></i></a></li>
+                                {{-- <li><input type="number"></li> --}}
+                                {{-- <li><a href="{{route('cart')}}" class="addtocart-btn"><i data-feather="shopping-cart"></i></a></li> --}}
+                                <li><a href="{{route('product-details', $item->id)}}"><i data-feather="eye"></i></a></li>
+                                {{-- <li><a href="javascript:void(0)" class="wishlist"><i data-feather="heart"></i></a></li> --}}
                             </ul>
                         </div>
                     </div>
                     <div class="product-style-3 product-style-chair">
                         <div class="product-title d-block mb-0">
-                            <!-- <div class="r-price">
-                                <div class="theme-color">&#8369;</div>
-                                <div class="main-price">
-                                    <ul class="rating mb-1 mt-0">
-                                        <li><i class="fas fa-star theme-color"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div> -->
-                            <p class="font-light mb-sm-2 mb-0">categpry</p>
+                            <div class="r-price">
+                                <div class="theme-color">&#8369;{{$item->price}}</div>
+                            </div>
+                            <p class="font-light mb-sm-2 mb-0">{{$item->category}}</p>
                             <a href="#" class="font-default">
-                                <h5>title</h5>
+                                <h5>{{$item->title}}</h5>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- endforeach -->
+            @endforeach
+
         </div>
     </div>
 </section>
 <!-- End of Featured Products -->
+
 <!-- category section start -->
 <section class="category-section ratio_40">
     <div class="container-fluid">
@@ -196,18 +192,18 @@
             </div>
             <div class="col-xxl-10 col-lg-9">
                 <div class="category-wrapper category-slider1 white-arrow category-arrow">
-                   <!-- foreach -->
+                    @foreach ($category as $cat)
                     <div>
-                        <a href="#" class="category-wrap category-padding">
-                            <img src="" class="bg-img blur-up lazyload"
+                        <a href="{{route('shop')}}" class="category-wrap category-padding">
+                            <img src="{{ asset('images/' . $cat->image) }}" class="bg-img blur-up lazyload"
                                 alt="category image">
                             <div class="category-content category-text-1">
-                                <h3 class="theme-color">cayegory name</h3>
-                                <span class="text-dark">Fashion</span>
+                                <h3 class="theme-color">{{$cat->category_name}}</h3>
+                                {{-- <span class="text-dark">Fashion</span> --}}
                             </div>
                         </a>
                     </div>
-                    <!-- endforeach -->
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -259,134 +255,37 @@
 
             <div class="our-product products-c">
                 <!-- foreach -->
-                <div>
-                    <div class="product-box">
-                        <div class="img-wrapper">
-                            <a href="#">
-                                <img src="#"
-                            </a>
-                            <div class="circle-shape"></div>
-                            <span class="background-text">Hand</span>
-                            <div class="cart-wrap">
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            <i data-feather="shopping-cart"></i>
-                                        </a>
-                                    </li>
-                                    <li><a href="#"><i data-feather="eye"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="wishlist">
-                                            <i data-feather="heart"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="addtocart-btn" data-bs-toggle="modal"
-                                            data-bs-target="#addtocart">
-                                            <i data-feather="shopping-cart"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-bs-toggle="modal"
-                                            data-bs-target="#quick-view">
-                                            <i data-feather="eye"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="wishlist">
-                                            <i data-feather="heart"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-style-3 product-style-chair">
-                            <div class="product-title d-block mb-0">
-                                <div class="r-price">
-                                    <div class="theme-color">&#8369;</div>
-                                    <div class="main-price">
-                                        <ul class="rating mb-1 mt-0">
-                                            <li>
-                                                <i class="fas fa-star theme-color"></i>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-star theme-color"></i>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-star"></i>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-star"></i>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-star"></i>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <p class="font-light mb-sm-2 mb-0">category</p>
-                                <a href="product/details.html" class="font-default">
-                                    <h5>title</h5>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- endforeach -->
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="ratio_asos overflow-hidden">
-    <div class="container p-sm-0">
-        <div class="row m-0">
-            <div class="col-12 p-0">
-                <div class="title-3 text-center">
-                    <h2>Best Selling Products</h2>
-                    <h5 class="theme-color">Our Collection</h5>
-                </div>
-            </div>
-        </div>
-        <div class="row g-sm-4 g-3">
-            <!-- foreach -->
+                @foreach ($best_seller as $best)
             <div class="col-xl-2 col-lg-2 col-6">
                 <div class="product-box">
                     <div class="img-wrapper">
                         <a href="#">
-                            <img src="" class="w-100 bg-img blur-up lazyload" alt="title">
+                            <img src="{{ asset('images/' . $best->main_image) }}" class="w-100 bg-img blur-up lazyload" alt="{{$best->title}}">
                         </a>
                         <div class="circle-shape"></div>
-                        <span class="background-text">category</span>
+                        <span class="background-text">{{$best->category}}</span>
                         <div class="cart-wrap">
                             <ul>
-                                <li><a href="#" class="addtocart-btn"><i data-feather="shopping-cart"></i></a></li>
-                                <li><a href="#"><i data-feather="eye"></i></a></li>
-                                <li><a href="" class="wishlist"><i data-feather="heart"></i></a></li>
+                               <!-- add to cart -->
                             </ul>
                         </div>
                     </div>
                     <div class="product-style-3 product-style-chair">
                         <div class="product-title d-block mb-0">
                             <div class="r-price">
-                                <div class="theme-color">&#8369;</div>
-                                <div class="main-price">
-                                    <ul class="rating mb-1 mt-0">
-                                        <li><i class="fas fa-star theme-color"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                    </ul>
-                                </div>
+                                <div class="theme-color">&#8369;{{$best->price}}</div>
                             </div>
-                            <p class="font-light mb-sm-2 mb-0">category</p>
+                            <p class="font-light mb-sm-2 mb-0">{{$best->category}}</p>
                             <a href="#" class="font-default">
-                                <h5>title</h5>
+                                <h5>{{$best->title}}</h5>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- endforeach -->
+            @endforeach
+                <!-- endforeach -->
+            </div>
         </div>
     </div>
 </section>

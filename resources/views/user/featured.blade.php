@@ -1,6 +1,4 @@
-@extends('layouts.app4') <!-- Extends the navbar layout -->
 
-@section('content')
     <div class="middle-panel p-6">
         <h1 class="text-3xl font-bold mb-4 text-center">Feature Items</h1>
 
@@ -18,4 +16,3 @@
             @endforeach
         </div>
     </div>
-@endsection

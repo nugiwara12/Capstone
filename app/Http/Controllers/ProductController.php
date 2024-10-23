@@ -49,6 +49,34 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
+    public function index2(Request $request)
+    {
+        $query = Product::query();
+
+        // Check for search input
+        if ($request->filled('search')) {
+            $searchTerm = '%' . $request->search . '%';
+
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('id', 'like', $searchTerm)
+                ->orWhere('product_code', 'like', $searchTerm)
+                ->orWhere('title', 'like', $searchTerm)
+                ->orWhere('category', 'like', $searchTerm)
+                ->orWhere('price', 'like', $searchTerm);
+            });
+        }
+
+        // Get only non-deleted products with pagination
+        $perPage = $request->input('per_page', 10);
+        $products = $query->whereNull('deleted_at')->paginate($perPage);
+
+        // Fetch featured products
+        $featuredProducts = Product::where('is_featured', true)->whereNull('deleted_at')->take(4)->get();
+
+        // Ensure both variables are passed to the view
+        return view('products.index2', compact('products', 'featuredProducts'));
+    }
+    
     // Display All Product in User page
     public function showProduct()
     {
