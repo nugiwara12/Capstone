@@ -41,7 +41,7 @@ class SalesReportController extends Controller
     
 
         // Generate the PDF using the sales data and load the view
-        $pdf = PDF::loadView('sales.report', compact('products', 'startDate', 'endDate'));
+        $pdf = PDF::loadView('components.sales.report', compact('products', 'startDate', 'endDate'));
 
         // Return the PDF for download
         return $pdf->download('sales_report.pdf');

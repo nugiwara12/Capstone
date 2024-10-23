@@ -142,8 +142,7 @@
                             <span>CATEGORY</span>
                         </a>
                         @endif
-                        @if (Auth::user()->role == 'admin')
-                        <!-- Sales -->
+                        <!-- @if (Auth::user()->role == 'admin')
                         <a href="{{ route('products.sold.index') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
                             {{ request()->routeIs('products.sold.index') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
                             <span aria-hidden="true" class="p-2 py-2 rounded-lg {{ request()->routeIs('products.sold.index') ? 'bg-blue-800' : 'bg-blue-200' }}">
@@ -151,7 +150,7 @@
                             </span>
                             <span>SALES</span>
                         </a>
-                        @endif
+                        @endif -->
                         @if (Auth::user()->role == 'admin')
                          <!-- ACTIVITY LOGS -->
                          <a href="{{ route('activity/log') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 

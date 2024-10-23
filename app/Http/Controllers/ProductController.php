@@ -23,7 +23,7 @@ class ProductController extends Controller
     {
         $product = Product::where('item_sold', '>', 0)->get();
 
-        return view('sales.products.index', compact('product'));
+        return view('components.sales.filter-date', compact('product'));
     }
 
     public function index(Request $request)

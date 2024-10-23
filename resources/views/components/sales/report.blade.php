@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Report</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 text-gray-800">
 
+<div class="bg-gray-100 text-gray-800">
     <div class="container mx-auto my-8">
         <h1 class="text-3xl font-bold mb-4">Sales Report</h1>
         <p class="mb-4 text-lg">From: <span class="font-semibold">{{ $startDate->format('Y-m-d') }}</span> To: <span class="font-semibold">{{ $endDate->format('Y-m-d') }}</span></p>
@@ -48,8 +40,6 @@
                 </tbody>
             </table>
         </div>
-
     </div>
+</div>
 
-</body>
-</html>
