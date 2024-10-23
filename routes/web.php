@@ -165,6 +165,11 @@ Route::get('/', function () {
     return view('welcome', compact('featured', 'best_seller', 'category'));
 })->name('/');
 
+// ----------------------------- STRIPE PAYMENT -----------------------//
+Route::controller(StripePaymentController::class)->group(function(){
+    Route::post('stripe', 'stripePost')->name('stripe.post');
+});
+
 
 // ----------------------------- CART -----------------------//
 Route::controller(CartController::class)->group(function () {
