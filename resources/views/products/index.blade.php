@@ -83,6 +83,26 @@
         </div>
     </div>
     <!-- pagination -->
+         <!-- Show Entries Form -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+        <div class="flex items-center mb-2 md:mb-0">
+            <form method="GET" action="{{ route('products') }}" class="flex items-center">
+                <label for="per_page" class="mr-2 text-sm mt-2">Show</label>
+                <select name="per_page" id="per_page" class="border border-gray-300 rounded px-2 py-1 text-sm" onchange="this.form.submit()">
+                    <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
+                    <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                    <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                    <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                </select>
+            </form>
+            <span class="text-sm ml-2">of <strong>{{ $products->total() }}</strong> entries</span>
+        </div>
+
+        <!-- Pagination Section -->
+        <div class="md:mt-0">
+            <x-product-pagination :products="$products" />
+        </div>
+    </div>
 </div>
 
 <script>

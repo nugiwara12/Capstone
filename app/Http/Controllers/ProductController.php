@@ -25,6 +25,7 @@ class ProductController extends Controller
 
         return view('sales.products.index', compact('product'));
     }
+
     public function index(Request $request)
     {
         $query = Product::query();
@@ -41,11 +42,12 @@ class ProductController extends Controller
             });
         }
         
-        // Get only non-deleted products
-        $products = $query->whereNull('deleted_at')->get();
-    
+        // Get only non-deleted products with pagination
+        $perPage = $request->input('per_page', 10); // Default to 10 products per page
+        $products = $query->whereNull('deleted_at')->paginate($perPage);
+        
         return view('products.index', compact('products'));
-    }     
+    }
 
     // Display All Product in User page
     public function showProduct()
