@@ -10,6 +10,8 @@
         integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{ asset('admin_assets/css/users.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
     <title>GawangGamat</title>
 </head>
 
@@ -27,12 +29,9 @@
             </a>
 
             <a href="#">
-                <i class="fa fa-user-friends"></i>
+                <i class="">Products</i>
             </a>
 
-            <a href="#">
-                <i class="fa fa-play-circle"></i>
-            </a>
 
             <a href="{{ route('featured') }}">
                 <i class="">Features</i>
@@ -54,7 +53,9 @@
 
     <!-- Content section -->
     <div class="container">
-        @yield('content') <!-- Content will be injected here -->
+        <div>
+            @yield('content')
+        </div>
     </div>
 </body>
 
