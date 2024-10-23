@@ -47,6 +47,10 @@ Route::get('dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Route for user index
+Route::get('/users', [AuthController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('user.index');
 //->middleware('redirect.authenticated');
 
 require __DIR__.'/auth.php';
@@ -59,7 +63,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'loginAction')->name('login.action');
     Route::get('logout', 'logout')->middleware('auth')->name('logout');
 });
-
 // ----------------------------- SHOP -----------------------//
 Route::controller(ShopController::class)->group(function () {
     Route::get('shop', 'shop')->name('shop');
@@ -99,6 +102,8 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
 
 });
 Route::get('products/sold/index', [ProductController::class, 'listSoldProducts'])->name('products.sold.index');
+Route::get('/best-sellers', [ProductController::class, 'bestSellers'])->name('best-sellers');
+Route::get('/featured', [ProductController::class, 'featured'])->name('featured');
 
 
 // USERMANAGEMENT ROUTES
