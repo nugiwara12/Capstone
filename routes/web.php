@@ -165,6 +165,11 @@ Route::get('/', function () {
     return view('welcome', compact('featured', 'best_seller', 'category'));
 })->name('/');
 
+Route::controller(ShopController::class)->group(function () {
+    Route::get( 'my_account', 'my_account')->name('my_account');
+    Route::get( 'thankyou', 'thankYou')->name('thank-you');
+    Route::get( 'customize/{id}', 'customize')->name('customize');
+});
 
 // ----------------------------- CART -----------------------//
 Route::controller(CartController::class)->group(function () {
