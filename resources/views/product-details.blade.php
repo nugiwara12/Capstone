@@ -1,4 +1,4 @@
-@extends('layouts.app3')
+@extends('layouts.app5')
 
 @section('contents')
 @if(Session::has('success'))
@@ -41,9 +41,6 @@
                 <h3>{{$product->title}}</h3>
                 <nav>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                           <!-- home -->
-                        </li>
                         <li class="breadcrumb-item active" aria-current="page">{{$product->title}}</li>
                     </ol>
                 </nav>
@@ -113,6 +110,23 @@
 
                         <div class="col-md-6">
                             <div class="cloth-details-size">
+                                {{-- <div class="product-count">
+                                    <ul>
+                                        <li>
+                                            <img src="../assets/images/gif/fire.gif"
+                                                class="img-fluid blur-up lazyload" alt="image">
+                                            <span class="p-counter">37</span>
+                                            <span class="lang">orders in last 24 hours</span>
+                                        </li>
+                                        <li>
+                                            <img src="../assets/images/gif/person.gif"
+                                                class="img-fluid user_img blur-up lazyload" alt="image">
+                                            <span class="p-counter">44</span>
+                                            <span class="lang">active view this</span>
+                                        </li>
+                                    </ul>
+                                </div> --}}
+
                                 <div class="details-image-concept">
                                     <h2>{{$product->title}}</h2>
                                 </div>
@@ -121,31 +135,94 @@
                                     <span class="label-text">#1 Best seller in</span>
                                     <span class="badge badge-grey-color"> {{$product->category}}</span>
                                 </div>
-                                <h3 class="price-detail">&#8369;{{$product->price}}</h3>
-                                <div id="selectSize" class="addeffect-section product-description border-product">
-                                    <form method="POST" action="{{ route('add_to_cart', $product->id) }}">
-                                    @csrf
-                                        <h6 class="product-title product-title-2 d-block">quantity</h6>
 
-                                        <div class="qty-box">
-                                            <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <button type="button" class="btn quantity-left-minus" onclick="updateQuantity()" data-type="minus" data-field="">
-                                                        <i class="fas fa-minus"></i>
-                                                    </button>
-                                                </span>
-                                                <input type="text" name="quantity" id="quantity" class="form-control input-number" value="1">
-                                                <span class="input-group-prepend">
-                                                    <button type="button" class="btn quantity-right-plus" onclick="updateQuantity()" data-type="plus" data-field="">
-                                                        <i class="fas fa-plus"></i>
-                                                    </button>
-                                                </span>
-                                            </div>
+                                <h3 class="price-detail">&#8369;{{$product->price}}</h3>
+
+                                {{-- <div class="color-image">
+                                    <div class="image-select">
+                                        <h5>Color :</h5>
+                                        <ul class="image-section">
+                                            <li>
+                                                <a href="javascript:void(0)">
+                                                    <img src="../assets/images/fashion/product/front/5.jpg"
+                                                        class="img-fluid blur-up lazyload" alt="">
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)">
+                                                    <img src="../assets/images/fashion/product/front/6.jpg"
+                                                        class="img-fluid blur-up lazyload" alt="">
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)">
+                                                    <img src="../assets/images/fashion/product/front/7.jpg"
+                                                        class="img-fluid blur-up lazyload" alt="">
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div> --}}
+
+                                <div id="selectSize" class="addeffect-section product-description border-product">
+                                    {{-- <h6 class="product-title size-text">select size
+                                        <a href="javascript:void(0)" data-bs-toggle="modal"
+                                            data-bs-target="#sizemodal">size chart</a>
+                                    </h6>
+
+                                    <h6 class="error-message">please select size</h6>
+
+                                    <div class="size-box">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)">s</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)">m</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)">l</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)">xl</a>
+                                            </li>
+                                        </ul>
+                                    </div> --}}
+                                    <form method="POST" action="{{ route('addToCart', $product->id) }}">
+                                        @csrf
+                                    <h6 class="product-title product-title-2 d-block">quantity</h6>
+
+                                    <div class="qty-box">
+                                        <div class="input-group">
+                                            <span class="input-group-prepend">
+                                                <button type="button" class="btn quantity-left-minus"
+                                                    onclick="updateQuantity()" data-type="minus" data-field="">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                            </span>
+                                            <input type="text" name="quantity" id="quantity"
+                                                class="form-control input-number" value="1">
+                                            <span class="input-group-prepend">
+                                                <button type="button" class="btn quantity-right-plus"
+                                                    onclick="updateQuantity()" data-type="plus" data-field="">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </span>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
 
                                 <div class="product-buttons">
+                                    
+
+                                   
+
+                                        <!-- Include your product details here -->
+                                        
+                                        <button type="submit" class="btn btn-solid hover-solid btn-animation">
+                                            <i class="fa fa-shopping-cart"></i> <span>Add To Cart</span>
+                                        </button>
+                                
                                     @if ($product->customizable == true)
                                     <a href="{{route('customize', $product->id)}}" class="btn btn-solid hover-solid btn-animation">
                                         <i class="bi bi-palette"></i> <span>Customize</span>
@@ -153,13 +230,18 @@
                                     @endif
                                 </div>
 
+                                
+
                                 <div class="mt-2 mt-md-3 border-product">
                                     <h6 class="product-title hurry-title d-block">Hurry Up! Left <span>10</span> in
                                         stock</h6>
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" style="width: 78%"></div>
                                     </div>
+                            
                                 </div>
+
+                                
                             </div>
                         </div>
                     </div>
@@ -175,6 +257,7 @@
 
                             <button class="nav-link" id="nav-speci-tab" data-bs-toggle="tab" data-bs-target="#speci"
                                 type="button">Specifications</button>
+
                         </div>
                     </nav>
 
@@ -269,6 +352,16 @@
                                         <img src="{{ asset('images/' . $ap->main_image) }}"
                                             class="bg-img blur-up lazyload" alt="">
                                     </a>
+                                </div>
+                                <div class="cart-wrap">
+                                    <ul>
+                                        <li>
+                                            <a href="{{route('product-details', $ap->id)}}">
+                                                <i data-feather="eye"></i>
+                                            </a>
+                                        </li>
+
+                                    </ul>
                                 </div>
                             </div>
                             <div class="product-details">

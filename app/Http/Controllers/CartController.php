@@ -7,8 +7,16 @@ use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class CartController extends Controller
 {
+    public function cart(){
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'You cannot access the cart if you are not logged in');
+        }
+        $id = Auth::user()->id;
+        $cart = Cart::where('user_id', $id)->get();
+        return view('cart', compact('cart'));
+    }
     // Show the product details
     public function show($id)
     {
@@ -47,5 +55,32 @@ class ProductController extends Controller
         );
 
         return redirect()->route('product-details', ['id' => $id])->with('success', 'Product added to cart successfully');
+    }
+    public function checkout() {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'You cannot access the checkout if you are not logged in');
+        }
+
+        $id = Auth::user()->id;
+        $cart = Cart::where('user_id', $id)->get();
+
+        // Check if the cart is empty
+        if ($cart->isEmpty()) {
+            return redirect()->route('cart')->with('error', 'Your cart is empty. Please add items before checking out.');
+        }
+
+        return view('checkout', compact('cart'));
+    }
+    public function destroy(string $id)
+    {
+        $cart = cart::findOrFail($id);
+
+        //Soft Delete
+        $cart->delete();
+
+        // Force Delete
+        // $cart->forceDelete();
+
+        return redirect()->back();
     }
 }
