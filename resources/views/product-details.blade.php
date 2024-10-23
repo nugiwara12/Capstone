@@ -1,4 +1,4 @@
-@extends('layouts.app3')
+@extends('layouts.app2')
 
 @section('contents')
 @if(Session::has('success'))
