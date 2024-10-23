@@ -333,6 +333,14 @@ class ProductController extends Controller
         // Return view with the products
         return view('user.featured', compact('products'));
     }
+    public function shops()
+    {
+        // Fetch the products you want to display
+        $products = Product::all(); // or any specific query you need
+
+        // Pass the products to the view
+        return view('user.productshop', compact('products')); // Replace 'your_view_name' with your actual view name
+    }
 
     /**
      * Remove the specified resource from storage.

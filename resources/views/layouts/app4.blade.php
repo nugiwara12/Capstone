@@ -25,7 +25,7 @@
                 <i class="">Best Seller</i>
             </a>
 
-            <a href="#">
+            <a href="{{ route('shops') }}">
                 <i class="">Products</i>
             </a>
 

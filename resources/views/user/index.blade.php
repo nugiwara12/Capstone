@@ -9,8 +9,8 @@
                 <i class="">Best Seller</i>
             </a>
 
-            <a href="javascript:void(0)">
-                <i class="fa fa-user-friends"></i>
+            <a href="{{ route('shops') }}">
+                <i class="">Product</i>
             </a>
 
             <a href="{{ route('featured') }}">
