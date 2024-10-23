@@ -151,7 +151,7 @@
                     </div>
                     <div class="product-style-3 product-style-chair">
                         <div class="product-title d-block mb-0">
-                            <div class="r-price">
+                            <!-- <div class="r-price">
                                 <div class="theme-color">&#8369;</div>
                                 <div class="main-price">
                                     <ul class="rating mb-1 mt-0">
@@ -159,7 +159,7 @@
                                         <li><i class="fas fa-star"></i></li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> -->
                             <p class="font-light mb-sm-2 mb-0">categpry</p>
                             <a href="#" class="font-default">
                                 <h5>title</h5>

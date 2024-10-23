@@ -2,111 +2,152 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $category = Category::orderBy('created_at', 'DESC')->get();
+        // Determine how many entries to show per page
+        $perPage = $request->input('per_page', 10); // Default to 10 if not specified
+    
+        // Get the search term
+        $search = $request->input('search');
+    
+        // Retrieve categories with pagination and search functionality
+        $categories = Category::when($search, function ($query, $search) {
+            // Search for both category name and ID
+            return $query->where(function($query) use ($search) {
+                $query->where('category_name', 'like', '%' . $search . '%')
+                      ->orWhere('id', $search); // Search by ID
+            });
+        })
+        ->orderBy('created_at', 'DESC')
+        ->paginate($perPage);
+    
+        return view('admin.category.index', compact('categories', 'search')); // Pass search to view
+    }     
 
-        return view('admin.category.index', compact('category'));
-    }
     public function create()
     {
         return view('admin.category.create');
     }
+
     public function store(Request $request)
     {
         // Validate the incoming request
-        $data= $request->validate([
-            'category_name' => 'required|string|max:255', // Assuming you're validating a name field
+        $validatedData = $request->validate([
+            'category_name' => 'required|string|max:255', // Validate the category name
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the image
         ]);
 
+        // Handle image upload
         if ($request->hasFile('image')) {
             $categoryImage = $request->file('image');
             $categoryImageName = time() . '_category.' . $categoryImage->getClientOriginalExtension();
             $categoryImage->move(public_path('images'), $categoryImageName);
-            $data['image'] = $categoryImageName;
+            $validatedData['image'] = $categoryImageName;
         }
 
-        // Create the category with the image path if applicable
-        Category::create($data);
+        // Create the category
+        $category = Category::create($validatedData);
 
-        return redirect()->route('category')->with('success', 'Category added successfully');
+        // Return JSON response for Ajax
+        return response()->json([
+            'success' => true,
+            'message' => 'Category added successfully!',
+            'category' => $category
+        ]);
     }
 
-    // public function showCategory(){
-    //     $category = Category::all();
-    //     return view ('welcome', compact('category'));
-    // }
     public function show($id)
     {
-        $category = Category::findOrFail($id);
-        return view('admin.category.show', compact('category'));
+        // Use findOrFail to handle invalid IDs
+        try {
+            $category = Category::findOrFail($id);
+            return view('admin.category.show', compact('category'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors('Category not found');
+        }
     }
 
-    public function edit($id){
-        $category = Category::findOrFail($id);
-        return view('admin.category.edit', compact('category'));
+    public function edit(string $id)
+    {
+        try {
+            $category = Category::findOrFail($id);
+            return view('admin.category.edit', compact('category'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors('Category not found');
+        }
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         // Find the existing category
-        $category = Category::findOrFail($id);
+        try {
+            $category = Category::findOrFail($id);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Category not found'], 404);
+        }
 
         // Validate the incoming request
-        $data = $request->validate([
-            'category_name' => 'required|string|max:255', // Assuming you're validating a name field
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the image
+        $validatedData = $request->validate([
+            'category_name' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Check if a new image has been uploaded
+        // Handle new image upload
         if ($request->hasFile('image')) {
-            // Delete the old image if it exists
             if ($category->image) {
                 $oldImagePath = public_path('images/' . $category->image);
                 if (file_exists($oldImagePath)) {
-                    unlink($oldImagePath); // Delete the old image file
+                    unlink($oldImagePath);
                 }
             }
 
-            // Upload the new image
             $categoryImage = $request->file('image');
             $categoryImageName = time() . '_category.' . $categoryImage->getClientOriginalExtension();
             $categoryImage->move(public_path('images'), $categoryImageName);
-            $data['image'] = $categoryImageName; // Set the new image name
+            $validatedData['image'] = $categoryImageName;
         } else {
-            // If no new image, keep the old image
-            $data['image'] = $category->image;
+            $validatedData['image'] = $category->image;
         }
 
-        // Update the category with the new data
-        $category->update($data);
+        // Update the category
+        $category->update($validatedData);
 
-        return redirect()->route('category')->with('success', 'Category updated successfully');
+        // Return JSON response for Ajax
+        return response()->json([
+            'success' => true,
+            'message' => 'Category updated successfully!',
+            'category' => $category
+        ]);
     }
 
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        $category = Category::findOrFail($id);
+        try {
+            $category = Category::findOrFail($id);
 
-        //Soft Delete
-        $category->delete();
-        // Force Delete
-        // $category->forceDelete();
+            // Optionally delete the image associated with the category
+            if ($category->image) {
+                $imagePath = public_path('images/' . $category->image);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
 
-        return redirect()->route('category')->with('success', 'Category deleted successfully');
+            // Delete the category
+            $category->delete();
+
+            // Return JSON response for Ajax
+            return response()->json([
+                'success' => true,
+                'message' => 'Category deleted successfully!',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Category not found'], 404);
+        }
     }
-
-    //View all soft deleted category
-    // public function restore(string $id)
-    // {
-    //     $category = Category::withTrashed()->findOrFail($id);
-    //     $category->restore();
-    //     return redirect()->route('');
-    // }
 }

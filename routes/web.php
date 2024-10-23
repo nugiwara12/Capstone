@@ -76,14 +76,15 @@ Route::delete('/contacts/{id}', [ContactUsFormController::class, 'destroy'])->na
 
 // ----------------------------- Category -----------------------//
 Route::controller(CategoryController::class)->prefix('categories')->group(function () {
-    Route::get('', 'index') ->name('category');
+    Route::get('', 'index')->name('category');
     Route::get('create', 'create')->name('category.create');
     Route::post('store', 'store')->name('category.store');
     Route::get('show/{id}', 'show')->name('category.show');
-    Route::get('edit/{id}', 'edit')->name('category.edit');
-    Route::put('edit/{id}', 'update')->name('category.update');
+    Route::get('{id}/edit', 'edit')->name('category.edit');
+    Route::put('{id}', 'update')->name('category.update'); // Adjusted to match the route
     Route::delete('destroy/{id}', 'destroy')->name('category.destroy');
 });
+
 
 // ----------------------------- PRODUCT -----------------------//
 Route::controller(ProductController::class)->prefix('products')->group(function () {

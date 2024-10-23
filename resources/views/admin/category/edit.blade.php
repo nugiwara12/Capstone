@@ -1,7 +1,5 @@
 @extends('layouts.app3')
 
-@section('title', 'Edit Category')
-
 @section('contents')
     <hr />
     <form action="{{ route('category.update', $category->id) }}" method="POST" enctype="multipart/form-data">
