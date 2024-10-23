@@ -13,16 +13,13 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
     <title>GawangGamat</title>
+
+    @yield('styles')
 </head>
 
 <body>
     <!-- Navbar section -->
     <nav>
-        <div class="nav-left">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo">
-            <input type="text" placeholder="Search Mediabook..">
-        </div>
-
         <div class="nav-middle">
             <a href="{{ route('best-sellers') }}">
                 <i class="">Best Seller</i>
@@ -57,6 +54,7 @@
             @yield('content')
         </div>
     </div>
-</body>
 
+    @yield('scripts')
+</body>
 </html>
