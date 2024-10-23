@@ -18,6 +18,12 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
+    public function index()
+    {
+        // Fetch users from the database (or however you want to handle this)
+        $users = User::all(); // Example: Get all users
+        return view('user.index', compact('users')); // Adjust view path as needed
+    }
     public function register()
     {
         return view('auth/register');
@@ -38,8 +44,9 @@ class AuthController extends Controller
             'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:11'], // Adjusted for 11-digit phone numbers
             'description' => ['required', 'string', 'max:255'],
         ])->validate();
-
-        User::create([
+    
+        // Create user and store the instance
+        $user = User::create([
             'name' => $request->name,
             'role' => $request->role,
             'email' => $request->email,
@@ -48,9 +55,18 @@ class AuthController extends Controller
             'phone' => $request->phone, // Add phone field
             'level' => 'Admin',
         ]);
-
-        return redirect()->route('dashboard');
+    
+        // Log in the user
+        Auth::login($user);
+    
+        // Redirect based on user role
+        if ($user->role === 'users') {
+            return redirect()->route('user.index');
+        } else {
+            return redirect()->route('dashboard');
+        }
     }
+    
 
     public function login()
     {
@@ -84,7 +100,14 @@ class AuthController extends Controller
         ];
         DB::table('activity_logs')->insert($activityLog);
 
-        return redirect()->route('dashboard'); // Redirect to the dashboard or desired page
+        $user = Auth::user(); 
+        
+       // Redirect based on user role
+       if ($user->role === 'users') {
+        return redirect()->route('user.index');
+    } else {
+        return redirect()->route('dashboard');
+    } // Redirect to the dashboard or desired page
     }
 
     public function logout(Request $request)
