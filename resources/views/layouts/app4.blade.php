@@ -22,7 +22,7 @@
         </div>
 
         <div class="nav-middle">
-            <a href="{{ route('best-sellers') }}" class="active">
+            <a href="{{ route('best-sellers') }}">
                 <i class="">Best Seller</i>
             </a>
 

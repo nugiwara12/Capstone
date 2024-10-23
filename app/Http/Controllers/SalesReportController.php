@@ -34,11 +34,11 @@ class SalesReportController extends Controller
         }
 
         // Fetch the sales data
-        $products = Product::with('product')
-                        ->whereBetween('created_at', [$startDate, $endDate])
-                        ->selectRaw('product_code, sum(quantity) as total_sold, sum(price) as total_revenue')
-                        ->groupBy('product_code')
-                        ->get();
+        $products = Product::whereBetween('created_at', [$startDate, $endDate])
+        ->selectRaw('product_code, sum(quantity) as total_sold, sum(price) as total_revenue')
+        ->groupBy('product_code')
+        ->get();
+    
 
         // Generate the PDF using the sales data and load the view
         $pdf = PDF::loadView('sales.report', compact('products', 'startDate', 'endDate'));
