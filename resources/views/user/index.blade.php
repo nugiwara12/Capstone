@@ -29,12 +29,8 @@
                 <i class="fa fa-user-friends"></i>
             </a>
 
-            <a href="#">
-                <i class="fa fa-play-circle"></i>
-            </a>
-
-            <a href="#">
-                <i class="fa fa-users"></i>
+            <a href="{{ route('featured') }}">
+                <i class="">Features</i>
             </a>
         </div>
 
