@@ -103,11 +103,14 @@ class ManagementUserController extends Controller
   
         return redirect()->route('usermanagement')->with('success', 'UserManagement deleted successfully');
     }
-    public function activity()
+    public function activity(Request $request)
     {
-        $activityLog = DB::table('activity_logs')->get();
-        return view ('activity_log', compact('activityLog'));
+        $entries = $request->input('entries', 10); // Default to 10 entries if none selected
+        $activityLog = DB::table('activity_logs')->paginate($entries);
+        
+        return view('activity_log', compact('activityLog'));
     }
+    
     public function changePasswordView()
     {
         return view('usermanagement.change_password');

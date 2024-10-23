@@ -1,70 +1,59 @@
 @extends('layouts.app3')
 
-@section('title', 'Activity Logs')
-
 @section('contents')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
-<div id="main">
-    <header class="mb-3">
-        <a href="#" class="burger-btn d-block d-xl-none">
-            <i class="bi bi-justify fs-3"></i>
-        </a>
-    </header>
-    <div class="page-heading">
-        <div class="page-title">
-            <div class="row">
-                <div class="col-12 col-md-6 order-md-1 order-last">
-                </div>
-
-        <section class="section">
-            <div class="card">
-                <div class="card-header">
-                    Log Datatable
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped" id="table1">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Description</th>
-                                <th>Date Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($activityLog as $key => $item)
-                                <tr>
-                                    <td>{{ ++$key }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->email }}</td>
-                                    <td>{{ $item->description }}</td>
-                                    <td>{{ $item->date_time }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <footer>
-                    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
-                    <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-                    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-                    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-                    <script>
-                        new DataTable('#table1', {
-                            lengthMenu: [
-                                [10, 25, 50, -1],
-                                [10, 25, 50, 'All']
-                            ]
-                        });
-                    </script>
-
-                    </footer>
-                </div>
+<div class="page-heading w-full">
+    <section class="section">
+        <div class="bg-white shadow-md rounded-lg">
+            <div class="p-4 border-b border-gray-200 flex justify-between">
+                <h4 class="font-semibold text-lg">Log Datatable</h4>
+                <!-- Show Entries Form -->
+                <form method="GET" action="{{ route('activity/log') }}" class="flex items-center space-x-2">
+                    <label for="entries" class="text-sm mt-2">Show</label>
+                    <select name="entries" id="entries" class="border border-gray-300 rounded p-1 text-sm" onchange="this.form.submit()">
+                        <option value="10" {{ request('entries') == 10 ? 'selected' : '' }}>10</option>
+                        <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
+                        <option value="50" {{ request('entries') == 50 ? 'selected' : '' }}>50</option>
+                        <option value="100" {{ request('entries') == 100 ? 'selected' : '' }}>100</option>
+                    </select>
+                    <span class="text-sm">entries</span>
+                </form>
             </div>
-        </section>
-    </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-400 border border-gray-300">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">#</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">Name</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">Email</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">Description</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">Date Time</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-400">
+                        @if($activityLog->count() > 0)
+                            @foreach($activityLog as $key => $item)
+                            <tr class="{{ $loop->even ? 'bg-gray-50' : 'bg-white' }} hover:bg-gray-200">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ ++$key }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $item->name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $item->email }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $item->description }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $item->date_time }}</td>
+                            </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="5" class="py-2 px-4 text-center">No activity logs found</td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
 
+            <!-- Pagination Links -->
+            <div class="p-4">
+                {{ $activityLog->appends(['entries' => request('entries')])->links() }}
+            </div>
+        </div>
+    </section>
+</div>
 @endsection
