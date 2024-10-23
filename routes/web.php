@@ -101,6 +101,8 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
 
 });
 Route::get('products/sold/index', [ProductController::class, 'listSoldProducts'])->name('products.sold.index');
+Route::get('/best-sellers', [ProductController::class, 'bestSellers'])->name('best-sellers');
+Route::get('/featured', [ProductController::class, 'featured'])->name('featured');
 
 
 // USERMANAGEMENT ROUTES

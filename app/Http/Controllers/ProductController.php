@@ -298,6 +298,24 @@ class ProductController extends Controller
         return redirect()->route('products')->with('success', 'Product updated successfully');
     }
 
+    public function bestSellers()
+    {
+        // Fetch best-selling products from the database
+        $products = Product::where('best_seller', true)->get();
+
+        // Return the view with the products data
+        return view('user.best-seller', compact('products'));
+    }
+
+    public function featured()
+    {
+        // Fetch all best seller products
+        $products = Product::where('featured', true)->get();
+
+        // Return view with the products
+        return view('user.featured', compact('products'));
+    }
+
     /**
      * Remove the specified resource from storage.
      */

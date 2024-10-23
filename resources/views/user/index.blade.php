@@ -21,8 +21,8 @@
         </div>
 
         <div class="nav-middle">
-            <a href="#" class="active">
-                <i class="fa fa-home"></i>
+            <a href="{{ route('best-sellers') }}" class="active">
+                <i class="">Best Seller</i>
             </a>
 
             <a href="#">

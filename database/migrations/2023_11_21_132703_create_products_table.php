@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('price');
-            $table->string('item_sold');
+            $table->string('item_sold')->nullable();
             $table->string('product_code');
             $table->text('description');
             $table->string('category');
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->integer('canvas_top')->nullable();
             $table->integer('canvas_left')->nullable();
             $table->string('color')->nullable();
-            $table->string('total_revenue');
+            $table->string('total_revenue')->nullable();
             $table->timestamps();
         });
     }
