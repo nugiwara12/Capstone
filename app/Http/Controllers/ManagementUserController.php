@@ -47,6 +47,7 @@ class ManagementUserController extends Controller
             'name' => ['required', 'regex:/^[A-z a-z]+$/', 'string', 'max:255'],
             'role' => 'required|string|max:255',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:11'],
             'password' => 'required|confirmed',
             'description' => ['required', 'string', 'max:255'],
         ]);
@@ -55,6 +56,7 @@ class ManagementUserController extends Controller
             'name' => $validatedData['name'],
             'role' => $validatedData['role'],
             'email' => $validatedData['email'],
+            'phone' => $validatedData['phone'],
             'password' => Hash::make($validatedData['password']),
             'description' => $validatedData['description'],
         ]);
