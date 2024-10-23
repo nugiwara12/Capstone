@@ -371,23 +371,6 @@
                             <div class="product-details">
                                 <div class="rating-details">
                                     <span class="font-light grid-content">{{$product->category}}</span>
-                                    <ul class="rating mt-0">
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                    </ul>
                                 </div>
                                 <div class="main-price">
                                     <a href="product/nihil-beatae-sit-sed.html" class="font-default">
@@ -404,60 +387,12 @@
                         </div>
                     </div>
                     @endforeach
-
-
-
-
-
-
-
-
-
                 </div>
-                <nav class="page-section">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="javascript:void(0)" aria-label="Previous"
-                                style="color:#6c757d;">
-                                <span aria-hidden="true">
-                                    <i class="fas fa-chevron-left"></i>
-                                </span>
-                            </a>
-                        </li>
-
-
-                        <li class="page-item active">
-                            <a class="page-link" href="javascript:void(0)">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="shop-1.html?page=2">2</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a href="shop-1.html?page=2" class="page-link" aria-label="Next">
-                                <span aria-hidden="true">
-                                    <i class="fas fa-chevron-right"></i>
-                                </span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </nav>
-
+                <!-- pagination -->
             </div>
         </div>
     </div>
 </section>
 
 <div id="qvmodal"></div>
-
-<form id="frmFilter" method="GET">
-    <input type="hidden" id="page" name="page" value="1">
-    <input type="hidden" id="size" name="size" value="12">
-    <input type="hidden" id="prange" name="prange" value="">
-    <input type="hidden" id="order" name="order" value="-1">
-    <input type="hidden" id="brands" name="brands" value="">
-    <input type="hidden" id="categories" name="categories" value="">
-</form>
-
 @endsection
