@@ -29,31 +29,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $query = Product::query();
-        
-        if ($request->filled('search')) {
-            $searchTerm = '%' . $request->search . '%';
-            
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('id', 'like', $searchTerm)                // Search by ID
-                  ->orWhere('product_code', 'like', $searchTerm)   // Search by Product Code
-                  ->orWhere('title', 'like', $searchTerm)           // Search by Title
-                  ->orWhere('category', 'like', $searchTerm)        // Search by Category
-                  ->orWhere('price', 'like', $searchTerm);          // Search by Price
-            });
-        }
-        
-        // Get only non-deleted products with pagination
-        $perPage = $request->input('per_page', 10); // Default to 10 products per page
-        $products = $query->whereNull('deleted_at')->paginate($perPage);
-        
-        return view('products.index', compact('products'));
-    }
 
-    public function index2(Request $request)
-    {
-        $query = Product::query();
-
-        // Check for search input
         if ($request->filled('search')) {
             $searchTerm = '%' . $request->search . '%';
 
@@ -67,14 +43,10 @@ class ProductController extends Controller
         }
 
         // Get only non-deleted products with pagination
-        $perPage = $request->input('per_page', 10);
+        $perPage = $request->input('per_page', 10); // Default to 10 products per page
         $products = $query->whereNull('deleted_at')->paginate($perPage);
 
-        // Fetch featured products
-        $featuredProducts = Product::where('is_featured', true)->whereNull('deleted_at')->take(4)->get();
-
-        // Ensure both variables are passed to the view
-        return view('products.index2', compact('products', 'featuredProducts'));
+        return view('products.index', compact('products'));
     }
     
     // Display All Product in User page
@@ -351,8 +323,26 @@ class ProductController extends Controller
         $products = Product::where('best_seller', true)->get();
 
         // Return the view with the products data
-        return view('user.best-seller', compact('products'));
+        return view('products.best-seller', compact('products'));
     }
+
+    public function allProducts(Request $request)
+    {
+        // Fetch the number of products per page from the request, default to 2
+        $perPage = $request->input('per_page', 2); // Adjust the default number as needed
+        
+        // Fetch active products with pagination
+        $products = Product::where('status', 1)->paginate($perPage);
+    
+        // Check if the request is AJAX
+        if ($request->ajax()) {
+            return view('partials.products', compact('products'))->render(); // Return only the products
+        }
+    
+        // Return the full view for non-AJAX requests
+        return view('products.all-product', compact('products'));
+    }
+    
 
     public function featured()
     {
@@ -360,7 +350,7 @@ class ProductController extends Controller
         $products = Product::where('featured', true)->get();
 
         // Return view with the products
-        return view('user.featured', compact('products'));
+        return view('products.featured', compact('products'));
     }
     public function shops()
     {
@@ -368,7 +358,7 @@ class ProductController extends Controller
         $products = Product::all(); // or any specific query you need
 
         // Pass the products to the view
-        return view('user.productshop', compact('products')); // Replace 'your_view_name' with your actual view name
+        return view('products.productshop', compact('products')); // Replace 'your_view_name' with your actual view name
     }
 
     public function storingcustom(Request $request)

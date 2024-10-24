@@ -95,6 +95,7 @@ Route::controller(CategoryController::class)->prefix('categories')->group(functi
 Route::controller(ProductController::class)->prefix('products')->group(function () {
     Route::get('', 'index')->name('products');
     Route::get('create', 'create')->name('products.create');
+    Route::get('create', 'create')->name('products.create');
     Route::post('store', 'store')->name('products.store');
     Route::get('show/{id}', 'show')->name('products.show');
     Route::get('edit/{id}', 'edit')->name('products.edit');
@@ -105,6 +106,7 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
 });
 Route::post('/save-image', [ProductController::class, 'storingcustom'])->name('image.save');
 
+Route::get('/all-products', [ProductController::class, 'allProducts'])->name('all-products');
 Route::get('products/sold/index', [ProductController::class, 'listSoldProducts'])->name('products.sold.index');
 Route::get('/best-sellers', [ProductController::class, 'bestSellers'])->name('best-sellers');
 Route::get('/featured', [ProductController::class, 'featured'])->name('featured');

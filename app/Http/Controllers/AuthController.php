@@ -22,7 +22,7 @@ class AuthController extends Controller
     {
         // Fetch users from the database (or however you want to handle this)
         $users = User::all(); // Example: Get all users
-        return view('user.index', compact('users')); // Adjust view path as needed
+        return view('products.all-product', compact('users')); // Adjust view path as needed
     }
     public function register()
     {
@@ -41,7 +41,7 @@ class AuthController extends Controller
                 ->numbers(1)
                 ->uncompromised()],
             'password_confirmation' => 'required',
-            'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'digit:11'], // Adjusted for 11-digit phone numbers
+            'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'digits:11'], // Adjusted for 11-digit phone numbers
             'description' => ['required', 'string', 'max:255'],
         ])->validate();
     
