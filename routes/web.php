@@ -187,6 +187,7 @@ Route::controller(StripePaymentController::class)->group(function(){
     Route::post('stripe', 'stripePost')->name('stripe.post');
 });
 Route::get('thankyou', [SubscriptionController::class, 'showThankYou'])->name('emails.subscription_confirmation');
+Route::get('thankyou', [ContactUsFormController::class, 'showThankYou'])->name('emails.contact_us');
 
 // ----------------------------- End Of Route Back Log -----------------------//
 });
