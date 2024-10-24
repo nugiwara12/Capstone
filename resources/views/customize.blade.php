@@ -496,33 +496,69 @@ function updateTotalCharge() {
             });
 
         // Function to download the #container content (image + canvas) as a PNG
-        function downloadCanvas() {
-            // Select the container div to capture (image + canvas)
-            const container = document.getElementById('container');
-            
-            // Use html2canvas to take a screenshot of the container div
-            html2canvas(container, {
-                allowTaint: true,
-                useCORS: true,
-                scale: 2 // Increase resolution of the output image
-            }).then(canvas => {
-                // Convert the captured screenshot to a PNG data URL
-                const dataURL = canvas.toDataURL('image/png');
+            // function downloadCanvas() {
+            //     // Select the container div to capture (image + canvas)
+            //     const container = document.getElementById('container');
                 
-                // Create a download link
-                const link = document.createElement('a');
-                link.href = dataURL;
-                link.download = 'my_design.png'; // Set the downloaded file name
-                
-                // Trigger the download
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            });
-        }
+            //     // Use html2canvas to take a screenshot of the container div
+            //     html2canvas(container, {
+            //         allowTaint: true,
+            //         useCORS: true,
+            //         scale: 2 // Increase resolution of the output image
+            //     }).then(canvas => {
+            //         // Convert the captured screenshot to a PNG data URL
+            //         const dataURL = canvas.toDataURL('image/png');
+                    
+            //         // Create a download link
+            //         const link = document.createElement('a');
+            //         link.href = dataURL;
+            //         link.download = 'my_design.png'; // Set the downloaded file name
+                    
+            //         // Trigger the download
+            //         document.body.appendChild(link);
+            //         link.click();
+            //         document.body.removeChild(link);
+            //     });
+            // }
+            function downloadCanvas() {
+    const container = document.getElementById('container');
+    
+    html2canvas(container, {
+        allowTaint: true,
+        useCORS: true,
+        scale: 2
+    }).then(canvas => {
+        const dataURL = canvas.toDataURL('image/png');
 
+        // Create a download link
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'my_design.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
 
-
+        // Send the image data to the server for saving in the database
+        fetch('/save-image', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token for Laravel
+            },
+            body: JSON.stringify({
+                image: dataURL
+            })
+        }).then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  alert('Image saved successfully!');
+              } else {
+                  alert('Image saving failed!');
+              }
+          })
+          .catch(error => console.error('Error:', error));
+    });
+}
 
     </script>
 

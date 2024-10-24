@@ -22,7 +22,7 @@ class AuthController extends Controller
     {
         // Fetch users from the database (or however you want to handle this)
         $users = User::all(); // Example: Get all users
-        return view('products.all-product', compact('users')); // Adjust view path as needed
+        return view('user.index', compact('users')); // Adjust view path as needed
     }
     public function register()
     {

@@ -68,7 +68,8 @@ class ProductController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in 
+     * .
      */
     public function store(Request $request)
     {
@@ -324,23 +325,6 @@ class ProductController extends Controller
         // Return the view with the products data
         return view('products.best-seller', compact('products'));
     }
-
-    public function allProducts(Request $request)
-    {
-        // Fetch the number of products per page from the request, default to 2
-        $perPage = $request->input('per_page', 2); // Adjust the default number as needed
-        
-        // Fetch active products with pagination
-        $products = Product::where('status', 1)->paginate($perPage);
-    
-        // Check if the request is AJAX
-        if ($request->ajax()) {
-            return view('partials.products', compact('products'))->render(); // Return only the products
-        }
-    
-        // Return the full view for non-AJAX requests
-        return view('welcome', compact('products'));
-    }
     
 
     public function featured()
@@ -358,6 +342,41 @@ class ProductController extends Controller
 
         // Pass the products to the view
         return view('products.productshop', compact('products')); // Replace 'your_view_name' with your actual view name
+    }
+
+    public function storingcustom(Request $request)
+    {
+        // Validate that the request contains 'image'
+        $request->validate([
+            'img_gallery' => 'required|string',
+        ]);
+
+        // Extract base64 image data
+        $imageData = $request->input('img_gallery');
+
+          // Remove 'data:image/png;base64,' from the string
+          $img_gallery = str_replace('data:image/png;base64,', '', $imageData);
+          $img_gallery = str_replace(' ', '+', $img_gallery);
+        // Decode the base64 image
+        $decodedImage = base64_decode($image);
+        if ($decodedImage === false) {
+            return response()->json(['success' => false, 'message' => 'Image decoding failed!'], 400);
+        }
+        
+        $galleryImageName = 'image_' . time() . '.png';
+        // Save the image file in the 'public/images' directory
+    $imagePath = public_path('images/' . $galleryImageName);
+    file_put_contents($imagePath, $decodedImage); // Save the decoded image to the file
+
+        
+
+        // Store the file path in the 'img_gallery' database table
+        Product::create([
+            'img_gallery' => 'images/' . $galleryImageName, // Store relative path
+        ]);
+
+        // Return a success response
+        return response()->json(['success' => true, 'message' => 'Image saved successfully!']);
     }
 
     /**
