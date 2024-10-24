@@ -93,6 +93,9 @@
     </div>
 </section>
 
+<div id="qvmodal"></div>
+
+
 <script>
     function filterProducts(categoryId) {
         // Get all product boxes
@@ -121,5 +124,4 @@
     }
 </script>
 
-<div id="qvmodal"></div>
 @endsection
