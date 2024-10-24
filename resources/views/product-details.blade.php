@@ -65,6 +65,9 @@
                                                 class="img-fluid blur-up lazyload" alt="">
                                         </div>
                                         {{-- Start of image gallery --}}
+                                        <div id="gallery" class="img-gallery">
+    <!-- Images will be dynamically inserted here -->
+</div>
                                         <div>
                                             <img src="../assets/images/fashion/2.jpg"
                                                 class="img-fluid blur-up lazyload" alt="">
@@ -88,6 +91,10 @@
                                                 class="img-fluid w-100 image_zoom_cls-0 blur-up lazyload" alt="">
                                         </div>
                                         {{-- Start of image gallery --}}
+                                        <div id="gallery" class="img-gallery">
+    <!-- Images will be dynamically inserted here -->
+</div>
+
                                         <div>
                                             <img src="../assets/images/fashion/2.jpg" id="zoom_02"
                                                 data-zoom-image="assets/images/fashion/2.jpg"
@@ -403,4 +410,6 @@
     </div>
 </section>
 <!-- product section end -->
+
+
 @endsection

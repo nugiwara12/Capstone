@@ -561,5 +561,44 @@ function updateTotalCharge() {
 }
 
     </script>
+    <script>
+        <script>
+    fetch('/save-image', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    },
+    body: JSON.stringify({
+        img_gallery: dataURL // Send the base64 data here
+    })
+})
+.then(response => response.json())
+.then(data => {
+    if (data.success) {
+        alert('Image saved successfully!');
+        
+        // Assuming you have an element to display the images
+        const gallery = document.getElementById('gallery');
+
+        // Clear existing images if you want to refresh
+        gallery.innerHTML = '';
+
+        // Append each image to the gallery
+        data.images.forEach(image => {
+            const imgElement = document.createElement('img');
+            imgElement.src = '/' + image.img_gallery; // Use the relative path
+            imgElement.alt = 'Gallery Image';
+            imgElement.classList.add('gallery-image'); // Add any styling you need
+            gallery.appendChild(imgElement);
+        });
+    } else {
+        alert('Image saving failed!');
+    }
+})
+.catch(error => console.error('Error:', error));
+
+</script>
+    </script>
 
 @endsection
