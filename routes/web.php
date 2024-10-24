@@ -25,6 +25,8 @@ use App\Http\Controllers\SalesReportController;
 
 
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

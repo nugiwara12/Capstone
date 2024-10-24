@@ -34,4 +34,16 @@ class SubscriptionController extends Controller
             'message' => 'You have successfully subscribed!',
         ]);
     }
+
+    public function sendEmail()
+    {
+        $name = [
+            'title' => 'Mail from Laravel',
+            'body' => 'This is for testing SMTP mail in Laravel.'
+        ];
+
+        Mail::to('jacinto011200@gmail.com')->send(new SendEmail($name));
+
+        return "Email Sent!";
+    }
 }
