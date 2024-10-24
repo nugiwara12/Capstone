@@ -337,20 +337,28 @@ class ProductController extends Controller
     }
 
     public function shop(Request $request) {
-        // Load products with their associated category
-        $products = Product::with('category')->get();
-        $categories = Category::all(); // Load all categories
+        // Get selected categories from the request
+        $selectedCategories = $request->input('categories', []);
     
-        // Debugging: Check products and their categories
+        // Load products with their associated category, filtering by selected categories if any
+        $products = Product::with('category')
+            ->when(!empty($selectedCategories), function ($query) use ($selectedCategories) {
+                return $query->whereIn('category_id', $selectedCategories);
+            })
+            ->get();
+    
+        // Load all categories
+        $categories = Category::all();
+    
+        // Debugging: Log products without categories
         foreach ($products as $product) {
             if (!$product->category) {
                 \Log::info('Product without category:', ['product_id' => $product->id]);
             }
         }
-        
-        return view('shop', compact('products', 'categories'));
-    }
     
+        return view('shop', compact('products', 'categories'));
+    }      
     
     public function filterProducts(Request $request)
     {
