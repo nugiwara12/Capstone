@@ -38,13 +38,12 @@
                     <div class="like">
                         <div class="like_icon">₱ {{ number_format($product->price, 2, ',', '.') }}</div>
                         <div class="like_icon">
-                            <i class="fa-solid fa-share"></i>
-                            <p>add to chrt</p>
+                            <button class="btn listing-content"><a class="text-white bg-yellow-500 px-4 py-2 rounded-lg" href="{{route('product-details', $product->id)}}">Add To Cart </a></button>
                         </div>
                     </div>
                     <hr>
                     <div class="comment_warpper">
-                        <img src="image/profile.png">
+                        <img src="{{url('admin_assets/img/pink.jpg')}}">
                         <div class="circle"></div>
                         <div class="comment_search">
                             <input type="text" placeholder="Write a comment">
