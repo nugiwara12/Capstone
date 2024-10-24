@@ -15,7 +15,7 @@ class Product extends Model
         'price',
         'product_code',
         'description',
-        'category',
+        'category_id', // Change from 'category' to 'category_id'
         'quantity',
         'image',
         'customizable',
@@ -30,6 +30,11 @@ class Product extends Model
         'featured',
         'item_sold',
         'total_revenue',
-
     ];
+
+    // Define the relationship to Category
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
 }
+

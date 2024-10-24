@@ -335,13 +335,33 @@ class ProductController extends Controller
         // Return view with the products
         return view('products.featured', compact('products'));
     }
-    public function shops()
-    {
-        // Fetch the products you want to display
-        $products = Product::all(); // or any specific query you need
 
-        // Pass the products to the view
-        return view('shop', compact('products')); // Replace 'your_view_name' with your actual view name
+    public function shop(Request $request) {
+        // Load products with their associated category
+        $products = Product::with('category')->get();
+        $categories = Category::all(); // Load all categories
+    
+        // Debugging: Check products and their categories
+        foreach ($products as $product) {
+            if (!$product->category) {
+                \Log::info('Product without category:', ['product_id' => $product->id]);
+            }
+        }
+        
+        return view('shop', compact('products', 'categories'));
+    }
+    
+    
+    public function filterProducts(Request $request)
+    {
+        $categoryIds = $request->get('categories', []);
+    
+        // Fetch products based on selected categories
+        $products = Product::when($categoryIds, function ($query) use ($categoryIds) {
+            return $query->whereIn('category_id', $categoryIds);
+        })->get();
+    
+        return response()->json($products);
     }
 
     public function allProducts(Request $request)
