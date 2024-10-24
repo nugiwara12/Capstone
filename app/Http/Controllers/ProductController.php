@@ -344,14 +344,17 @@ class ProductController extends Controller
         return view('shop', compact('products')); // Replace 'your_view_name' with your actual view name
     }
 
-    public function allProducts()
+    public function allProducts(Request $request)
     {
-        // Fetch the products you want to display
-        $products = Product::all(); // or any specific query you need
-
-        // Pass the products to the view
-        return view('user.index', compact('products')); // Replace 'your_view_name' with your actual view name
-    }
+        $perPage = $request->input('per_page', 2); // Default to 2 products per page
+        $products = Product::where('status', 1)->paginate($perPage);
+    
+        if ($request->ajax()) {
+            return view('partials.products', compact('products'))->render();
+        }
+    
+        return view('user.index', compact('products'));
+    }    
 
     public function storingcustom(Request $request)
     {
