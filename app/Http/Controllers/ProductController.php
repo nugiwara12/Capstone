@@ -339,7 +339,7 @@ class ProductController extends Controller
         }
     
         // Return the full view for non-AJAX requests
-        return view('products.all-product', compact('products'));
+        return view('welcome', compact('products'));
     }
     
 

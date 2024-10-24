@@ -50,9 +50,9 @@ Route::get('dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route for user index
-Route::get('/users', [AuthController::class, 'index'])
+Route::get('/welcome', [AuthController::class, 'index'])
     ->middleware(['auth', 'verified'])
-    ->name('user.index');
+    ->name('welcome');
 //->middleware('redirect.authenticated');
 
 require __DIR__.'/auth.php';
@@ -155,16 +155,12 @@ Route::post('/subscribe', [SubscriptionController::class, 'store'])->name('subsc
 
 Route::get('/sales-report', [SalesReportController::class, 'generateSalesReport'])->name('sales.report');
 
+Route::controller(ShopController::class)->group(function () {
+    Route::get( 'my_account', 'my_account')->name('my_account');
+    Route::get( 'thankyou', 'thankYou')->name('thank-you');
+    Route::get( 'customize/{id}', 'customize')->name('customize');
+});
 
-
-
-
-
-    Route::controller(ShopController::class)->group(function () {
-        Route::get( 'my_account', 'my_account')->name('my_account');
-        Route::get( 'thankyou', 'thankYou')->name('thank-you');
-        Route::get( 'customize/{id}', 'customize')->name('customize');
-    });
 Route::get('/', function () {
     $featured = Product::where('featured', true)->get();
     $best_seller = Product::where('best_seller', true)->get();
