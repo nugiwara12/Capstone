@@ -103,6 +103,7 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
     Route::post('restore/{id}', 'restore')->name('products.restore'); // Add restore route here
     Route::post('add-to-cart', 'addToCart')->name('add.to.cart');
 });
+Route::post('/save-image', [ProductController::class, 'storingcustom'])->name('image.save');
 
 Route::get('products/sold/index', [ProductController::class, 'listSoldProducts'])->name('products.sold.index');
 Route::get('/best-sellers', [ProductController::class, 'bestSellers'])->name('best-sellers');
