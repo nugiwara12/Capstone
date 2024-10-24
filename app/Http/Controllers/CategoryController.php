@@ -14,13 +14,13 @@ class CategoryController extends Controller
         $category = Category::all();
     
         // Fetch products based on selected categories
-        $products = Product::when($request->input('category'), function ($query) use ($request) {
+        $product = Product::when($request->input('category'), function ($query) use ($request) {
             return $query->whereIn('category', $request->input('category')); // Ensure 'category_id' exists in the products table
         }, function ($query) {
             return $query; // If no category is selected, return all products
         })->get();
     
-        return view('shop', compact('products', 'category'));
+        return view('shop', compact('product', 'category'));
     }
     
 

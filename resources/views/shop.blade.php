@@ -42,7 +42,7 @@
                                     </li>
                                     @endforeach
                                 </ul>
-                                <button type="submit" class="btn btn-primary mt-3">Filter</button>
+                                <button type="submit" class="btn btn-primary h-8 w-auto px-3 py-1 text-sm mt-4">Filter</button>
                             </form> 
                         </div>
                     </div>
@@ -52,34 +52,35 @@
                 <!-- Product section -->
                 
                 <div class="category-product col-lg-9 col-12 ratio_30">
-    <div class="row g-sm-4 g-3 row-cols-lg-4 row-cols-md-3 row-cols-2 mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section">
-        @foreach ($products as $product)
-        <div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="{{ route('product-details', $product->id) }}">
-                            <img src="{{ asset('images/' . $product->main_image) }}" class="bg-img blur-up lazyload" alt="">
-                        </a>
+                    <div class="row g-sm-4 g-3 row-cols-lg-4 row-cols-md-3 row-cols-2 mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section">
+                        @foreach ($product as $products) <!-- Make sure to use the correct loop variable here -->
+                        <div>
+                            <div class="product-box">
+                                <div class="img-wrapper">
+                                    <div class="front">
+                                        <a href="{{ route('product-details', $products->id) }}"> <!-- Change $product to $products -->
+                                            <img src="{{ asset('images/' . $products->main_image) }}" class="bg-img blur-up lazyload" alt=""> <!-- Change $product to $products -->
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-details">
+                                    <div class="main-price">
+                                        <a href="{{ route('product-details', $products->id) }}" class="font-default">
+                                            <h5 class="ms-0">{{ $products->title }}</h5> <!-- Change $product to $products -->
+                                        </a>
+                                        <h3 class="theme-color">&#8369;{{ $products->price }}</h3> <!-- Change $product to $products -->
+                                        <button class="btn listing-content">
+                                            <a class="text-white" href="{{ route('product-details', $products->id) }}">Add To Cart</a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
-                <div class="product-details">
-                    <div class="main-price">
-                        <a href="{{ route('product-details', $product->id) }}" class="font-default">
-                            <h5 class="ms-0">{{ $product->title }}</h5>
-                        </a>
-                        <h3 class="theme-color">&#8369;{{ $product->price }}</h3>
-                        <button class="btn listing-content"><a class="text-white" href="{{ route('product-details', $product->id) }}">Add To Cart</a></button>
-                    </div>
+
                 </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
-</div>
-
-
-
                 </div>
                 <!-- Pagination -->
             </div>
