@@ -188,6 +188,6 @@ Route::controller(StripePaymentController::class)->group(function(){
 });
 Route::get('thankyou', [SubscriptionController::class, 'showThankYou'])->name('emails.subscription_confirmation');
 Route::get('thankyou', [ContactUsFormController::class, 'showThankYou'])->name('emails.contact_us');
-
+Route::get('/filtering', [CategoryController::class, 'filtering'])->name('filtering');
 // ----------------------------- End Of Route Back Log -----------------------//
 });

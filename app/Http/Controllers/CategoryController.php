@@ -4,9 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
 
 class CategoryController extends Controller
 {
+    public function filtering(Request $request)
+    {
+        // Get all categories
+        $category = Category::all();
+    
+        // Fetch products based on selected categories
+        $products = Product::when($request->input('category'), function ($query) use ($request) {
+            return $query->whereIn('category', $request->input('category')); // Ensure 'category_id' exists in the products table
+        }, function ($query) {
+            return $query; // If no category is selected, return all products
+        })->get();
+    
+        return view('shop', compact('products', 'category'));
+    }
+    
+
+    
+
     public function index(Request $request)
     {
         // Determine how many entries to show per page
