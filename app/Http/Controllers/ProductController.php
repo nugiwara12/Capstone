@@ -378,39 +378,47 @@ class ProductController extends Controller
 
     public function storingcustom(Request $request)
     {
-        // Validate that the request contains 'image'
+        // Validate that the request contains 'img_gallery'
         $request->validate([
             'img_gallery' => 'required|string',
         ]);
-
+    
         // Extract base64 image data
         $imageData = $request->input('img_gallery');
-
-          // Remove 'data:image/png;base64,' from the string
-          $img_gallery = str_replace('data:image/png;base64,', '', $imageData);
-          $img_gallery = str_replace(' ', '+', $img_gallery);
+    
+        // Remove 'data:image/png;base64,' from the string
+        $img_gallery = str_replace('data:image/png;base64,', '', $imageData);
+        $img_gallery = str_replace(' ', '+', $img_gallery);
+    
         // Decode the base64 image
-        $decodedImage = base64_decode($image);
+        $decodedImage = base64_decode($img_gallery);
         if ($decodedImage === false) {
             return response()->json(['success' => false, 'message' => 'Image decoding failed!'], 400);
         }
-        
-        $galleryImageName = 'image_' . time() . '.png';
+    
+        // Create images directory if it doesn't exist
+        if (!file_exists(public_path('images'))) {
+            mkdir(public_path('images'), 0755, true);
+        }
+    
         // Save the image file in the 'public/images' directory
-    $imagePath = public_path('images/' . $galleryImageName);
-    file_put_contents($imagePath, $decodedImage); // Save the decoded image to the file
-
-        
-
+        $galleryImageName = 'image_' . time() . '.png';
+        $imagePath = public_path('images/' . $galleryImageName);
+        file_put_contents($imagePath, $decodedImage); // Save the decoded image to the file
+    
         // Store the file path in the 'img_gallery' database table
         Product::create([
             'img_gallery' => 'images/' . $galleryImageName, // Store relative path
         ]);
-
-        // Return a success response
-        return response()->json(['success' => true, 'message' => 'Image saved successfully!']);
+    
+        // Fetch all images for the gallery
+        $images = Product::all(); // Assuming you have a Product model for img_gallery
+    
+        // Return a success response along with the images
+        return response()->json(['success' => true, 'message' => 'Image saved successfully!', 'images' => $images]);
     }
-
+    
+    
     /**
      * Remove the specified resource from storage.
      */
