@@ -41,7 +41,7 @@ class AuthController extends Controller
                 ->numbers(1)
                 ->uncompromised()],
             'password_confirmation' => 'required',
-            'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:11'], // Adjusted for 11-digit phone numbers
+            'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'digit:11'], // Adjusted for 11-digit phone numbers
             'description' => ['required', 'string', 'max:255'],
         ])->validate();
     
@@ -103,11 +103,11 @@ class AuthController extends Controller
         $user = Auth::user(); 
         
        // Redirect based on user role
-       if ($user->role === 'users') {
+        if ($user->role === 'users') {
         return redirect()->route('user.index');
-    } else {
-        return redirect()->route('dashboard');
-    } // Redirect to the dashboard or desired page
+        } else {
+            return redirect()->route('dashboard');
+        } // Redirect to the dashboard or desired page
     }
 
     public function logout(Request $request)

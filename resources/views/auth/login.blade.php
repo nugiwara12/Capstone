@@ -18,7 +18,9 @@
     <div class="flex justify-center">
       <div class="w-full max-w-lg"> <!-- Adjusted the column width -->
         <!-- Logo for login -->
-        <img class="mx-auto mb-4 w-32" src="{{ asset('admin_assets/img/logo/imglogo.png') }}" alt="logo">
+        <a href="/">
+          <img class="mx-auto mb-4 w-32" src="{{ asset('admin_assets/img/logo/imglogo.png') }}" alt="logo">
+        </a>
         <div class="bg-white shadow-lg rounded-lg overflow-hidden my-5">
           <div class="p-6">
             <div class="text-center">
@@ -27,6 +29,14 @@
                 {{ Session::get('success') }}
               </div>
               @endif
+
+              @if ($errors->any())
+                  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                      <strong class="font-bold">Whoops!</strong>
+                      <span class="block sm:inline">{{ $errors->first() }}</span>
+                  </div>
+              @endif
+
               <h1 class="text-2xl font-semibold text-gray-900 mb-4">Login</h1>
             </div>
 
@@ -34,12 +44,17 @@
               @csrf
               <div class="form-group">
                 <label for="exampleInputEmail" class="block text-sm font-medium text-gray-700">Email Address</label>
-                <input name="email" type="email" id="exampleInputEmail" placeholder="Enter Email Address..." class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <input name="email" type="email" id="exampleInputEmail" placeholder="Enter Email Address..." class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
               </div>
 
               <div class="form-group">
                 <label for="exampleInputPassword" class="block text-sm font-medium text-gray-700">Password</label>
-                <input name="password" type="password" id="exampleInputPassword" placeholder="Password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <div class="relative">
+                  <input name="password" type="password" id="exampleInputPassword" placeholder="Password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                  <button type="button" id="togglePassword" onclick="togglePasswordVisibility()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </div>
                 <div class="text-xs text-gray-500 italic">Never share your password with anyone else.</div>
               </div>
 
@@ -61,5 +76,21 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('exampleInputPassword');
+      const toggleButton = document.getElementById('togglePassword');
+
+      // Toggle password visibility
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleButton.innerHTML = '<i class="fas fa-eye-slash"></i>'; // Change icon
+      } else {
+        passwordInput.type = 'password';
+        toggleButton.innerHTML = '<i class="fas fa-eye"></i>'; // Change icon
+      }
+    }
+  </script>
 </body>
 </html>
