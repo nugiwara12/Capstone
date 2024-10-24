@@ -156,8 +156,7 @@ Route::post('/subscribe', [SubscriptionController::class, 'store'])->name('subsc
 Route::get('/sales-report', [SalesReportController::class, 'generateSalesReport'])->name('sales.report');
 
 
-// ----------------------------- End Of Route Back Log -----------------------//
-});
+
 
 
 
@@ -189,4 +188,8 @@ Route::controller(CartController::class)->group(function () {
 
 Route::controller(StripePaymentController::class)->group(function(){
     Route::post('stripe', 'stripePost')->name('stripe.post');
+});
+Route::get('thankyou', [SubscriptionController::class, 'showThankYou'])->name('emails.subscription_confirmation');
+
+// ----------------------------- End Of Route Back Log -----------------------//
 });

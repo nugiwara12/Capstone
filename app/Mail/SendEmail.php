@@ -3,26 +3,24 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SubscriptionConfirmation extends Mailable
+class SendEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $name;
+    public $email;
 
     /**
      * Create a new message instance.
      *
+     * @param string $email
      * @return void
      */
-    public function __construct($name)
+    public function __construct($email)
     {
-        $this->name = $name;
+        $this->email = $email;
     }
 
     /**
@@ -32,7 +30,10 @@ class SubscriptionConfirmation extends Mailable
      */
     public function build()
     {
-        return $this->subject('Thank You for Subscribing with the email')
-                    ->view('emails.subscription_confirmation');
+        return $this->subject('Subscription Successful!')
+                    ->view('emails.subscription_confirmation')
+                    ->with([
+                        'email' => $this->email,
+                    ]);
     }
 }

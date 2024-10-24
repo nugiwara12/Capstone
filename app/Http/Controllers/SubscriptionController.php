@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Subscriber;
+use App\Mail\SendEmail;
+use Illuminate\Support\Facades\Mail;
 
 class SubscriptionController extends Controller
 {
     public function store(Request $request)
     {
-        // Validate the request
+        // Validate the request without checking for uniqueness
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
         ]);
@@ -23,10 +25,13 @@ class SubscriptionController extends Controller
             ], 422); // Unprocessable Entity
         }
 
-        // Create a new subscriber record
-        Subscriber::create([
+        // Create a new subscriber record (even if the email already exists)
+        $subscriber = Subscriber::create([
             'email' => $request->input('email'),
         ]);
+
+        // Send Thank You email
+        Mail::to($subscriber->email)->send(new SendEmail($subscriber->email));
 
         // Return a JSON response indicating success
         return response()->json([
@@ -35,15 +40,8 @@ class SubscriptionController extends Controller
         ]);
     }
 
-    public function sendEmail()
+    public function showThankYou()
     {
-        $name = [
-            'title' => 'Mail from Laravel',
-            'body' => 'This is for testing SMTP mail in Laravel.'
-        ];
-
-        Mail::to('jacinto011200@gmail.com')->send(new SendEmail($name));
-
-        return "Email Sent!";
+        return view('emails.subscription_confirmation');
     }
 }
