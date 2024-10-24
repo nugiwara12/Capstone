@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Subscription Confirmation</h1>
-    <p>Thank you for subscribing with the email: <strong>{{ $email }}</strong>.</p>
+    <p>Thank you for subscribing with the email.</p>
     <p>You will now receive updates and notifications.</p>
 </body>
 </html>

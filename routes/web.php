@@ -188,3 +188,4 @@ Route::controller(CartController::class)->group(function () {
 Route::controller(StripePaymentController::class)->group(function(){
     Route::post('stripe', 'stripePost')->name('stripe.post');
 });
+Route::get('thankyou', [SubscriptionController::class, 'showThankYou'])->name('emails.subscription_confirmation');

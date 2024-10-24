@@ -17,7 +17,7 @@
 
         <!-- Centered main navigation (hidden on mobile, visible on PC) -->
         <div class="hidden lg:flex justify-center flex-grow gap-8 text-gray-800">
-            <a href="demo3.php" class="flex items-center space-x-2 hover:text-gray-600">
+            <a href="{{(route('user.index'))}}" class="flex items-center space-x-2 hover:text-gray-600">
                 <i data-feather="home"></i>
                 <span>Home</span>
             </a>
