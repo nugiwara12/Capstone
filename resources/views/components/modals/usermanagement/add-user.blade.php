@@ -36,20 +36,22 @@
         <div class="p-3 overflow-auto">
             <div class="flex justify-center">
                 <!-- Add Form -->
-                <form id="userRegistrationForm" class="w-full space-y-4">
+                <form id="userRegistrationForm" method="POST" action="{{ route('register.save') }}" class="w-full space-y-4">
                     @csrf
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <!-- Name -->
                         <div>
                             <x-input-label for="name" :value="__('Name')" class="text-gray-700 font-semibold" />
-                            <x-text-input id="name" class="block mt-1 w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" type="text" name="name" required autofocus autocomplete="name" placeholder="Full Name" />
+                            <x-text-input id="name" class="block mt-1 w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" placeholder="Full Name" />
                             <x-input-error :messages="$errors->get('name')" class="text-red-500 text-sm mt-2" />
                         </div>
 
                         <!-- Email Address -->
                         <div>
                             <x-input-label for="email" :value="__('Email')" class="text-gray-700 font-semibold" />
-                            <x-text-input id="email" class="block mt-1 w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" type="email" name="email" required autocomplete="username" placeholder="Email Address" />
+                            <x-text-input id="email" class="block mt-1 w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                type="email" name="email" value="{{ old('email') }}" required autocomplete="username" placeholder="Email Address" />
                             <x-input-error :messages="$errors->get('email')" class="text-red-500 text-sm mt-2" />
                         </div>
 
@@ -57,10 +59,10 @@
                         <div>
                             <x-input-label for="role" :value="__('Role')" class="text-gray-700 font-semibold" />
                             <select id="role" name="role" class="block mt-1 w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
-                                <option value="" disabled selected>{{ __('Select Role') }}</option>
-                                <option value="admin">{{ __('Admin') }}</option>
-                                <option value="users">{{ __('Users') }}</option>
-                                <option value="seller">{{ __('Seller') }}</option>
+                                <option value="" disabled {{ old('role') ? '' : 'selected' }}>{{ __('Select Role') }}</option>
+                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>{{ __('Admin') }}</option>
+                                <option value="users" {{ old('role') == 'users' ? 'selected' : '' }}>{{ __('Users') }}</option>
+                                <option value="seller" {{ old('role') == 'seller' ? 'selected' : '' }}>{{ __('Seller') }}</option>
                             </select>
                             <x-input-error :messages="$errors->get('role')" class="text-red-500 text-sm mt-2" />
                         </div>
@@ -68,29 +70,37 @@
                         <!-- Phone Number -->
                         <div>
                             <x-input-label for="phone" :value="__('Phone Number')" class="text-gray-700 font-semibold" />
-                            <x-text-input id="phone" class="block mt-1 w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" type="tel" name="phone" required autocomplete="tel" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Phone Number" />
+                            <x-text-input id="phone" class="block mt-1 w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                type="tel" name="phone" value="{{ old('phone') }}" required autocomplete="tel" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,11)" maxlength="11" placeholder="Phone Number" />
                             <x-input-error :messages="$errors->get('phone')" class="text-red-500 text-sm mt-2" />
                         </div>
 
                         <!-- Password -->
-                        <div>
+                        <div class="">
                             <x-input-label for="password" :value="__('Password')" class="text-gray-700 font-semibold" />
-                            <x-text-input id="password" class="block mt-1 w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" type="password" name="password" required autocomplete="new-password" />
+                            <x-text-input id="password" class="block mt-1 w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                type="password" name="password" required autocomplete="new-password" />
                             <x-input-error :messages="$errors->get('password')" class="text-red-500 text-sm mt-2" />
-                            <div class="text-xs text-gray-500 italic">Must be 8-20 characters long, include at least 1 number and both upper and lower case letters.</div>
+                            <div class="text-xs text-gray-500 italic mt-1">Must be 8-20 characters long, include at least 1 number and both upper and lower case letters.</div>
                         </div>
 
                         <!-- Confirm Password -->
-                        <div>
+                        <div class="">
                             <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="text-gray-700 font-semibold" />
-                            <x-text-input id="password_confirmation" class="block mt-1 w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" type="password" name="password_confirmation" required autocomplete="new-password" />
+                            <x-text-input id="password_confirmation" class="block mt-1 w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                type="password" name="password_confirmation" required autocomplete="new-password" />
                             <x-input-error :messages="$errors->get('password_confirmation')" class="text-red-500 text-sm mt-2" />
                         </div>
 
+                        <div class="flex items-center">
+                            <input type="checkbox" id="show-password" class="h-4 w-4">
+                            <label for="show-password" class="ml-2 text-sm text-gray-700">Show Password</label>
+                        </div>
+
                         <!-- Description -->
-                        <div class="col-span-2"> <!-- Full width for description -->
+                        <div class="col-span-2">
                             <x-input-label for="description" :value="__('Tell About Yourself')" class="text-gray-700 font-semibold" />
-                            <textarea name="description" id="description" required placeholder="Description" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+                            <textarea name="description" id="description" required placeholder="Description" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{{ old('description') }}</textarea>
                             <x-input-error :messages="$errors->get('description')" class="text-red-500 text-sm mt-2" />
                         </div>
 
@@ -152,10 +162,11 @@ $(document).ready(function() {
                 });
             },
             error: function(xhr) {
-                // Show error message
-                var errorMessage = 'Registration failed. Please try again.';
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    errorMessage = xhr.responseJSON.message;
+                // Handle validation errors
+                var errorMessage = 'Registration failed. Please check your input.';
+                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    // Get the first validation error message
+                    errorMessage = Object.values(xhr.responseJSON.errors).flat().join(', ');
                 }
 
                 Swal.fire({
@@ -167,6 +178,17 @@ $(document).ready(function() {
             }
         });
     });
+});
+
+// Show Password
+const showPasswordCheckbox = document.getElementById('show-password');
+const passwordInput = document.getElementById('password');
+const confirmPasswordInput = document.getElementById('password_confirmation');
+
+showPasswordCheckbox.addEventListener('change', function () {
+    const passwordType = this.checked ? 'text' : 'password';
+    passwordInput.type = passwordType;
+    confirmPasswordInput.type = passwordType;
 });
 </script>
 @endsection
