@@ -16,8 +16,7 @@
 <body class="bg-gray-200 min-h-screen flex items-center justify-center">
   <div class="container mx-auto px-4">
     <div class="flex justify-center">
-      <div class="w-full max-w-lg"> <!-- Adjusted the column width -->
-        <!-- Logo for login -->
+      <div class="w-full max-w-lg">
         <a href="/">
           <img class="mx-auto mb-4 w-32" src="{{ asset('admin_assets/img/logo/imglogo.png') }}" alt="logo">
         </a>
@@ -40,7 +39,7 @@
               <h1 class="text-2xl font-semibold text-gray-900 mb-4">Login</h1>
             </div>
 
-            <form action="{{ route('login') }}" method="POST" class="space-y-4">
+            <form action="{{ route('login') }}" method="POST" class="space-y-4" onsubmit="showLoadingSpinner()">
               @csrf
               <div class="form-group">
                 <label for="exampleInputEmail" class="block text-sm font-medium text-gray-700">Email Address</label>
@@ -71,6 +70,17 @@
               </div>
               <hr class="my-4">
             </form>
+
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="hidden fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+              <div class="loader">
+                <svg class="animate-spin h-10 w-10 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0112.354-5.657l-1.414 1.414A6 6 0 106 12h-2z"></path>
+                </svg>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -90,6 +100,10 @@
         passwordInput.type = 'password';
         toggleButton.innerHTML = '<i class="fas fa-eye"></i>'; // Change icon
       }
+    }
+
+    function showLoadingSpinner() {
+      document.getElementById('loadingSpinner').classList.remove('hidden');
     }
   </script>
 </body>
