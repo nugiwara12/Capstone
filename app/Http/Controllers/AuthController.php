@@ -41,7 +41,7 @@ class AuthController extends Controller
                 ->numbers(1)
                 ->uncompromised()],
             'password_confirmation' => 'required',
-            'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'digit:11'], // Adjusted for 11-digit phone numbers
+            'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'digits:11'], // Adjusted for 11-digit phone numbers
             'description' => ['required', 'string', 'max:255'],
         ])->validate();
     
