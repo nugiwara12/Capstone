@@ -45,7 +45,7 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="{{route('home')}}">
+                            <a href="{{route('user.index')}}">
                                 <i class="fas fa-home"></i>
                             </a>
                         </li>

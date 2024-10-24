@@ -157,7 +157,11 @@ Route::get('/sales-report', [SalesReportController::class, 'generateSalesReport'
 
 
 
-
+    Route::controller(ShopController::class)->group(function () {
+        Route::get( 'my_account', 'my_account')->name('my_account');
+        Route::get( 'thankyou', 'thankYou')->name('thank-you');
+        Route::get( 'customize/{id}', 'customize')->name('customize');
+    });
 Route::get('/', function () {
     $featured = Product::where('featured', true)->get();
     $best_seller = Product::where('best_seller', true)->get();
@@ -174,7 +178,11 @@ Route::controller(ShopController::class)->group(function () {
 // ----------------------------- CART -----------------------//
 Route::controller(CartController::class)->group(function () {
     Route::get( 'cart', 'cart')->name('cart');
-    Route::post('cart/{id}', 'add_to_cart')->name('add_to_cart');
+    Route::post('cart/{id}', 'addToCart')->name('addToCart');
     Route::get( 'checkout', 'checkout')->name('checkout');
     Route::delete('destroy/{id}', 'destroy')->name('remove_product');
+});
+
+Route::controller(StripePaymentController::class)->group(function(){
+    Route::post('stripe', 'stripePost')->name('stripe.post');
 });
