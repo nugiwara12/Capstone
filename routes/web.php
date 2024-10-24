@@ -106,7 +106,7 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
 });
 Route::post('/save-image', [ProductController::class, 'storingcustom'])->name('image.save');
 
-Route::get('/all-products', [ProductController::class, 'allProducts'])->name('all-products');
+Route::get('/user.index', [ProductController::class, 'allProducts'])->name('user.index');
 Route::get('products/sold/index', [ProductController::class, 'listSoldProducts'])->name('products.sold.index');
 Route::get('/best-sellers', [ProductController::class, 'bestSellers'])->name('best-sellers');
 Route::get('/featured', [ProductController::class, 'featured'])->name('featured');
