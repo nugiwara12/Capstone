@@ -1,6 +1,10 @@
 
+@extends('layouts.app4')
+
+@section('contents')
+
 <div class="middle-panel p-6">
-    <h1 class="text-3xl font-bold mb-4 text-center">Product</h1>
+    <h1 class="text-3xl font-bold mb-4 text-center">Feature Items</h1>
 
     <!-- Your Feature product listings go here -->
     <div class="flex overflow-x-auto space-x-4">
@@ -17,3 +21,5 @@
     </div>
 </div>
 
+@endsection
+    
