@@ -56,7 +56,6 @@
     {{-- End of Main Content --}}
 
     {{-- Footer --}}
-    @include('components.footer.footer')
 
     <div class="tap-to-top">
         <a href="#page-top">
