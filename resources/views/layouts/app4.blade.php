@@ -24,7 +24,7 @@
         </div>
 
         <div class="hidden md:flex space-x-4">
-            <a href="{{ route('all-products') }}" class="text-gray-700 hover:text-blue-500">All Product</a>
+            <a href="{{ route('user.index') }}" class="text-gray-700 hover:text-blue-500">All Product</a>
             <a href="{{ route('best-sellers') }}" class="text-gray-700 hover:text-blue-500">Best Seller</a>
             <a href="{{ route('shops') }}" class="text-gray-700 hover:text-blue-500">Products</a>
             <a href="{{ route('featured') }}" class="text-gray-700 hover:text-blue-500">Features</a>

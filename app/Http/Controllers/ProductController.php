@@ -341,7 +341,16 @@ class ProductController extends Controller
         $products = Product::all(); // or any specific query you need
 
         // Pass the products to the view
-        return view('products.productshop', compact('products')); // Replace 'your_view_name' with your actual view name
+        return view('shop', compact('products')); // Replace 'your_view_name' with your actual view name
+    }
+
+    public function allProducts()
+    {
+        // Fetch the products you want to display
+        $products = Product::all(); // or any specific query you need
+
+        // Pass the products to the view
+        return view('user.index', compact('products')); // Replace 'your_view_name' with your actual view name
     }
 
     public function storingcustom(Request $request)
