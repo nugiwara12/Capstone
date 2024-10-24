@@ -325,23 +325,6 @@ class ProductController extends Controller
         // Return the view with the products data
         return view('products.best-seller', compact('products'));
     }
-
-    public function allProducts(Request $request)
-    {
-        // Fetch the number of products per page from the request, default to 2
-        $perPage = $request->input('per_page', 2); // Adjust the default number as needed
-        
-        // Fetch active products with pagination
-        $products = Product::where('status', 1)->paginate($perPage);
-    
-        // Check if the request is AJAX
-        if ($request->ajax()) {
-            return view('partials.products', compact('products'))->render(); // Return only the products
-        }
-    
-        // Return the full view for non-AJAX requests
-        return view('products.all-product', compact('products'));
-    }
     
 
     public function featured()
