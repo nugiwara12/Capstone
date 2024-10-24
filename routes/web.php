@@ -50,9 +50,9 @@ Route::get('dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route for user index
-Route::get('/welcome', [AuthController::class, 'index'])
+Route::get('/user', [AuthController::class, 'index'])
     ->middleware(['auth', 'verified'])
-    ->name('welcome');
+    ->name('user.index');
 //->middleware('redirect.authenticated');
 
 require __DIR__.'/auth.php';

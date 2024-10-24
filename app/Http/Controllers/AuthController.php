@@ -61,7 +61,7 @@ class AuthController extends Controller
     
         // Redirect based on user role
         if ($user->role === 'users') {
-            return redirect()->route('welcome');
+            return redirect()->route('user.index');
         } else {
             return redirect()->route('dashboard');
         }
@@ -104,7 +104,7 @@ class AuthController extends Controller
         
        // Redirect based on user role
         if ($user->role === 'users') {
-        return redirect()->route('welcome');
+        return redirect()->route('user.index');
         } else {
             return redirect()->route('dashboard');
         } // Redirect to the dashboard or desired page
