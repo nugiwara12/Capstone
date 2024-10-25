@@ -3,6 +3,15 @@
 @section('contents')
 
 <div class="w-full">
+    <!-- Search Form -->
+    <div class="flex justify-between items-center mb-4">
+        <form action="{{ route('order.index') }}" method="GET" class="flex items-center space-x-2">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search orders..." class="border border-gray-300 rounded-md px-4 py-2" />
+            <button type="submit" class="bg-blue-600 text-white rounded-md px-4 py-2 hover:bg-blue-700">Search</button>
+            <a href="{{ route('order.index') }}" class="bg-gray-300 text-black rounded-md px-4 py-2 hover:bg-gray-400 no-underline hover:no-underline">Reset</a> <!-- Reset Button -->
+        </form>
+    </div>
+
     <!-- Orders Card -->
     <div class="min-h-full mt-4">
         <div class="overflow-x-auto">
@@ -57,11 +66,31 @@
                 </tbody>
             </table>
         </div>
+        <!-- Show Entries Form -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+            <div class="flex items-center mb-2 md:mb-0">
+                <form method="GET" action="{{ route('order.index') }}" class="flex items-center">
+                    <label for="per_page" class="mr-2 text-sm mt-2">Show</label>
+                    <select name="per_page" id="per_page" class="border border-gray-300 rounded px-2 py-1 text-sm" onchange="this.form.submit()">
+                        <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
+                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                        <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                    </select>
+                </form>
+                <span class="text-sm ml-2">of <strong>{{ $orders->total() }}</strong> entries</span>
+            </div>
+
+            <!-- Pagination Section -->
+            <div class="md:mt-0">
+                <x-pagination-order :orders="$orders" />
+            </div>
+        </div>
     </div>
 
     <!-- Pagination Section -->
     <div class="mt-4">
-        {{ $orders->links() }} <!-- Include pagination links if applicable -->
+        {{ $orders->links() }} <!-- Include pagination links -->
     </div>
 </div>
 

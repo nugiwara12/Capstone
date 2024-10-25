@@ -12,10 +12,20 @@ use App\Mail\DeliveryStatusUpdated;
 
 class OrderController extends Controller
 {
-    public function index() {
-        $orders = Order::orderBy('created_at', 'DESC')->paginate(10); // You can adjust the pagination limit
-        return view('order.index', compact('orders'));
-    }
+    public function index(Request $request) {
+        // Get the search query if available
+        $search = $request->input('search');
+    
+        // Query the orders, applying search if necessary
+        $orders = Order::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%")
+                         ->orWhere('email', 'like', "%{$search}%")
+                         ->orWhere('phone', 'like', "%{$search}%")
+                         ->orWhere('product_title', 'like', "%{$search}%");
+        })->orderBy('created_at', 'DESC')->paginate(10); // Adjust pagination limit as needed
+    
+        return view('order.index', compact('orders', 'search'));
+    }    
 
     public function delivered(Request $request, $id) {
         return $this->updateOrderStatus($id, 'Delivered', $request);
