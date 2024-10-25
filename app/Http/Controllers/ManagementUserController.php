@@ -81,22 +81,36 @@ class ManagementUserController extends Controller
     
     public function update(Request $request, string $id)
     {
+        // Validate the incoming request data
         $validatedData = $request->validate([
             'name' => ['required', 'regex:/^[A-z a-z]+$/', 'string', 'max:255'],
             'role' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'digits:11'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id], // Ensure email is unique except for this user
             'description' => ['required', 'string', 'max:255'],
         ]);
     
-        $user = User::findOrFail($id);
-        $user->update($validatedData);
+        try {
+            // Find the user by ID or fail
+            $user = User::findOrFail($id);
     
-        return response()->json([
-            'message' => 'User updated successfully.',
-            'user' => $user,
-        ]);
-    }
+            // Update the user's data with the validated data
+            $user->update($validatedData);
+    
+            // Return success response
+            return response()->json([
+                'message' => 'User updated successfully.',
+                'user' => $user,
+            ], 200);
+    
+        } catch (\Exception $e) {
+            // Return error response if something goes wrong
+            return response()->json([
+                'message' => 'Failed to update user.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }    
 
     public function destroy(string $id)
     {
