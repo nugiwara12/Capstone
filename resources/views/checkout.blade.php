@@ -1,4 +1,4 @@
-@extends('layouts.app6')
+@extends('layouts.app2')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
     .hide{
@@ -44,11 +44,7 @@
                 <h3>Checkout</h3>
                 <nav>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="{{route('user.index')}}">
-                                <i class="fas fa-home"></i>
-                            </a>
-                        </li>
+                        
                         <li class="breadcrumb-item active" aria-current="page">Checkout</li>
                     </ol>
                 </nav>
@@ -122,8 +118,13 @@
                     {{-- <div class="form-check ps-0 mt-3 custome-form-check">
                         <label class="form-check-label checkout-label" for="saveAddress">This information will be used for the next time</label>
                     </div> --}}
+
                     <hr class="my-lg-5 my-4">
+
+
+
             </div>
+
             <div class="col-lg-4">
                 <div class="checkout__totals">
                     <h3 class="fw-bold">Your Order</h3>
@@ -188,20 +189,21 @@
 
                       <!-- Debit card input field for Stripe -->
                     <div class="row g-4" id="debitCardFields" >
-                        <ul class="my-2 flex space-x-4 items-center">
+                        <ul class="my-2">
                             <li class="text-muted">Credit Card/Debit Card</li>
                             <li>
                                 <a href="javascript:void(0)">
-                                    <img src="{{asset('assets/images/payment-icon/1.jpg')}}" class="w-8 h-8 object-contain blur-up lazyload" alt="payment icon">
+                                    <img src="{{asset('assets/images/payment-icon/1.jpg')}}" class="img-fluid blur-up lazyload ps-4"
+                                        alt="payment icon">
                                 </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0)">
-                                    <img src="{{asset('assets/images/payment-icon/2.jpg')}}" class="w-8 h-8 object-contain blur-up lazyload" alt="payment icon">
+                                    <img src="{{asset('assets/images/payment-icon/2.jpg')}}" class="img-fluid blur-up lazyload ps-4"
+                                        alt="payment icon">
                                 </a>
                             </li>
                         </ul>
-
                         <div class='form-row row'>
                             <div class='col-md-6 form-group required'>
                                 <label class='control-label'>Name on Card</label>
@@ -227,11 +229,16 @@
                                 <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
                             </div>
                         </div>
-                        <div class='col-md-6 error form-group hide'>
-                            <div class='alert-danger alert'>Please correct the errors and try again.
+
+                            <div class='col-md-6 error form-group hide'>
+
+                                <div class='alert-danger alert'>Please correct the errors and try again.
+                                </div>
+
                             </div>
-                        </div>
+
                     </div>
+
                       <!-- PayPal input field -->
                       {{-- <div class="row g-4" id="paypalFields" style="display:none;">
                         <div class="col-md-6">
@@ -250,59 +257,143 @@
 </section>
 
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+
+
 <script type="text/javascript">
+
+
+
 $(function() {
+
+
+
+    /*------------------------------------------
+
+    --------------------------------------------
+
+    Stripe Payment Code
+
+    --------------------------------------------
+
+    --------------------------------------------*/
+
+
+
     var $form = $(".require-validation");
+
+
 
     $('form.require-validation').bind('submit', function(e) {
 
         var $form = $(".require-validation"),
+
         inputSelector = ['input[type=email]', 'input[type=password]',
+
                          'input[type=text]', 'input[type=file]',
+
                          'textarea'].join(', '),
+
         $inputs = $form.find('.required').find(inputSelector),
+
         $errorMessage = $form.find('div.error'),
+
         valid = true;
+
         $errorMessage.addClass('hide');
 
+
+
         $('.has-error').removeClass('has-error');
+
         $inputs.each(function(i, el) {
+
           var $input = $(el);
+
           if ($input.val() === '') {
+
             $input.parent().addClass('has-error');
+
             $errorMessage.removeClass('hide');
+
             e.preventDefault();
+
           }
+
         });
 
+
+
         if (!$form.data('cc-on-file')) {
+
           e.preventDefault();
+
           Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+
           Stripe.createToken({
+
             number: $('.card-number').val(),
+
             cvc: $('.card-cvc').val(),
+
             exp_month: $('.card-expiry-month').val(),
+
             exp_year: $('.card-expiry-year').val()
+
           }, stripeResponseHandler);
+
         }
+
+
+
     });
 
-    // Handle form submission
+
+
+    /*------------------------------------------
+
+    --------------------------------------------
+
+    Stripe Response Handler
+
+    --------------------------------------------
+
+    --------------------------------------------*/
+
     function stripeResponseHandler(status, response) {
+
         if (response.error) {
+
             $('.error')
+
                 .removeClass('hide')
+
                 .find('.alert')
+
                 .text(response.error.message);
+
         } else {
+
+            /* token contains id, last4, and card type */
+
             var token = response['id'];
 
+
+
             $form.find('input[type=text]').empty();
+
             $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+
             $form.get(0).submit();
+
         }
+
     }
+
+
+
 });
+
 </script>
 <script>
 // List of cities and barangays for Pampanga (example dataset)
@@ -381,4 +472,5 @@ paypalRadio.addEventListener('change', function() {
     }
 });
 </script>
+
 @endsection
