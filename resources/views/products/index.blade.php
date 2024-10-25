@@ -4,6 +4,7 @@
 
 <div class="w-full">
     <div class="min-h-full mt-4">
+        <x-chart.product-chart />
         <div class="flex justify-between items-center">
         <!-- Left Section: Search Form -->
             <div class="mr-4">
@@ -181,5 +182,4 @@ function confirmRestore(id) {
     });
 }
 </script>
-
 @endsection

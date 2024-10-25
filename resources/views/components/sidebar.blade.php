@@ -105,6 +105,7 @@
                     </div>
                     <!-- DASHBOARD -->
                     <div class="flex-1 px-4 space-y-2 overflow-hidden hover:overflow-auto">
+                        @if (Auth::user()->role == 'admin')
                         <a href="{{ route('dashboard') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
                             {{ request()->routeIs('dashboard') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
                             <span aria-hidden="true" class="p-2 py-2 rounded-lg {{ request()->routeIs('dashboard') ? 'bg-blue-800' : 'bg-blue-200' }}">
@@ -112,7 +113,6 @@
                             </span>
                             <span>HOME</span>
                         </a>
-                        @if (Auth::user()->role == 'admin')
                         <!-- USER MANAGEMENT -->
                         <a href="{{ route('usermanagement') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
                             {{ request()->routeIs('usermanagement') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">

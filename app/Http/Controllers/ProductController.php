@@ -29,24 +29,31 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $query = Product::query();
-
+    
         if ($request->filled('search')) {
             $searchTerm = '%' . $request->search . '%';
-
+    
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('id', 'like', $searchTerm)
-                ->orWhere('product_code', 'like', $searchTerm)
-                ->orWhere('title', 'like', $searchTerm)
-                ->orWhere('category', 'like', $searchTerm)
-                ->orWhere('price', 'like', $searchTerm);
+                  ->orWhere('product_code', 'like', $searchTerm)
+                  ->orWhere('title', 'like', $searchTerm)
+                  ->orWhere('category', 'like', $searchTerm)
+                  ->orWhere('price', 'like', $searchTerm);
             });
         }
-
+    
         // Get only non-deleted products with pagination
         $perPage = $request->input('per_page', 10); // Default to 10 products per page
         $products = $query->whereNull('deleted_at')->paginate($perPage);
-
-        return view('products.index', compact('products'));
+    
+        // Calculate total products and sold products
+        $totalProducts = Product::whereNull('deleted_at')->count();
+        $soldProducts = Product::where('status', 'sold')->whereNull('deleted_at')->count(); // Adjust status as needed
+    
+        // Calculate percentage of sold products
+        $percentageSold = $totalProducts > 0 ? ($soldProducts / $totalProducts) * 100 : 0;
+    
+        return view('products.index', compact('products', 'totalProducts', 'percentageSold'));
     }
     
     // Display All Product in User page
