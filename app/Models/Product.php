@@ -15,7 +15,7 @@ class Product extends Model
         'price',
         'product_code',
         'description',
-        'category_id', // Change from 'category' to 'category_id'
+        'category', // Change from 'category' to 'category_id'
         'quantity',
         'image',
         'customizable',

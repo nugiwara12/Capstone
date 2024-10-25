@@ -189,5 +189,9 @@ Route::controller(StripePaymentController::class)->group(function(){
 Route::get('thankyou', [SubscriptionController::class, 'showThankYou'])->name('emails.subscription_confirmation');
 Route::get('thankyou', [ContactUsFormController::class, 'showThankYou'])->name('emails.contact_us');
 Route::get('/filtering', [CategoryController::class, 'filtering'])->name('filtering');
+
+
+Route::post('/save-customization', [ProductController::class, 'saveCustomization'])->name('save.customization');
+
 // ----------------------------- End Of Route Back Log -----------------------//
 });

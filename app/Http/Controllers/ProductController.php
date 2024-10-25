@@ -81,7 +81,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // Validate the input
-        $request->validate([
+        $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'price' => 'required|numeric',
             'product_code' => 'required|string|max:100',
@@ -98,11 +98,11 @@ class ProductController extends Controller
             'main_image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
             'img_gallery.*' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
             'customizingImage' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'color' => 'nullable|string|max:50', // Add color validation
+            'variant_images.*' => 'image|mimes:jpg,jpeg,png,gif|max:2048', // Validate variant images
         ]);
 
         // Prepare data for storing
-        $data = $request->all();
+        $data = $validatedData;
 
         // Process main image
         if ($request->hasFile('main_image')) {
@@ -131,6 +131,17 @@ class ProductController extends Controller
             $data['customizing_image'] = $customizingImageName;
         }
 
+        // Process variant images
+        if ($request->hasFile('variant_images')) {
+            $variantImages = [];
+            foreach ($request->file('variant_images') as $variantImage) {
+                $variantImageName = time() . '_' . uniqid() . '.' . $variantImage->getClientOriginalExtension();
+                $variantImage->move(public_path('images'), $variantImageName);
+                $variantImages[] = $variantImageName;
+            }
+            $data['variant_images'] = json_encode($variantImages); // Store as JSON string in the database
+        }
+
         // Prepare additional customization fields, if they exist
         $data['canvas_width'] = $request->input('customization_width');
         $data['canvas_height'] = $request->input('customization_height');
@@ -139,9 +150,6 @@ class ProductController extends Controller
         $data['customizable'] = $request->input('customizable', 0); // Defaults to 0 if not set
         $data['best_seller'] = $request->input('best_seller', 0);
         $data['featured'] = $request->input('featured', 0);
-
-        // Include the color in the data array
-        $data['color'] = $request->input('color', null); // Defaults to null if not provided
 
         $user = Auth::user();
         $name = $user->name;
@@ -432,6 +440,38 @@ class ProductController extends Controller
         // Return a success response along with the images
         return response()->json(['success' => true, 'message' => 'Image saved successfully!', 'images' => $images]);
     }
+
+    public function saveCustomization(Request $request)
+    {
+        // Validate incoming request data
+        $validatedData = $request->validate([
+            'product_id' => 'required|integer',
+            'customization.text' => 'required|string',
+            'customization.images' => 'array', // Adjust validation based on your needs
+            'customization.shapes' => 'array', // Adjust validation based on your needs
+            'customization.backgroundColor' => 'required|string',
+        ]);
+    
+        // Process the customization data
+        try {
+            // Assuming you have a model to save customization data
+            $customization = new Customization();
+            $customization->product_id = $validatedData['product_id'];
+            $customization->text = $validatedData['customization']['text'];
+            $customization->images = json_encode($validatedData['customization']['images']); // If needed, adjust based on your DB structure
+            $customization->shapes = json_encode($validatedData['customization']['shapes']); // If needed, adjust based on your DB structure
+            $customization->background_color = $validatedData['customization']['backgroundColor'];
+            $customization->save();
+    
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Customization save error: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Unable to save customization.'], 500);
+        }
+    }
+    
+
     
     
     /**
