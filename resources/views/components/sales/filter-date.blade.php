@@ -22,6 +22,8 @@
                 <div>
                     <label for="filter" class="block font-semibold mb-1">Filter:</label>
                     <select name="filter" id="filter" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="" >Select date</option>
+                        <option value="daily">Daily</option>
                         <option value="weekly">Weekly</option>
                         <option value="monthly">Monthly</option>
                         <option value="yearly">Yearly</option>
