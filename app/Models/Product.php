@@ -26,7 +26,6 @@ class Product extends Model
         'main_image',
         'img_gallery',
         'customizing_image',
-        'dl_customize',
         'best_seller',
         'featured',
         'item_sold',

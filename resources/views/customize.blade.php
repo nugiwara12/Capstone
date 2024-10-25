@@ -136,18 +136,16 @@
 </div>
 
 <div class="mt-4">
-<form id="designForm" action="/save-image" method="POST">
-        @csrf <!-- CSRF token for Laravel -->
-        <input type="hidden" id="product_code" name="product_code" value="your_product_code_here">
-        <input type="hidden" id="image_data" name="dl_customize"> <!-- Hidden input for image data -->
-        <input type="text" id="title" name="title" required placeholder="Title"> <!-- Add this input -->
+<!-- <form id="designForm" action="/save-image" method="POST"> -->
+        <!-- @csrf CSRF token for Laravel -->
+        <!-- <input type="hidden" id="image_data" name="dl_customize"> Hidden input for image data -->
         <button type="button" onclick="downloadCanvas()" class="btn btn-success w-100">Download Design</button>
-    </form>
+    <!-- </form> -->
 </div>
 
 </div>
 
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         window.downloadCanvas = function() {
             const container = document.getElementById('container');
@@ -167,13 +165,6 @@
                 link.click();
                 document.body.removeChild(link);
 
-                // Get the product code from the form
-                const productCode = document.getElementById('product_code')?.value; // Optional chaining
-                if (!productCode) {
-                    alert('Product code is not available!');
-                    return;
-                }
-
                 // Set the image data to the hidden input field
                 document.getElementById('image_data').value = dataURL;
                 document.getElementById('image_data').name = 'image'; // Set name to match controller
@@ -188,7 +179,8 @@
             }).catch(error => console.error('Error capturing canvas:', error));
         };
     });
-</script>
+</script> -->
+
 
 <!-- Fabric -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.2/fabric.min.js"></script>
@@ -581,34 +573,34 @@ function updateTotalCharge() {
             //         document.body.removeChild(link);
             //     });
             // }
-    //         function downloadCanvas() {
-    //     const container = document.getElementById('container');
+            function downloadCanvas() {
+        const container = document.getElementById('container');
 
-    //     html2canvas(container, {
-    //         allowTaint: true,
-    //         useCORS: true,
-    //         scale: 2
-    //     }).then(canvas => {
-    //         const dataURL = canvas.toDataURL('image/png');
+        html2canvas(container, {
+            allowTaint: true,
+            useCORS: true,
+            scale: 2
+        }).then(canvas => {
+            const dataURL = canvas.toDataURL('image/png');
 
-    //         // Create a download link for the image
-    //         const link = document.createElement('a');
-    //         link.href = dataURL;
-    //         link.download = 'my_design.png';
-    //         document.body.appendChild(link);
-    //         link.click();
-    //         document.body.removeChild(link);
+            // Create a download link for the image
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'my_design.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
 
-    //         // Get the product code from the form
-    //         const productCode = document.getElementById('product_code').value;
+            // Get the product code from the form
+            const productCode = document.getElementById('product_code').value;
 
-    //         // Set the image data to the hidden input field
-    //         document.getElementById('image_data').value = dataURL;
+            // Set the image data to the hidden input field
+            document.getElementById('image_data').value = dataURL;
 
-    //         // Submit the form
-    //         document.getElementById('designForm').submit();
-    //     });
-    // }
+            // Submit the form
+            document.getElementById('designForm').submit();
+        });
+    }
 
     </script>
 @endsection
