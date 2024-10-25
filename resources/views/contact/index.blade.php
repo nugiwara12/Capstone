@@ -1,89 +1,95 @@
 @extends('layouts.app3')
 
-@section('title', 'Contact Messages')
-
 @section('contents')
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-
-    <div class="d-flex align-items-center justify-content-between">
-
-    </div>
-    <hr />
-    @if(Session::has('success'))
-        <div class="alert alert-success" role="alert">
-            {{ Session::get('success') }}
-        </div>
-    @endif
-    <table class="table table-hover" id="example">
-        <thead class="table-primary">
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Mobile Number</th>
-                <th>Email</th>
-                <th>Message</th>
-                <th>Date</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-    <tbody>
-            @if($contacts->count() > 0)
-                @foreach($contacts as $rs)
+<div class="w-full">
+    <!-- add card -->
+    <div class="min-h-full mt-4">
+        <!-- Success Message -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-400 border border-gray-300">
+                <thead class="bg-gray-50">
                     <tr>
-                        <td class="align-middle">{{ $loop->iteration }}</td>
-                        <td class="align-middle">{{ $rs->name }}</td>
-                        <td class="align-middle">{{ $rs->phone }}</td>
-                        <td class="align-middle">{{ $rs->email }}</td>
-                        <td class="align-middle">{{ $rs->message }}</td>
-                        <td class="align-middle">{{ $rs->created_at }}</td>
-                        <td class="align-middle">
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <!-- <a href="{{ route('contact.show', $rs->id) }}" type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="View Details">Detail</a> -->
-                                <form id="deleteForm-{{ $rs->id }}" action="{{ route('contact.destroy', $rs->id) }}" method="POST" style="display: inline;">
+                        <th class="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">#</th>
+                        <th class="px-6 py-3 text-left text-xs font-normal text-black font-bold uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-normal text-black font-bold uppercase tracking-wider">Mobile</th>
+                        <th class="px-6 py-3 text-left text-xs font-normal text-black font-bold uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-3 text-left text-xs font-normal text-black font-bold uppercase tracking-wider">Message</th>
+                        <th class="px-6 py-3 text-left text-xs font-normal text-black font-bold uppercase tracking-wider">Date</th>
+                        <th class="px-4 py-3 text-left text-xs font-normal text-black font-bold uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-400">
+                    @forelse ($contacts as $contact)
+                    <tr class="{{ $loop->even ? 'bg-gray-50' : 'bg-white' }} hover:bg-gray-200">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-black">{{ $loop->iteration }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $contact->name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $contact->phone }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $contact->email }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $contact->message }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-black">{{ $contact->created_at }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-black text-left relative">
+                            <div class="flex items-center space-x-2">
+                                <form id="deleteForm{{ $contact->id }}" action="{{ route('contact.destroy', $contact->id) }}" method="POST" class="block delete-form" role="menuitem">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger m-0" href=javascript:void(0) onclick="confirmation(event, {{ $rs->id }})">Delete</button>
+                                    <button type="button" class="flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white hover:bg-red-500 focus:outline-none" onclick="confirmDelete('{{ $contact->id }}')" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                 </form>
-                                {{-- <form action="{{ route('contact.destroy', $rs->id) }}" method="POST" type="button" class="btn btn-danger p-0" onsubmit="return confirm('Delete?')"data-toggle="tooltip" data-placement="top" title="Delete">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger m-0">Delete</button>
-                                </form> --}}
                             </div>
                         </td>
                     </tr>
-                @endforeach
-            @else
+                    @empty
+                        <tr>
+                            <td colspan="5" class="py-2 px-4 text-center">No contact found</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-            @endif
-        </tbody>
-    </table>
-    <footer>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-    <script>
-         $(document).ready(function() {
-            $('#example').DataTable( {
-                // dom: 'Bfrtip',
-                // buttons: [
-                //     'print',
-                //     'excel'
-                // ]
-            } );
-        } );
-    </script>
+    <!-- Show Entries Form -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+        <div class="flex items-center mb-2 md:mb-0">
+            <form method="GET" action="{{ route('contact') }}" class="flex items-center">
+                <label for="per_page" class="mr-2 text-sm mt-2">Show</label>
+                <select name="per_page" id="per_page" class="border border-gray-300 rounded px-2 py-1 text-sm" onchange="this.form.submit()">
+                    <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
+                    <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                    <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                    <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                </select>
+            </form>
+            <span class="text-sm ml-2">of <strong>{{ $contacts->total() }}</strong> entries</span>
+        </div>
 
-    <!-- Include DataTables Buttons extension CSS and JS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.1.1/css/buttons.dataTables.min.css">
-    <script src="https://cdn.datatables.net/buttons/2.1.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.html5.min.js"></script>
+        <!-- Pagination Section -->
+        <div class="md:mt-0">
+            <x-pagination-contact :contacts="$contacts" />
+        </div>
+    </div>
+</div>
+@endsection
 
-    <!-- Include ExcelJS library for Excel export -->
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
-    </footer>
+@section('scripts')
+<script>
+    function confirmDelete(contactId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If confirmed, submit the corresponding form
+                document.getElementById('deleteForm' + contactId).submit();
+            }
+        });
+    }
+</script>
 @endsection

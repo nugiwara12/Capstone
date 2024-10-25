@@ -12,9 +12,10 @@ class ContactUsFormController extends Controller
 {
     public function index()
     {
-        $contacts = Contact::all();
+        $contacts = Contact::paginate(request('per_page', 10)); // Default to 10 per page
         return view('contact.index', compact('contacts'));
     }
+    
 
     // Create Contact Form
     public function createForm(Request $request)

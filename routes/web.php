@@ -77,6 +77,7 @@ Route::controller(ShopController::class)->group(function () {
 Route::get('/contact', [ContactUsFormController::class, 'createForm'])->name('contact');
 Route::post('/contact', [ContactUsFormController::class, 'ContactUsForm'])->name('contact.store');
 Route::get('/index', [ContactUsFormController::class, 'index'])->name('contacts.index');
+Route::get('/components/sidebar', [ContactUsFormController::class, 'message'])->name('components.sidebar');
 Route::get('/contacts/{id}', [ContactUsFormController::class, 'show'])->name('contact.show');
 Route::delete('/contacts/{id}', [ContactUsFormController::class, 'destroy'])->name('contact.destroy');
 
