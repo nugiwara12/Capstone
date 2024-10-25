@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('main_image');
             $table->text('img_gallery')->nullable();
             $table->string('customizing_image')->nullable();
+            $table->string('dl_customize')->nullable();
             $table->integer('canvas_width')->nullable();
             $table->integer('canvas_height')->nullable();
             $table->integer('canvas_top')->nullable();

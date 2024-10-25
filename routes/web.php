@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Product;
 use App\Models\Category;
 use App\Http\Controllers\SalesReportController;
+use App\Http\Controllers\PaymentController;
 
 
 
@@ -192,6 +193,12 @@ Route::get('/filtering', [CategoryController::class, 'filtering'])->name('filter
 
 
 Route::post('/save-customization', [ProductController::class, 'saveCustomization'])->name('save.customization');
+Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+Route::get('/thank-you', function () {
+    return view('thank-you');
+})->name('thankyou');
+
+Route::post('/save-image', [ProductController::class, 'saveImage'])->name('save.image');
 
 // ----------------------------- End Of Route Back Log -----------------------//
 });

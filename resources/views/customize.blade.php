@@ -13,25 +13,38 @@
     </div>
 </div>
 
-    <div class="container mx-auto px-4"> 
-    <div class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md mt-12 mb-3">
-        <label for="customText" class="block text-xl font-semibold mb-4">Benchmark</label>
-        <p class="text-gray-700 mb-4">
-            Text Charge (5 Php per letter); minimum of 10 letters. Additional charges apply for any letters beyond this limit:
-        </p>
-        <div id="textCharge" class="mt-2 p-2 bg-gray-100 border border-gray-300 rounded">No additional charge</div>
-        
-        <label for="imageCharge" class="mt-6 block text-gray-700">
-            Image Charge (Minimum of 1 photo; additional charges of 15 Php apply for any photos beyond this limit):
-        </label>
-        <div id="imageCharge" class="mt-2 p-2 bg-gray-100 border border-gray-300 rounded">No additional charge</div>
-        
-        <div id="totalCharge" class="mt-6 font-bold text-lg text-blue-600">Total Charge: 0 Php</div>
+<!-- Button to Open the Modal -->
+<button type="button" class="btn btn-primary mt-10" data-bs-toggle="modal" data-bs-target="#benchmarkModal">
+    Open Benchmark
+</button>
+
+<!-- Benchmark Modal -->
+<div class="modal fade" id="benchmarkModal" tabindex="-1" aria-labelledby="benchmarkModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
+                    <label for="customText" class="block text-xl font-semibold mb-4">Benchmark</label>
+                    <p class="text-gray-700 mb-4">
+                        Text Charge (5 Php per letter); minimum of 10 letters. Additional charges apply for any letters beyond this limit:
+                    </p>
+                    <div id="textCharge" class="mt-2 p-2 bg-gray-100 border border-gray-300 rounded">No additional charge</div>
+                    
+                    <label for="imageCharge" class="mt-6 block text-gray-700">
+                        Image Charge (Minimum of 1 photo; additional charges of 15 Php apply for any photos beyond this limit):
+                    </label>
+                    <div id="imageCharge" class="mt-2 p-2 bg-gray-100 border border-gray-300 rounded">No additional charge</div>
+                    
+                    <div id="totalCharge" class="mt-6 font-bold text-lg text-blue-600">Total Charge: 0 Php</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-
-        
+ 
 
     </div>
 
@@ -122,13 +135,60 @@
     </select>
 </div>
 
-      <div class="mt-4">
-      <button onclick="downloadCanvas()" class="btn btn-success w-100">Download Design</button>
-        </div>
+<div class="mt-4">
+<form id="designForm" action="/save-image" method="POST">
+        @csrf <!-- CSRF token for Laravel -->
+        <input type="hidden" id="product_code" name="product_code" value="your_product_code_here">
+        <input type="hidden" id="image_data" name="dl_customize"> <!-- Hidden input for image data -->
+        <input type="text" id="title" name="title" required placeholder="Title"> <!-- Add this input -->
+        <button type="button" onclick="downloadCanvas()" class="btn btn-success w-100">Download Design</button>
+    </form>
+</div>
 
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        window.downloadCanvas = function() {
+            const container = document.getElementById('container');
 
+            html2canvas(container, {
+                allowTaint: true,
+                useCORS: true,
+                scale: 2
+            }).then(canvas => {
+                const dataURL = canvas.toDataURL('image/png');
+
+                // Create a download link for the image
+                const link = document.createElement('a');
+                link.href = dataURL;
+                link.download = 'my_design.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // Get the product code from the form
+                const productCode = document.getElementById('product_code')?.value; // Optional chaining
+                if (!productCode) {
+                    alert('Product code is not available!');
+                    return;
+                }
+
+                // Set the image data to the hidden input field
+                document.getElementById('image_data').value = dataURL;
+                document.getElementById('image_data').name = 'image'; // Set name to match controller
+
+                // Submit the form
+                const form = document.getElementById('designForm'); // Ensure you get the form correctly
+                if (form) {
+                    form.submit();
+                } else {
+                    console.error('Form element not found!');
+                }
+            }).catch(error => console.error('Error capturing canvas:', error));
+        };
+    });
+</script>
 
 <!-- Fabric -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.2/fabric.min.js"></script>
@@ -521,143 +581,34 @@ function updateTotalCharge() {
             //         document.body.removeChild(link);
             //     });
             // }
-            function downloadCanvas() {
-    const container = document.getElementById('container');
-    
-    html2canvas(container, {
-        allowTaint: true,
-        useCORS: true,
-        scale: 2
-    }).then(canvas => {
-        const dataURL = canvas.toDataURL('image/png');
+    //         function downloadCanvas() {
+    //     const container = document.getElementById('container');
 
-        // Create a download link
-        const link = document.createElement('a');
-        link.href = dataURL;
-        link.download = 'my_design.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    //     html2canvas(container, {
+    //         allowTaint: true,
+    //         useCORS: true,
+    //         scale: 2
+    //     }).then(canvas => {
+    //         const dataURL = canvas.toDataURL('image/png');
 
-        // Send the image data to the server for saving in the database
-        fetch('/save-image', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token for Laravel
-            },
-            body: JSON.stringify({
-                image: dataURL
-            })
-        }).then(response => response.json())
-          .then(data => {
-              if (data.success) {
-                  alert('Image saved successfully!');
-              } else {
-                  alert('Image saving failed!');
-              }
-          })
-          .catch(error => console.error('Error:', error));
-    });
-}
+    //         // Create a download link for the image
+    //         const link = document.createElement('a');
+    //         link.href = dataURL;
+    //         link.download = 'my_design.png';
+    //         document.body.appendChild(link);
+    //         link.click();
+    //         document.body.removeChild(link);
+
+    //         // Get the product code from the form
+    //         const productCode = document.getElementById('product_code').value;
+
+    //         // Set the image data to the hidden input field
+    //         document.getElementById('image_data').value = dataURL;
+
+    //         // Submit the form
+    //         document.getElementById('designForm').submit();
+    //     });
+    // }
 
     </script>
-    <script>
-
-        
-    fetch('/save-image', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-    },
-    body: JSON.stringify({
-        img_gallery: dataURL // Send the base64 data here
-    })
-})
-.then(response => response.json())
-.then(data => {
-    if (data.success) {
-        alert('Image saved successfully!');
-        
-        // Assuming you have an element to display the images
-        const gallery = document.getElementById('gallery');
-
-        // Clear existing images if you want to refresh
-        gallery.innerHTML = '';
-
-        // Append each image to the gallery
-        data.images.forEach(image => {
-            const imgElement = document.createElement('img');
-            imgElement.src = '/' + image.img_gallery; // Use the relative path
-            imgElement.alt = 'Gallery Image';
-            imgElement.classList.add('gallery-image'); // Add any styling you need
-            gallery.appendChild(imgElement);
-        });
-    } else {
-        alert('Image saving failed!');
-    }
-})
-.catch(error => console.error('Error:', error));
-
-    </script>
-    
-    <script>
-        const checkoutUrl = "{{ url('save.customization') }}"; // Use correct URL for redirect
-        const productId = @json($product->id); // Safely pass product ID
-
-        // Function to gather customization data
-        function getCustomizationData() {
-            const customTextElement = document.getElementById('customText');
-            if (!customTextElement) {
-                console.error("Element with ID 'customText' not found.");
-                return;
-            }
-            const customText = customTextElement.value;
-
-            const customImages = []; // Assume you're adding images dynamically; collect them in an array
-            const selectedShapes = []; // Collect the shapes added by the user
-
-            return {
-                text: customText,
-                images: customImages,
-                shapes: selectedShapes,
-                backgroundColor: document.getElementById('backgroundColorPicker').value
-            };
-        }
-
-        function saveCustomization() {
-    const customizationData = getCustomizationData();
-
-    fetch('/save-customization', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({
-            product_id: productId,
-            customization: customizationData
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            return response.text().then(text => {
-                console.error('Error saving customization:', text);
-                throw new Error(text);
-            });
-        }
-        return response.text(); // Change to text if not expecting JSON
-    })
-    .then(data => {
-        console.log(data); // This will log the success message
-        window.location.href = checkoutUrl; // Redirect after successful save
-    })
-    .catch(error => console.error('Fetch error:', error));
-}
-
-
-
-    </script>
-
 @endsection
