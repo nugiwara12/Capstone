@@ -269,18 +269,6 @@
                                 </div>
 
                             </div>
-                              <!-- GCash and Maya QR Code Section -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-        <div class="text-center">
-            <h4 class="font-semibold mb-2">Pay with GCash</h4>
-            <img src="{{asset('assets/images/payment-icon/2.jpg')}}" alt="GCash QR Code" class="w-40 h-40 mx-auto rounded-md shadow-md">
-        </div>
-        <div class="text-center">
-            <h4 class="font-semibold mb-2">Pay with Maya</h4>
-            <img src="{{asset('assets/images/payment-icon/1.jpg')}}" alt="Maya QR Code" class="w-40 h-40 mx-auto rounded-md shadow-md">
-        </div>
-    </div>
-
                     </div>
 
 
@@ -297,6 +285,133 @@
                 </div>
             </div>
             </form>
+                             <!-- GCash and Maya QR Code Section -->
+                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+    <!-- GCash Payment Option -->
+    <div class="text-center">
+        <h4 class="font-semibold mb-2">Pay with GCash</h4>
+        <img src="{{ asset('assets/images/payment/gcash-logo.ico') }}" alt="GCash Logo" 
+             class="w-50 h-40 mx-auto rounded-md shadow-md cursor-pointer" 
+             onclick="showModal('gcashModal')">
+    </div>
+    <!-- Maya Payment Option -->
+    <div class="text-center">
+        <h4 class="font-semibold mb-2">Pay with Maya</h4>
+        <img src="{{ asset('assets/images/payment/maya-logo.ico') }}" alt="Maya Logo" 
+             class="w-50 h-40 mx-auto rounded-md shadow-md cursor-pointer" 
+             onclick="showModal('mayaModal')">
+    </div>
+</div>
+
+<!-- GCash Modal -->
+<div class="modal fade" id="gcashModal" tabindex="-1" aria-labelledby="gcashModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- QR Code Image -->
+                <div class="text-center mb-4">
+                    <img src="{{ asset('assets/images/payment/gcash-code.png') }}" alt="GCash QR Code" class="img-fluid rounded shadow" style="max-width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto;">
+                    <p class="text-muted mt-2">Scan the QR code to pay with GCash</p>
+                </div>
+
+                <!-- GCash Form -->
+                <form action="{{ route('payment.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="payment_method" value="gcash">
+
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <label for="gcashName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="gcashName" name="name" placeholder="Enter your name" required>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="mb-3">
+                        <label for="gcashAddress" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="gcashAddress" name="address" placeholder="Enter your address" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="gcashEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="gcashEmail" name="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="mb-3">
+                        <label for="gcashPhone" class="form-label">Gcash Phone Number</label>
+                        <input type="text" class="form-control" id="gcashPhone" name="phone" placeholder="Enter your phone number" required>
+                    </div>
+
+                    <!-- Screenshot Upload -->
+                    <div class="mb-3">
+                        <label for="gcashScreenshot" class="form-label">Upload Screenshot</label>
+                        <input type="file" class="form-control" id="gcashScreenshot" name="screenshot" accept="image/*">
+                    </div>
+
+                    <!-- Confirm Button -->
+                    <button type="submit" class="btn btn-primary">Confirm Payment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Maya Modal -->
+<div class="modal fade" id="mayaModal" tabindex="-1" aria-labelledby="mayaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- QR Code Image -->
+                <div class="text-center mb-4">
+                    <img src="{{ asset('assets/images/payment/maya-qr.png') }}" alt="Maya QR Code" class="img-fluid rounded shadow" style="max-width: 100%; height: auto;">
+                    <p class="text-muted mt-2">Scan the QR code to pay with Maya</p>
+                </div>
+                <!-- Maya Form -->
+                <form action="{{ route('payment.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="payment_method" value="maya">
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <label for="mayaName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="mayaName" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <!-- Address -->
+                    <div class="mb-3">
+                        <label for="mayaAddress" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="mayaAddress" name="address" placeholder="Enter your address" required>
+                    </div>
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="mayaEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="mayaEmail" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <!-- Phone -->
+                    <div class="mb-3">
+                        <label for="mayaPhone" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="mayaPhone" name="phone" placeholder="Enter your phone number" required>
+                    </div>
+                    <!-- Screenshot Upload -->
+                    <div class="mb-3">
+                        <label for="mayaScreenshot" class="form-label">Upload Screenshot</label>
+                        <input type="file" class="form-control" id="mayaScreenshot" name="screenshot" accept="image/*">
+                    </div>
+                    <!-- Confirm Button -->
+                    <button type="submit" class="btn btn-primary">Confirm Payment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </section>
@@ -567,6 +682,13 @@ paypalRadio.addEventListener('change', function() {
         debitCardFields.style.display = 'none';
     }
 });
+</script>
+<script>
+    function showModal(modalId) {
+    var myModal = new bootstrap.Modal(document.getElementById(modalId));
+    myModal.show();
+}
+
 </script>
 
 @endsection
