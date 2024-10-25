@@ -6,8 +6,8 @@
     <title>Gawang Gamat</title>
 </head>
 <body>
-    <h1>Thank you</h1>
-    <p>Thank you for the contact we will use this in international purpose</p>
-    <p>Phising isda</p>
+    <h1>GawangGamat</h1>
+    <p>Thank you for contacting us!</p>
+    <p> We appreciate your feedback and will get back to you shortly.</p>
 </body>
 </html>
