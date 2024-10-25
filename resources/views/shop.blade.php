@@ -25,25 +25,30 @@
                     </div>
                     <div class="accordion category-name" id="accordionExample">
                         <div class="accordion-item category-rating">
-                            <h2 class="accordion-header" id="headingTwo">
+                            <h2 class="accordion-header mb-2" id="headingTwo">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
                                     Category
                                 </button>
                             </h2>
                             <form method="GET" action="{{ route('filtering') }}">
-                                <ul class="category-list">
-                                    @foreach ($category as $cat) <!-- Ensure you're using the correct variable -->
-                                    <li>
-                                        <div class="form-check ps-0 custome-form-check">
-                                            <input class="checkbox_animated check-it" id="cat_{{ $cat->category_name }}" name="category[]"
-                                                value="{{ $cat->category_name }}" type="checkbox" {{ request()->input('category') && in_array($cat->category_name, request()->input('category')) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="cat_{{ $cat->category_name }}">{{ $cat->category_name }}</label>
-                                        </div>
-                                    </li>
+                                <div class="flex flex-col space-y-4">
+                                    <!-- Show All Checkbox -->
+                                    <div class="form-check ps-0 custome-form-check flex items-center">
+                                        <input class="checkbox_animated check-it" id="show_all" type="checkbox" onclick="toggleAll(this)">
+                                        <label class="form-check-label ml-2" for="show_all">Show All</label>
+                                    </div>
+
+                                    <!-- Individual Category Checkboxes -->
+                                    @foreach ($category as $cat)
+                                    <div class="form-check ps-0 custome-form-check flex items-center">
+                                        <input class="checkbox_animated check-it" id="cat_{{ $cat->category_name }}" name="category[]"
+                                            value="{{ $cat->category_name }}" type="checkbox" {{ request()->input('category') && in_array($cat->category_name, request()->input('category')) ? 'checked' : '' }}>
+                                        <label class="form-check-label ml-2" for="cat_{{ $cat->category_name }}">{{ $cat->category_name }}</label>
+                                    </div>
                                     @endforeach
-                                </ul>
-                                <button type="submit" class="btn btn-primary h-8 w-auto px-3 py-1 text-sm mt-4">Filter</button>
-                            </form> 
+                                </div>
+                                <button type="submit" class="btn btn-primary h-8 w-auto px-3 rounded-md py-1 text-sm mt-4">Filter</button>
+                            </form>                 
                         </div>
                     </div>
                 </div>
@@ -89,4 +94,13 @@
 </section>
 
 <div id="qvmodal"></div>
+
+<script>
+    function toggleAll(source) {
+        const checkboxes = document.querySelectorAll('.check-it');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = source.checked;
+        });
+    }
+</script>
 @endsection
