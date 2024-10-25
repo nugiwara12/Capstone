@@ -470,34 +470,30 @@ class ProductController extends Controller
             return response()->json(['success' => false, 'message' => 'Unable to save customization.'], 500);
         }
     }
-    public function saveImage(Request $request) {
-        $request->validate([
-            'image' => 'required|string', // Validate the image data
-            'product_code' => 'required|string', // Validate the product code
-            'title' => 'required|string', // Validate the title
-        ]);
+    // public function saveImage(Request $request) {
+    //     $request->validate([
+    //         'image' => 'required|string', // Validate the image data
+    //         'product_code' => 'required|string', // Validate the product code
+    //         'title' => 'required|string', // Validate the title
+    //     ]);
     
-        // Decode the base64 image data
-        $dl_customize = $request->input('image');
-        $product_code = $request->input('product_code');
-        $title = $request->input('title'); // Get the title from the request
+    //     // Decode the base64 image data
+    //     $dl_customize = $request->input('image');
     
-        // Remove the 'data:image/png;base64,' part of the string
-        $dl_customize = str_replace('data:image/png;base64,', '', $dl_customize);
-        $dl_customize = str_replace(' ', '+', $dl_customize);
+    //     // Remove the 'data:image/png;base64,' part of the string
+    //     $dl_customize = str_replace('data:image/png;base64,', '', $dl_customize);
+    //     $dl_customize = str_replace(' ', '+', $dl_customize);
     
-        // Decode to store the image in binary format
-        $imageBinary = base64_decode($dl_customize);
+    //     // Decode to store the image in binary format
+    //     $imageBinary = base64_decode($dl_customize);
     
-        // Save image to products table
-        DB::table('products')->insert([
-            'product_code' => $product_code,
-            'title' => $title, // Include title in the insert
-            'dl_customize' => $imageBinary, // Store the image data
-        ]);
+    //     // Save image to products table
+    //     DB::table('products')->insert([
+    //         'dl_customize' => $imageBinary, // Store the image data
+    //     ]);
     
-        return response()->json(['success' => true]);
-    }
+    //     return response()->json(['success' => true]);
+    // }
     
     
     
