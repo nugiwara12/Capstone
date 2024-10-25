@@ -87,7 +87,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $rs->title }}</td>
                     <td>{{ $rs->total_sold }}</td>
-                    <td>&#8369; {{ number_format($rs->total_revenue, 2) }}</td>
+                    <td>{{ number_format($rs->total_revenue, 2) }}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -96,7 +96,7 @@
         <!-- Average Total and Percentage Display -->
         <div class="average-display">
             <h3>Average Total Revenue</h3>
-            <p>&#8369; {{ number_format($products->avg('total_revenue'), 2) }} 
+            <p>{{ number_format($products->avg('total_revenue'), 2) }} 
             ({{ number_format(($products->avg('total_revenue') / ($products->sum('total_revenue') > 0 ? $products->sum('total_revenue') : 1)) * 100, 2) }}%)</p>
         </div>
     </div>
