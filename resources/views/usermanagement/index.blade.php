@@ -76,9 +76,10 @@
 @endforeach
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/58y5KZJ1G2Rn0ILU35h/Xo/2H45Ebg9hcz8Z7e" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 // Handle dropdown toggle
-(document).ready(function() {
+$(document).ready(function() {
     $('[id^="dropdownMenuButton"]').on('click', function(event) {
         event.stopPropagation(); // Prevent event from bubbling up
         const dropdownMenu = $(this).next('.dropdown-menu');
@@ -96,21 +97,21 @@
     });
 
     // AJAX request to update user
-    $(`form[id^="editUserForm"]`).on('submit', function(e) {
+    $('form[id^="editUserForm"]').on('submit', function(e) {
         e.preventDefault(); // Prevent the default form submission
 
-        var userId = $(this).data('user-id'); // This gets the user ID from the form
+        var userId = $(this).data('user-id'); // Get the user ID from the form
         var formData = $(this).serialize(); // Serialize the form data
 
         $.ajax({
-            url: `/usermanagement/${userId}`, // Update the URL to include the user ID
-            type: "PUT", // Use PUT for updating
+            url: `/usermanagement/${userId}`,
+            type: "PUT",
             data: formData,
             headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             success: function(response) {
-                // Show success message
+                console.log(response); // Log the success response
                 Swal.fire({
                     title: 'Success!',
                     text: 'User updated successfully.',
@@ -121,7 +122,7 @@
                 });
             },
             error: function(xhr) {
-                // Show error message
+                console.log(xhr.responseText); // Log the error response
                 Swal.fire({
                     title: 'Error!',
                     text: 'Failed to update user: ' + (xhr.responseJSON.message || 'Unknown error'),
@@ -132,6 +133,7 @@
         });
     });
 });
+
 
 // Use SweetAlert to confirm deletion
 function confirmDelete(userId) {

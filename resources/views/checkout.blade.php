@@ -1,4 +1,4 @@
-@extends('layouts.app6')
+@extends('layouts.app2')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
     .hide{
@@ -44,11 +44,7 @@
                 <h3>Checkout</h3>
                 <nav>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="{{route('user.index')}}">
-                                <i class="fas fa-home"></i>
-                            </a>
-                        </li>
+                        
                         <li class="breadcrumb-item active" aria-current="page">Checkout</li>
                     </ol>
                 </nav>

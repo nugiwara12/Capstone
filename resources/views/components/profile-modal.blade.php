@@ -24,6 +24,9 @@
                                 <div class="mt-0.5 dark:text-slate-300">
                                     {{ Auth::user()->phone }}
                                 </div>
+                                <div class="mt-0.5 dark:text-slate-300">
+                                    {{ Auth::user()->role }}
+                                </div>
                             </div>
                         </figcaption>
                     </figure>
