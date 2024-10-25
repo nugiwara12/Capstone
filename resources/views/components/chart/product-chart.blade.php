@@ -47,7 +47,6 @@
     </div>
 </div>
 
-@section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
 const options1 = {
@@ -187,4 +186,3 @@ function updateCharts() {
 // Update charts every 1.5 seconds
 setInterval(updateCharts, 1500);
 </script>
-@endsection
