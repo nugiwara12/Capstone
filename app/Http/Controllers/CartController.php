@@ -60,17 +60,25 @@ class CartController extends Controller
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'You cannot access the checkout if you are not logged in');
         }
-
+        $totalAmount = session('total_amount');
         $id = Auth::user()->id;
         $cart = Cart::where('user_id', $id)->get();
-
+    
         // Check if the cart is empty
         if ($cart->isEmpty()) {
             return redirect()->route('cart')->with('error', 'Your cart is empty. Please add items before checking out.');
         }
-
-        return view('checkout', compact('cart'));
+    
+        // Calculate total amount
+        $totalAmount = $cart->sum(function ($item) {
+            return $item->price * $item->quantity;
+        });
+    
+        return view('checkout', compact('cart', 'totalAmount'));
     }
+    
+
+    
     public function destroy(string $id)
     {
         $cart = cart::findOrFail($id);

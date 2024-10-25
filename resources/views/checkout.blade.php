@@ -56,7 +56,31 @@
         </div>
     </div>
 </section>
+<div class="mb-6 p-4 border border-gray-200 rounded-md shadow-md bg-white">
+    <h3 class="text-lg font-semibold mb-2">For Customization Only:</h3>
+    <label for="customText" class="block font-semibold mb-2">Enter Custom Text</label>
+    <small class="block text-gray-500 mb-1">Note: Text with 11+ characters will incur additional charges</small>
+    <input 
+        type="text" 
+        id="customText" 
+        oninput="updateTextCharge(this.value)" 
+        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+        placeholder="Enter your text here">
+    <div id="textCharge" class="mt-2 text-sm text-gray-700">No additional charge</div>
+</div>
 
+<!-- Custom Number Section -->
+<div class="mb-6 p-4 border border-gray-200 rounded-md shadow-md bg-white">
+    <label for="customNumber" class="block font-semibold mb-2">Enter Custom Number</label>
+    <small class="block text-gray-500 mb-1">Note: Entering more than 2 numbers will incur additional charges</small>
+    <input 
+        type="number" 
+        id="customNumber" 
+        oninput="updateImageCharge(this.value)" 
+        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+        placeholder="Enter your number here">
+    <div id="imageCharge" class="mt-2 text-sm text-gray-700">No additional charge</div>
+</div>
 <!-- Cart Section Start -->
 <section class="section-b-space">
     <div class="container">
@@ -130,55 +154,64 @@
             </div>
 
             <div class="col-lg-4">
-                <div class="checkout__totals">
-                    <h3 class="fw-bold">Your Order</h3>
-                    <table class="checkout-cart-items">
-                        <thead>
-                            <tr>
-                                <th class="fw-bold">PRODUCT</th>
-                                <th class="fw-bold text-end">SUBTOTAL</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            $totalAmount = 0; // Initialize total amount
-                            @endphp
-                            @foreach ($cart as $item)
-                            <tr>
-                                <td>
-                                    {{$item->product_title}} x {{$item->quantity}}
-                                </td>
-                                <td class="text-end">
-                                    &#8369;{{$item->price * $item->quantity}}
-                                </td>
-                            </tr>
-                            @php
-                            $totalAmount += $item->price * $item->quantity; // Add to total amount
-                            @endphp
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <table class="checkout-totals">
-                        <tbody>
-                            <tr>
-                                <th>SUBTOTAL</th>
-                                <td class="text-end">&#8369;{{$totalAmount}}</td>
-                            </tr>
-                            @php
-                                $shippingCost = $cart->count() > 0 ? 100 : 0;
-                            @endphp
-                            <tr>
-                                <th>SHIPPING</th>
-                                <td class="text-end">&#8369;{{$shippingCost}}</td>
-                            </tr>
-                            <tr>
-                                <th class="border-bottom-0 fw-bold">TOTAL</th>
-                                <td class="border-bottom-0 text-end fw-bold">&#8369;{{$value=$totalAmount + $shippingCost}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="checkout__totals">
+        <h3 class="fw-bold">Your Order</h3>
+        <table class="checkout-cart-items">
+            <thead>
+                <tr>
+                    <th class="fw-bold">PRODUCT</th>
+                    <th class="fw-bold text-end">SUBTOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                $totalAmount = 0; // Initialize total amount
+                @endphp
+                @foreach ($cart as $item)
+                <tr>
+                    <td>
+                        {{$item->product_title}} x {{$item->quantity}}
+                    </td>
+                    <td class="text-end">
+                        &#8369;{{$item->price * $item->quantity}}
+                    </td>
+                </tr>
+                @php
+                $totalAmount += $item->price * $item->quantity; // Add to total amount
+                @endphp
+                @endforeach
+            </tbody>
+        </table>
+        <table class="checkout-totals">
+            <tbody>
+                <tr>
+                    <th>SUBTOTAL</th>
+                    <td class="text-end">&#8369;{{$totalAmount}}</td>
+                </tr>
+                @php
+                $shippingCost = $cart->count() > 0 ? 100 : 0;
+                @endphp
+                <tr>
+                    <th>SHIPPING</th>
+                    <td class="text-end">&#8369;{{$shippingCost}}</td>
+                </tr>
+                <tr>
+                    <th>TEXT CHARGE</th>
+                    <td class="text-end" id="textChargeDisplay">&#8369;0</td>
+                </tr>
+                <tr>
+                    <th>IMAGE CHARGE</th>
+                    <td class="text-end" id="imageChargeDisplay">&#8369;0</td>
+                </tr>
+                <tr>
+                    <th class="border-bottom-0 fw-bold">TOTAL</th>
+                    <td class="border-bottom-0 text-end fw-bold" id="totalDisplay">&#8369;{{ $totalAmount + $shippingCost }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
             <h3 class="mb-3">Pay Using Card</h3>
             <div class="d-block">
                 <div class="d-block">
@@ -240,8 +273,20 @@
                                 </div>
 
                             </div>
+                              <!-- GCash and Maya QR Code Section -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+        <div class="text-center">
+            <h4 class="font-semibold mb-2">Pay with GCash</h4>
+            <img src="{{asset('assets/images/payment-icon/2.jpg')}}" alt="GCash QR Code" class="w-40 h-40 mx-auto rounded-md shadow-md">
+        </div>
+        <div class="text-center">
+            <h4 class="font-semibold mb-2">Pay with Maya</h4>
+            <img src="{{asset('assets/images/payment-icon/1.jpg')}}" alt="Maya QR Code" class="w-40 h-40 mx-auto rounded-md shadow-md">
+        </div>
+    </div>
 
                     </div>
+
 
                       <!-- PayPal input field -->
                       {{-- <div class="row g-4" id="paypalFields" style="display:none;">
@@ -252,7 +297,7 @@
                         </div>
                     </div> --}}
                         <input type="hidden" name="total_amount" value="{{ $totalAmount + $shippingCost }}">
-                      <button class="btn btn-solid-default mt-4" type="submit">Pay Now (&#8369;{{$value}})</button>
+                      <button class="btn btn-solid-default mt-4" type="submit">Pay Now</button>
                 </div>
             </div>
             </form>
@@ -262,6 +307,57 @@
 
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
+<script>
+    function updateTotal() {
+        const additionalPayment = parseFloat(document.getElementById('additionalPayment')?.value) || 0;
+        const textCharge = parseFloat(document.getElementById('textCharge').dataset.charge) || 0;
+        const imageCharge = parseFloat(document.getElementById('imageCharge').dataset.charge) || 0;
+        const subtotal = {{ $totalAmount }};
+        const shipping = {{ $shippingCost }};
+
+        const total = subtotal + shipping + additionalPayment + textCharge + imageCharge;
+
+        // Update display for total, text charge, and image charge
+        document.getElementById('totalDisplay').innerText = `₱${total.toFixed(2)}`;
+        document.getElementById('textChargeDisplay').innerText = `₱${textCharge.toFixed(2)}`;
+        document.getElementById('imageChargeDisplay').innerText = `₱${imageCharge.toFixed(2)}`;
+    }
+
+    // Update the text charge display based on custom text length
+    function updateTextCharge(text) {
+        const filteredText = text.replace(/[\s]/g, ''); // Remove digits and spaces
+        const length = filteredText.length;
+        const benchmark = 10;
+        let charge = 0;
+
+        if (length > benchmark) {
+            charge = (length - benchmark) * 5; // 5 pesos per extra character
+        }
+
+        // Update display and set data attribute for charge
+        const textChargeElement = document.getElementById('textCharge');
+        textChargeElement.textContent = charge > 0 ? `Additional charge: ₱${charge}` : 'No additional charge';
+        textChargeElement.dataset.charge = charge; // Store charge value
+
+        updateTotal(); // Update the total whenever text is updated
+    }
+
+    // Update the image charge display based on number input
+    function updateImageCharge(value) {
+        const chargeElement = document.getElementById('imageCharge');
+        const numberValue = parseInt(value, 10) || 0; // Default to 0 if NaN
+        let charge = 0;
+
+        if (numberValue >= 2) {
+            charge = (numberValue - 1) * 10; // 10 pesos per additional item
+        }
+
+        chargeElement.textContent = charge > 0 ? `Additional charge: ₱${charge}` : 'No additional charge';
+        chargeElement.dataset.charge = charge; // Store charge value
+
+        updateTotal(); // Update the total whenever image count is updated
+    }
+</script>
 
 
 <script type="text/javascript">

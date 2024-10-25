@@ -125,6 +125,7 @@
       <div class="mt-4">
       <button onclick="downloadCanvas()" class="btn btn-success w-100">Download Design</button>
         </div>
+
 </div>
 
 
@@ -562,7 +563,8 @@ function updateTotalCharge() {
 
     </script>
     <script>
-        <script>
+
+        
     fetch('/save-image', {
     method: 'POST',
     headers: {
@@ -598,7 +600,64 @@ function updateTotalCharge() {
 })
 .catch(error => console.error('Error:', error));
 
-</script>
+    </script>
+    
+    <script>
+        const checkoutUrl = "{{ url('save.customization') }}"; // Use correct URL for redirect
+        const productId = @json($product->id); // Safely pass product ID
+
+        // Function to gather customization data
+        function getCustomizationData() {
+            const customTextElement = document.getElementById('customText');
+            if (!customTextElement) {
+                console.error("Element with ID 'customText' not found.");
+                return;
+            }
+            const customText = customTextElement.value;
+
+            const customImages = []; // Assume you're adding images dynamically; collect them in an array
+            const selectedShapes = []; // Collect the shapes added by the user
+
+            return {
+                text: customText,
+                images: customImages,
+                shapes: selectedShapes,
+                backgroundColor: document.getElementById('backgroundColorPicker').value
+            };
+        }
+
+        function saveCustomization() {
+    const customizationData = getCustomizationData();
+
+    fetch('/save-customization', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            product_id: productId,
+            customization: customizationData
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => {
+                console.error('Error saving customization:', text);
+                throw new Error(text);
+            });
+        }
+        return response.text(); // Change to text if not expecting JSON
+    })
+    .then(data => {
+        console.log(data); // This will log the success message
+        window.location.href = checkoutUrl; // Redirect after successful save
+    })
+    .catch(error => console.error('Fetch error:', error));
+}
+
+
+
     </script>
 
 @endsection
