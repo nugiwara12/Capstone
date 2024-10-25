@@ -54,7 +54,7 @@
                                                 <li><a href="{{ route('register') }}" class="d-block">Register</a></li>
                                             @endguest
                                             @auth
-                                                <li><a href="" class="d-block">Profile</a></li>
+                                                <li><a href="{{ route('my_account') }}" class="d-block">Profile</a></li>
                                                 <li><a href="{{ route('logout') }}" class="d-block" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                                     @csrf

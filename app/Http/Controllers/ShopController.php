@@ -28,6 +28,7 @@ class ShopController extends Controller
 
     public function my_account()
     {
+        $id = Auth::id(); // Get the currently authenticated user's ID
         $order = Order::where('user_id', $id)->get();
         $orderCount = Order::where('user_id', $id)->count();
         $orderPendingCount = Order::where('user_id', $id)->where('delivery_status', 'Pending')->count();

@@ -54,7 +54,7 @@
                 today and make every moment unforgettable! Happy shopping!
             </div>
             <div class="button-row1">
-                <a href="#" class="btn btn-custom">Shop Now</a>
+                <a href="{{route('shop')}}" class="btn btn-custom">Shop Now</a>
             </div>
         </div>
     </div>
@@ -73,7 +73,7 @@
                     <div class="banner-detail">
                         <span class="font-dark-30">Buy <span>Now!</span></span>
                     </div>
-                    <a href="#" class="contain-banner">
+                    <a href="javascript:void(0);" class="contain-banner">
                         <div class="banner-content with-big">
                             <h2 class="mb-2">For Him</h2>
                             <span>Surprise him with a personalized treasure.
@@ -84,13 +84,13 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="collection-banner p-bottom p-center text-center">
-                    <a href="#" class="banner-img">
+                    <a href="javascript:void(0);" class="banner-img">
                         <img src="{{asset('assets/images/3-categories/FORHER.png')}}" class="bg-img blur-up lazyload" alt="">
                     </a>
                     <div class="banner-detail">
                         <span class="font-dark-30">Buy <span>Now!</span></span>
                     </div>
-                    <a href="#" class="contain-banner">
+                    <a href="javascript:void(0);" class="contain-banner">
                         <div class="banner-content with-big">
                             <h2 class="mb-2">For Her</h2>
                             <span>Delight her with a one-of-a-kind creation.</span>
@@ -100,13 +100,13 @@
             </div>
             <div class="col-lg-4">
                 <div class="collection-banner p-bottom p-center text-center">
-                    <a href="#" class="banner-img">
+                    <a href="javascript:void(0);" class="banner-img">
                         <img src="{{asset('assets/images/3-categories/spo.png')}}" class="bg-img blur-up lazyload" alt="">
                     </a>
                     <div class="banner-detail">
                         <span class="font-dark-30">Buy <span>Now!</span></span>
                     </div>
-                    <a href="#" class="contain-banner">
+                    <a href="javascript:void(0);" class="contain-banner">
                         <div class="banner-content with-big">
                             <h2 class="mb-2">Special Occasions</h2>
                             <span>Get the perfect gift for any celebration.</span>
@@ -138,13 +138,13 @@
                         <a href="{{route('product-details', $item->id)}}">
                             <img src="{{ asset('images/' . $item->main_image) }}" class="w-100 bg-img blur-up lazyload" alt="{{$item->title}}">
                         </a>
-                        <div class="circle-shape"></div>
+                        <!-- <div class="circle-shape"></div> -->
                         <span class="background-text">{{$item->category}}</span>
                         <div class="cart-wrap">
                             <ul>
                                 {{-- <li><input type="number"></li> --}}
                                 {{-- <li><a href="{{route('cart')}}" class="addtocart-btn"><i data-feather="shopping-cart"></i></a></li> --}}
-                                <li><a href="{{route('product-details', $item->id)}}"><i data-feather="eye"></i></a></li>
+                                <!-- <li><a href="{{route('product-details', $item->id)}}"><i data-feather="eye"></i></a></li> -->
                                 {{-- <li><a href="javascript:void(0)" class="wishlist"><i data-feather="heart"></i></a></li> --}}
                             </ul>
                         </div>
@@ -255,11 +255,11 @@
 
             <div class="our-product products-c">
                 <!-- foreach -->
-                @foreach ($best_seller as $best)
+            @foreach ($best_seller as $best)
             <div class="col-xl-2 col-lg-2 col-6">
                 <div class="product-box">
                     <div class="img-wrapper">
-                        <a href="#">
+                        <a href="javascript:void(0)">
                             <img src="{{ asset('images/' . $best->main_image) }}" class="w-100 bg-img blur-up lazyload" alt="{{$best->title}}">
                         </a>
                         <div class="circle-shape"></div>
