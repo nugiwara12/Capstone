@@ -59,11 +59,12 @@ class AuthController extends Controller
         // Log in the user
         Auth::login($user);
     
-        // Redirect based on user role
         if ($user->role === 'users') {
-            return redirect()->route('user.index');
-        } else {
+            return redirect()->route('my_account');
+        } elseif (in_array($user->role, ['admin', 'seller'])) {
             return redirect()->route('dashboard');
+        } else {
+            abort(404); // Show a 404 page for unauthorized access
         }
     }
     
@@ -102,12 +103,14 @@ class AuthController extends Controller
 
         $user = Auth::user(); 
         
-       // Redirect based on user role
+        // Redirect based on user role
         if ($user->role === 'users') {
-        return redirect()->route('user.index');
-        } else {
+            return redirect()->route('my_account');
+        } elseif (in_array($user->role, ['admin', 'seller'])) {
             return redirect()->route('dashboard');
-        } // Redirect to the dashboard or desired page
+        } else {
+            abort(404); // Show a 404 page for unauthorized access
+        }
     }
 
     public function logout(Request $request)
