@@ -291,8 +291,9 @@
     <div class="text-center">
         <h4 class="font-semibold mb-2">Pay with GCash</h4>
         <img src="{{ asset('assets/images/payment/gcash-logo.ico') }}" alt="GCash Logo" 
-             class="w-50 h-40 mx-auto rounded-md shadow-md cursor-pointer" 
-             onclick="showModal('gcashModal')">
+            class="w-50 h-40 mx-auto rounded-md shadow-md cursor-pointer" 
+            data-toggle="modal" 
+            data-target="#gcashModal">
     </div>
     <!-- Maya Payment Option -->
     <div class="text-center">
@@ -304,20 +305,20 @@
 </div>
 
 <!-- GCash Modal -->
-<div class="modal fade" id="gcashModal" tabindex="-1" aria-labelledby="gcashModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="gcashModal" tabindex="-1" role="dialog" aria-labelledby="gcashModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header p-2">
+                <h5 class="text-black text-lg font-semibold" id="gcashModalLabel">Pay with GCash</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-3xl">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                <!-- QR Code Image -->
-                <div class="text-center mb-4">
-                    <img src="{{ asset('assets/images/payment/gcash-code.png') }}" alt="GCash QR Code" class="img-fluid rounded shadow" style="max-width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto;">
-                    <p class="text-muted mt-2">Scan the QR code to pay with GCash</p>
+            <div class="modal-body overflow-auto" style="max-height: 700px; overflow-y: auto;">
+                <div class="flex flex-col items-center text-center mb-4">
+                    <img src="{{ asset('assets/images/payment/gcash-code.png') }}" alt="GCash QR Code" class="img-fluid w-full">
+                    <span class="text-muted mt-2">Scan the QR code to pay with GCash</span>
                 </div>
-
-                <!-- GCash Form -->
                 <form action="{{ route('payment.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="payment_method" value="gcash">
@@ -325,35 +326,37 @@
                     <!-- Name -->
                     <div class="mb-3">
                         <label for="gcashName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="gcashName" name="name" placeholder="Enter your name" required>
+                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashName" name="name" placeholder="Enter your name" required>
                     </div>
 
                     <!-- Address -->
                     <div class="mb-3">
-                        <label for="gcashAddress" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="gcashAddress" name="address" placeholder="Enter your address" required>
+                        <label for="gcashAddress" class="block text-sm font-medium text-gray-700">Address</label>
+                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashAddress" name="address" placeholder="Enter your address" required>
                     </div>
 
                     <!-- Email -->
                     <div class="mb-3">
-                        <label for="gcashEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="gcashEmail" name="email" placeholder="Enter your email" required>
+                        <label for="gcashEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashEmail" name="email" placeholder="Enter your email" required>
                     </div>
 
                     <!-- Phone -->
                     <div class="mb-3">
-                        <label for="gcashPhone" class="form-label">Gcash Phone Number</label>
-                        <input type="text" class="form-control" id="gcashPhone" name="phone" placeholder="Enter your phone number" required>
+                        <label for="gcashPhone" class="block text-sm font-medium text-gray-700">Gcash Phone Number</label>
+                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashPhone" name="phone" placeholder="Enter your phone number" required>
                     </div>
 
                     <!-- Screenshot Upload -->
                     <div class="mb-3">
-                        <label for="gcashScreenshot" class="form-label">Upload Screenshot</label>
-                        <input type="file" class="form-control" id="gcashScreenshot" name="screenshot" accept="image/*">
+                        <label for="gcashScreenshot" class="block text-sm font-medium text-gray-700">Upload Screenshot</label>
+                        <input type="file" class="text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashScreenshot" name="screenshot" accept="image/*">
                     </div>
 
                     <!-- Confirm Button -->
-                    <button type="submit" class="btn btn-primary">Confirm Payment</button>
+                    <div class="flex justify-end">
+                        <button type="submit" class="btn btn-primary bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Submit Payment</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -361,52 +364,59 @@
 </div>
 
 
-
-
-<!-- Maya Modal -->
-<div class="modal fade" id="mayaModal" tabindex="-1" aria-labelledby="mayaModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<!-- GCash Modal -->
+<div class="modal fade" id="mayaModal" tabindex="-1" role="dialog" aria-labelledby="mayaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header p-2">
+                <h5 class="text-black text-lg font-semibold" id="mayaModalLabel">Pay with Maya</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-3xl">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                <!-- QR Code Image -->
-                <div class="text-center mb-4">
-                    <img src="{{ asset('assets/images/payment/maya-qr.png') }}" alt="Maya QR Code" class="img-fluid rounded shadow" style="max-width: 100%; height: auto;">
-                    <p class="text-muted mt-2">Scan the QR code to pay with Maya</p>
+            <div class="modal-body overflow-auto" style="max-height: 700px; overflow-y: auto;">
+                <div class="flex flex-col items-center text-center mb-4">
+                    <img src="{{ asset('assets/images/payment/maya-qr.png') }}" alt="GCash QR Code" class="img-fluid w-full">
+                    <span class="text-muted mt-2">Scan the QR code to pay with GCash</span>
                 </div>
-                <!-- Maya Form -->
                 <form action="{{ route('payment.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="payment_method" value="maya">
+                    <input type="hidden" name="payment_method" value="gcash">
+
                     <!-- Name -->
                     <div class="mb-3">
-                        <label for="mayaName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="mayaName" name="name" placeholder="Enter your name" required>
+                        <label for="gcashName" class="form-label">Name</label>
+                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashName" name="name" placeholder="Enter your name" required>
                     </div>
+
                     <!-- Address -->
                     <div class="mb-3">
-                        <label for="mayaAddress" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="mayaAddress" name="address" placeholder="Enter your address" required>
+                        <label for="gcashAddress" class="block text-sm font-medium text-gray-700">Address</label>
+                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashAddress" name="address" placeholder="Enter your address" required>
                     </div>
+
                     <!-- Email -->
                     <div class="mb-3">
-                        <label for="mayaEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="mayaEmail" name="email" placeholder="Enter your email" required>
+                        <label for="gcashEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashEmail" name="email" placeholder="Enter your email" required>
                     </div>
+
                     <!-- Phone -->
                     <div class="mb-3">
-                        <label for="mayaPhone" class="form-label">Phone Number</label>
-                        <input type="text" class="form-control" id="mayaPhone" name="phone" placeholder="Enter your phone number" required>
+                        <label for="gcashPhone" class="block text-sm font-medium text-gray-700">Gcash Phone Number</label>
+                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashPhone" name="phone" placeholder="Enter your phone number" required>
                     </div>
+
                     <!-- Screenshot Upload -->
                     <div class="mb-3">
-                        <label for="mayaScreenshot" class="form-label">Upload Screenshot</label>
-                        <input type="file" class="form-control" id="mayaScreenshot" name="screenshot" accept="image/*">
+                        <label for="gcashScreenshot" class="block text-sm font-medium text-gray-700">Upload Screenshot</label>
+                        <input type="file" class="text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashScreenshot" name="screenshot" accept="image/*">
                     </div>
+
                     <!-- Confirm Button -->
-                    <button type="submit" class="btn btn-primary">Confirm Payment</button>
+                    <div class="flex justify-end">
+                        <button type="submit" class="btn btn-primary bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Submit Payment</button>
+                    </div>
                 </form>
             </div>
         </div>
