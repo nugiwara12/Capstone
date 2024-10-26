@@ -32,7 +32,16 @@
                                             <li><a href="{{(route('shop'))}}" class="nav-link menu-title">Shop</a></li>
                                             <li><a href="{{(route('about_us'))}}" class="nav-link menu-title">About Us</a></li>
                                             <li><a href="{{(route('contact'))}}" class="nav-link menu-title">Contact Us</a></li>
-                                            <li><a href="{{(route('cart'))}}" class="nav-link menu-title">Cart</a></li>
+                                            <li class="relative">
+                                                <a href="{{ route('cart') }}" class="nav-link menu-title">
+                                                    <i class="bi bi-cart text-xl"></i>
+                                                    <!-- Cart count positioned at the top-right -->
+                                                    <span id="cart-count" 
+                                                        class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white 
+                                                                text-xs font-semibold rounded-full h-5 w-5 flex items-center justify-center">
+                                                    </span>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -71,3 +80,18 @@
         </div>
     </div>
 </header>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    fetchCartCount();
+
+    function fetchCartCount() {
+        fetch("{{ route('cart.count') }}")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("cart-count").innerText = data.cartCount > 0 ? data.cartCount : '';
+            })
+            .catch(error => console.error('Error fetching cart count:', error));
+    }
+});
+
+</script>

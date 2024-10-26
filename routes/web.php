@@ -109,7 +109,7 @@ Route::controller(CategoryController::class)->prefix('categories')->group(functi
 
 // ----------------------------- PRODUCT -----------------------//
 Route::controller(ProductController::class)->prefix('products')->group(function () {
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth','verified'])->group(function () {
         Route::get('', 'index')->name('products');
         Route::get('create', 'create')->name('products.create');
         Route::get('create', 'create')->name('products.create');
@@ -120,12 +120,12 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
         Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
         Route::post('restore/{id}', 'restore')->name('products.restore'); // Add restore route here
         Route::post('add-to-cart', 'addToCart')->name('add.to.cart');
+        Route::get('products/sold/index', [ProductController::class, 'listSoldProducts'])->name('products.sold.index');
     });
 });
 Route::post('/save-image', [ProductController::class, 'storingcustom'])->name('image.save');
 
 Route::get('/user.index', [ProductController::class, 'allProducts'])->name('user.index');
-Route::get('products/sold/index', [ProductController::class, 'listSoldProducts'])->name('products.sold.index');
 Route::get('/best-sellers', [ProductController::class, 'bestSellers'])->name('best-sellers');
 Route::get('/featured', [ProductController::class, 'featured'])->name('featured');
 Route::get('/shops', [ProductController::class, 'shops'])->name('shops');
@@ -220,6 +220,7 @@ Route::get('/thank-you', function () {
 })->name('thankyou');
 
 Route::post('/save-image', [ProductController::class, 'saveImage'])->name('save.image');
+Route::get('cart/count', [CartController::class, 'cartCount'])->name('cart.count');
 
 // ----------------------------- End Of Route Back Log -----------------------//
 // });

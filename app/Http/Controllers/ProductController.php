@@ -22,6 +22,9 @@ class ProductController extends Controller
      */
     public function listSoldProducts()
     {
+        if (!in_array(Auth::user()->role, ['admin', 'seller'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         $product = Product::where('item_sold', '>', 0)->get();
 
         return view('components.sales.filter-date', compact('product'));

@@ -76,9 +76,12 @@ class CartController extends Controller
     
         return view('checkout', compact('cart', 'totalAmount'));
     }
-    
-
-    
+    // In your Controller or middleware, depending on your setup
+    public function cartCount()
+    {
+        $cartCount = Auth::check() ? Cart::where('user_id', Auth::id())->count() : 0;
+        return response()->json(['cartCount' => $cartCount]);
+    }
     public function destroy(string $id)
     {
         $cart = cart::findOrFail($id);
