@@ -364,6 +364,7 @@
                 </div>
             </div>
 
+
             <!-- GCash Modal -->
             <div class="modal fade" id="mayaModal" tabindex="-1" role="dialog" aria-labelledby="mayaModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-md modal-dialog-centered" role="document">
