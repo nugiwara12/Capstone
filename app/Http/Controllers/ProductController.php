@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use App\Models\activityLog;
 use Illuminate\Support\Facades\DB;
 
+
 class ProductController extends Controller
 {
     /**
@@ -28,6 +29,9 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
+        if (!in_array(Auth::user()->role, ['admin', 'seller'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         $query = Product::query();
     
         if ($request->filled('search')) {
@@ -70,6 +74,9 @@ class ProductController extends Controller
      */
     public function create()
     {
+        if (!in_array(Auth::user()->role, ['admin', 'seller'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         $category = Category::all();
         return view('products.create', compact('category'));
     }
@@ -213,6 +220,9 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
+        if (!in_array(Auth::user()->role, ['admin', 'seller'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         $product = Product::findOrFail($id);
         $category = Category::all();
         $product->img_gallery = json_decode($product->img_gallery);
@@ -225,6 +235,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
+        if (!in_array(Auth::user()->role, ['admin', 'seller'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         $product = Product::findOrFail($id);
         $category = Category::all();
 
@@ -234,6 +247,9 @@ class ProductController extends Controller
     // chatgpt new update function
     public function update(Request $request, $id)
     {
+        if (!in_array(Auth::user()->role, ['admin', 'seller'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         // Find the product by ID
         $product = Product::findOrFail($id);
 
@@ -522,6 +538,9 @@ class ProductController extends Controller
 
     public function restore($id)
     {
+        if (!in_array(Auth::user()->role, ['admin', 'seller'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         $product = Product::findOrFail($id);
         
         // Check if the product is already marked as deleted

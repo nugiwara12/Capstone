@@ -18,6 +18,9 @@ class ManagementUserController extends Controller
 {
     public function index(Request $request)
     {
+        if (!in_array(Auth::user()->role, ['admin'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         // Get the search query if any
         $search = $request->input('search');
     
@@ -38,6 +41,9 @@ class ManagementUserController extends Controller
 
     public function create()
     {
+        if (!in_array(Auth::user()->role, ['admin'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         return view('usermanagement.create');
     }
 
@@ -72,6 +78,9 @@ class ManagementUserController extends Controller
     }
     public function edit(string $id)
     {
+        if (!in_array(Auth::user()->role, ['admin'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         // Fetch a single user instance
         $user = User::findOrFail($id);
     
@@ -81,6 +90,9 @@ class ManagementUserController extends Controller
     
     public function update(Request $request, string $id)
     {
+        if (!in_array(Auth::user()->role, ['admin'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         // Validate the incoming request data
         $validatedData = $request->validate([
             'name' => ['required', 'regex:/^[A-z a-z]+$/', 'string', 'max:255'],
@@ -114,6 +126,9 @@ class ManagementUserController extends Controller
 
     public function destroy(string $id)
     {
+        if (!in_array(Auth::user()->role, ['admin'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         $users = User::findOrFail($id);
   
         $users->delete();

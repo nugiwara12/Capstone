@@ -39,21 +39,22 @@ use App\Http\Controllers\PaymentController;
 |
 */
 // ----------------------------- Start Backlog-----------------------//
-Route::group(['middleware' => 'prevent-back-history'],function(){
+// Route::group(['middleware' => 'prevent-back-history'],function(){
 
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('dashboard', [AuthController::class, 'dashboard'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
 
 // Route for user index
 Route::get('/user', [AuthController::class, 'index'])
     ->middleware(['auth', 'verified'])
-    ->name('user.index');
+    ->name('/user');
 //->middleware('redirect.authenticated');
 
 require __DIR__.'/auth.php';
@@ -93,27 +94,32 @@ Route::delete('orders/{id}', [OrderController::class, 'delete'])->name('order.de
 // ----------------------------- Category -----------------------//
 Route::controller(CategoryController::class)->prefix('categories')->group(function () {
     Route::get('', 'index')->name('category');
-    Route::get('create', 'create')->name('category.create');
-    Route::post('store', 'store')->name('category.store');
+    Route::middleware(['auth'])->group(function () {
+        Route::get('category/create', [CategoryController::class, 'create'])->name('category.create');
+    
+        Route::post('store', 'store')->name('category.store');
     Route::get('show/{id}', 'show')->name('category.show');
     Route::get('{id}/edit', 'edit')->name('category.edit');
     Route::put('{id}', 'update')->name('category.update'); // Adjusted to match the route
     Route::delete('destroy/{id}', 'destroy')->name('category.destroy');
 });
+});
 
 
 // ----------------------------- PRODUCT -----------------------//
 Route::controller(ProductController::class)->prefix('products')->group(function () {
-    Route::get('', 'index')->name('products');
-    Route::get('create', 'create')->name('products.create');
-    Route::get('create', 'create')->name('products.create');
-    Route::post('store', 'store')->name('products.store');
-    Route::get('show/{id}', 'show')->name('products.show');
-    Route::get('edit/{id}', 'edit')->name('products.edit');
-    Route::put('edit/{id}', 'update')->name('products.update');
-    Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
-    Route::post('restore/{id}', 'restore')->name('products.restore'); // Add restore route here
-    Route::post('add-to-cart', 'addToCart')->name('add.to.cart');
+    Route::middleware(['auth'])->group(function () {
+        Route::get('', 'index')->name('products');
+        Route::get('create', 'create')->name('products.create');
+        Route::get('create', 'create')->name('products.create');
+        Route::post('store', 'store')->name('products.store');
+        Route::get('show/{id}', 'show')->name('products.show');
+        Route::get('edit/{id}', 'edit')->name('products.edit');
+        Route::put('edit/{id}', 'update')->name('products.update');
+        Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
+        Route::post('restore/{id}', 'restore')->name('products.restore'); // Add restore route here
+        Route::post('add-to-cart', 'addToCart')->name('add.to.cart');
+    });
 });
 Route::post('/save-image', [ProductController::class, 'storingcustom'])->name('image.save');
 
@@ -168,7 +174,9 @@ Route::post('/subscribe', [SubscriptionController::class, 'store'])->name('subsc
 Route::get('/sales-report', [SalesReportController::class, 'generateSalesReport'])->name('sales.report');
 
 Route::controller(ShopController::class)->group(function () {
-    Route::get( 'my_account', 'my_account')->name('my_account');
+    Route::get('my_account', 'my_account')
+        ->middleware(['auth', 'verified']) // Add middleware here
+        ->name('my_account');
     Route::get( 'thankyou', 'thankYou')->name('thank-you');
     Route::get( 'customize/{id}', 'customize')->name('customize');
 });
@@ -181,7 +189,9 @@ Route::get('/', function () {
 })->name('/');
 
 Route::controller(ShopController::class)->group(function () {
-    Route::get( 'my_account', 'my_account')->name('my_account');
+    Route::get('my_account', 'my_account')
+        ->middleware(['auth', 'verified']) // Add middleware here
+        ->name('my_account');
     Route::get( 'thankyou', 'thankYou')->name('thank-you');
     Route::get( 'customize/{id}', 'customize')->name('customize');
 });
@@ -211,4 +221,4 @@ Route::get('/thank-you', function () {
 Route::post('/save-image', [ProductController::class, 'saveImage'])->name('save.image');
 
 // ----------------------------- End Of Route Back Log -----------------------//
-});
+// });

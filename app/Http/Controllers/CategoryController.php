@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -28,6 +29,9 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
+        if (!in_array(Auth::user()->role, ['admin'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         // Determine how many entries to show per page
         $perPage = $request->input('per_page', 10); // Default to 10 if not specified
     
@@ -50,6 +54,10 @@ class CategoryController extends Controller
 
     public function create()
     {
+         // Check if the user has the appropriate role
+    if (!in_array(Auth::user()->role, ['admin'])) {
+        abort(403, 'You do not have permission to access this page.');
+    }
         return view('admin.category.create');
     }
 
@@ -93,6 +101,9 @@ class CategoryController extends Controller
 
     public function edit(string $id)
     {
+        if (!in_array(Auth::user()->role, ['admin'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         try {
             $category = Category::findOrFail($id);
             return view('admin.category.edit', compact('category'));
@@ -103,6 +114,9 @@ class CategoryController extends Controller
 
     public function update(Request $request, string $id)
     {
+        if (!in_array(Auth::user()->role, ['admin'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         // Find the existing category
         try {
             $category = Category::findOrFail($id);
@@ -146,6 +160,9 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
+        if (!in_array(Auth::user()->role, ['admin'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         try {
             $category = Category::findOrFail($id);
 

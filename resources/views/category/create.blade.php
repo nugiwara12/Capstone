@@ -1,9 +1,11 @@
 @extends('layouts.app3')
 
 @section('title', 'Create Category')
-
 @section('contents')
+@if (Auth::check() && in_array(Auth::user()->role, ['admin', 'seller']))
+
     <hr />
+
     <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row ">
@@ -17,4 +19,5 @@
             </div>
         </div>
     </form>
+    @endif
 @endsection

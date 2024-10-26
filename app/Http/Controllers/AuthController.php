@@ -22,11 +22,18 @@ class AuthController extends Controller
     {
         // Fetch users from the database (or however you want to handle this)
         $users = User::all(); // Example: Get all users
-        return view('user.index', compact('users')); // Adjust view path as needed
+        return view('my_account', compact('users')); // Adjust view path as needed
     }
     public function register()
     {
         return view('auth/register');
+    }
+    public function dashboard()
+    {
+        if (!in_array(Auth::user()->role, ['admin', 'seller'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
+        return view('dashboard');
     }
 
     public function registerSave(Request $request)
@@ -58,6 +65,7 @@ class AuthController extends Controller
     
         // Log in the user
         Auth::login($user);
+        
     
         if ($user->role === 'users') {
             return redirect()->route('my_account');
@@ -102,6 +110,7 @@ class AuthController extends Controller
         DB::table('activity_logs')->insert($activityLog);
 
         $user = Auth::user(); 
+        
         
         // Redirect based on user role
         if ($user->role === 'users') {
