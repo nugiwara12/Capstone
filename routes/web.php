@@ -77,8 +77,18 @@ Route::controller(ShopController::class)->group(function () {
 Route::get('/contact', [ContactUsFormController::class, 'createForm'])->name('contact');
 Route::post('/contact', [ContactUsFormController::class, 'ContactUsForm'])->name('contact.store');
 Route::get('/index', [ContactUsFormController::class, 'index'])->name('contacts.index');
+Route::get('/components/sidebar', [ContactUsFormController::class, 'message'])->name('components.sidebar');
 Route::get('/contacts/{id}', [ContactUsFormController::class, 'show'])->name('contact.show');
 Route::delete('/contacts/{id}', [ContactUsFormController::class, 'destroy'])->name('contact.destroy');
+
+// ----------------------------- ORDER-----------------------//
+Route::get('/order', [OrderController::class, 'index'])->name('order.index');
+Route::post('orders/{id}/delivered', [OrderController::class, 'delivered'])->name('order.delivered');
+Route::post('orders/{id}/shipped', [OrderController::class, 'shipped'])->name('order.shipped');
+Route::post('orders/{id}/packed', [OrderController::class, 'packed'])->name('order.packed');
+Route::post('orders/{id}/preparing', [OrderController::class, 'preparing'])->name('order.preparing');
+Route::delete('orders/{id}', [OrderController::class, 'delete'])->name('order.delete');
+
 
 // ----------------------------- Category -----------------------//
 Route::controller(CategoryController::class)->prefix('categories')->group(function () {

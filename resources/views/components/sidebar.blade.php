@@ -53,18 +53,16 @@
                         <span class="sr-only">Toggle sidebar</span>
                         <i class="bi bi-text-right text-2xl"></i>
                     </button>
-                    <button @click="(isSidebarOpen && currentSidebarTab == 'messagesTab') ? isSidebarOpen = false : isSidebarOpen = true; currentSidebarTab = 'messagesTab'" 
+                    <a href="{{ route('contacts.index')}}"
                         class="p-2 transition-colors rounded-lg shadow-md hover:bg-blue-800" 
                         :class="(isSidebarOpen && currentSidebarTab == 'messagesTab') ? 'text-white bg-blue-800' : 'text-black bg-white'">
                         <span class="sr-only">Toggle message panel</span>
                         <i class="bi bi-chat-square-text text-2xl"></i>
-                    </button>
-                    <button @click="(isSidebarOpen && currentSidebarTab == 'notificationsTab') ? isSidebarOpen = false : isSidebarOpen = true; currentSidebarTab = 'notificationsTab'" 
-                        class="p-2 transition-colors bg-gra rounded-lg shadow-lg hover:bg-blue-800" 
-                        :class="(isSidebarOpen && currentSidebarTab == 'notificationsTab') ? 'text-white bg-blue-800' : 'text-black bg-white'">
+                    </a>
+                    <a href="{{ route('order.index')}}" :class="(isSidebarOpen && currentSidebarTab == 'notificationsTab') ? 'text-white bg-blue-800' : 'text-black bg-white'">
                         <span class="sr-only">Toggle notifications panel</span>
                         <i class="bi bi-bell text-2xl"></i>
-                    </button>
+                    </a>
                 </div>
 
                 <div class="relative flex items-center flex-shrink-0 p-2" x-data="{ isOpen: false }">
@@ -89,17 +87,16 @@
                  x-transition:enter-end="translate-x-0" x-transition:leave-start="translate-x-0" 
                  x-transition:leave-end="-translate-x-full" x-show="isSidebarOpen" 
                  class="fixed inset-y-0 left-0 z-10 flex-shrink-0 w-64 bg-white border-r-2 border-blue-100 shadow-lg sm:left-16 rounded-tr-3xl rounded-br-3xl sm:w-72 lg:static lg:w-64">
-                <section x-show="currentSidebarTab == 'messagesTab'" class="px-4 py-6">
+                <a href="{{ route('contacts.index')}}" x-show="currentSidebarTab == 'messagesTab'" class="px-4 py-6">
                     <h2 class="text-xl">Messages</h2>
-                    <x-avatar />
-                </section>
+                </a>
                 <section x-show="currentSidebarTab == 'notificationsTab'" class="px-4 py-6">
                     <h2 class="text-xl">Notifications</h2>
                 </section>
                 <nav x-show="currentSidebarTab == 'linksTab'" aria-label="Main" class="flex flex-col h-full">
                     <!-- Logo -->
                     <div class="flex items-center justify-center flex-shrink-0 py-10">
-                        <a href="#">
+                        <a href="{{ route('dashboard') }}">
                             <img class="w-24 h-auto" src="{{ asset('admin_assets/img/logo/imglogo.png') }}" alt="Gawang Gamat" />
                         </a>
                     </div>
