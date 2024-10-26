@@ -146,424 +146,424 @@
 
 
 <!-- Fabric -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.2/fabric.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.2/fabric.min.js"></script>
 <!-- Jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- Jquery Ui -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.0/jquery-ui.min.js" integrity="sha512-MlEyuwT6VkRXExjj8CdBKNgd+e2H+aYZOCUaCrt9KRk6MlZDOs91V1yK22rwm8aCIsb5Ec1euL8f0g58RKT/Pg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.0/jquery-ui.min.js" integrity="sha512-MlEyuwT6VkRXExjj8CdBKNgd+e2H+aYZOCUaCrt9KRk6MlZDOs91V1yK22rwm8aCIsb5Ec1euL8f0g58RKT/Pg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- FileSaver -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-    <script>
-     // Get the elements
-        const container = document.getElementById('container');
-        const colorPicker = document.getElementById('backgroundColorPicker');
-        const colorDropdown = document.getElementById('backgroundColorDropdown');
-        const transparentBgToggle = document.getElementById('transparentBgToggle');
+<script>
+    // Get the elements
+    const container = document.getElementById('container');
+    const colorPicker = document.getElementById('backgroundColorPicker');
+    const colorDropdown = document.getElementById('backgroundColorDropdown');
+    const transparentBgToggle = document.getElementById('transparentBgToggle');
 
-        let canvas;
-        let textObjects = [];
-        let shapeObjects = [];
-        let activeTextIndex = -1;
-        let imageCount = 0; 
-        let totalTextCharge = 0; // Initialize total text charge
-let totalImageCharge = 0; // Initialize total image charge
-
-
-function updateTotalCharge() {
-    const totalCharge = totalTextCharge + totalImageCharge;
-    $('#totalCharge').text(`Total Charge: ₱${totalCharge}`); // Update the total charge display
-}
+    let canvas;
+    let textObjects = [];
+    let shapeObjects = [];
+    let activeTextIndex = -1;
+    let imageCount = 0; 
+    let totalTextCharge = 0; // Initialize total text charge
+    let totalImageCharge = 0; // Initialize total image charge
 
 
-        const element = document.getElementById('canvasContainer');
-        const parent = element.parentElement;
-        // parent.style.backgroundImage = "url('{{ asset('images/' . $product->customizing_image) }}')";
+    function updateTotalCharge() {
+        const totalCharge = totalTextCharge + totalImageCharge;
+        $('#totalCharge').text(`Total Charge: ₱${totalCharge}`); // Update the total charge display
+    }
 
 
-        // Set element dimensions (can be fetched from DB)
-        const newLeft = {{$product->canvas_left}}, newTop = {{$product->canvas_top}};
-        element.style.left = `${newLeft}%`;
-        element.style.top = `${newTop}%`;
-        const canWidth = {{$product->canvas_width}} * parent.clientWidth / 100;
-        const canHeight = {{$product->canvas_height}} * parent.clientHeight / 100;
-
-        $(document).ready(function() {
-            canvas = new fabric.Canvas("canvas");
-            setCanvasSize(canWidth, canHeight); // Set canvas size
-            
-            // Add Text to Canvas
-            $('#addTextBtn').click(() => addTextToCanvas());
-
-            // Delete Active Object
-            $('#deleteBtn').click(() => deleteActiveObject());
-
-            // Add Image to Canvas
-            $('#addImgBtn').click(() => addImageToCanvas());
-
-            // Shape selection from dropdown
-            $('.dropdown-item').click(function(event) {
-                event.preventDefault(); // Prevent default anchor behavior
-                const selectedShape = $(this).data('shape');
-                const color = $('#shapeColorPicker').val(); // Get the current color from the shape color picker
-                addShapeToCanvas(selectedShape, color); // Pass the color to the function
-            });
-
-            // Bind download function to button
-            $('#downloadBtn').click(downloadCanvas);
-
-            // Show color picker for text when the text color changes
-            $('#textColorPicker').on('input', function() {
-                const selectedColor = $(this).val();
-                const activeObject = canvas.getActiveObject();
-                if (activeObject && activeObject.type === 'textbox') {
-                    activeObject.set('fill', selectedColor); // Change the fill color of the active text object
-                    canvas.renderAll(); // Refresh the canvas
-                }
-            });
-
-            // Show color picker when the eyedropper button is clicked
-            $('#eyedropperBtn').on('click', function(event) {
-                $('#textColorPicker').show(); // Show the text color picker
-
-                // Position the color picker
-                const buttonOffset = $(this).offset();
-                const buttonHeight = $(this).outerHeight();
-
-                $('#textColorPicker').css({
-                    top: buttonOffset.top + buttonHeight + 5,
-                    left: buttonOffset.left
-                });
-
-                // Focus the text color picker for immediate selection
-                $('#textColorPicker').focus().trigger('click');
-
-                event.preventDefault();
-            });
-
-            // Function to change background color
-            function changeBackgroundColor(color) {
-                container.style.backgroundColor = color;
-            }
-
-            // Event listener for color picker
-            colorPicker.addEventListener('input', function() {
-                changeBackgroundColor(this.value);
-            });
-
-            // Event listener for dropdown
-            colorDropdown.addEventListener('change', function() {
-                changeBackgroundColor(this.value);
-            });
-
-            // Event listener for transparent background toggle
-            transparentBgToggle.addEventListener('click', function() {
-                container.style.backgroundColor = 'transparent'; // Reset to transparent
-            });
-
-            // Show/hide text editor and delete button
-            canvas.on('object:selected', handleObjectSelected);
-            canvas.on('selection:cleared', clearSelection);
-
-            // Initially hide the color picker input
-            $('#textColorPicker').hide();
-
-                    });
-
-        // Set canvas size dynamically
-        function setCanvasSize(width, height) {
-            $("#canvasContainer").css({ width, height });
-            $("#canvas").attr({ width, height });
-            canvas.setWidth(width);
-            canvas.setHeight(height);
-        }
-
-        // Add Text Object to Canvas
-        function addTextToCanvas() {
-            const text = new fabric.Textbox("Add Your Text", {
-                left: canvas.width / 2,
-                top: canvas.height / 2,
-                fontSize: parseInt($('#fontSize').val(), 10), // Get font size from dropdown
-                fontFamily: $('#fontFamily').val(), // Get font family from dropdown
-                fill: $('#textColorPicker').val(), // Initial text color
-                textAlign: "center",
-                editable: true,
-            });
-
-            textObjects.push(text);
-            canvas.add(text).setActiveObject(text);
-            activeTextIndex = textObjects.length - 1;
-
-            updateTextEditorValues(text);
-
-            // Add input event to track text changes and update benchmark charge
-            text.on('changed', function() {
-                updateTextCharge(text.text);
-            });
-        }
-
-        function updateTextEditorValues(text) {
-            $("#textColorPicker").val(text.fill);
-            $("#fontSize").val(text.fontSize);
-            $("#fontFamily").val(text.fontFamily);
-            updateTextCharge(text.text); // Update charge when text is added
-        }
-
-        // Function to calculate and display the additional charge
-        function updateTextCharge(text) {
-            const filteredText = text.replace(/[0-9\s]/g, ''); // Remove digits and spaces
-            const length = filteredText.length; // Calculate length of filtered text
-
-            // Minimum character benchmark
-            const benchmark = 10;
-            let charge = 0;
-
-            if (length > benchmark) {
-                // Calculate additional charge for characters beyond the benchmark
-                charge = (length - benchmark) * 5; // 5 pesos for each character beyond 10
-            }
-            totalTextCharge = charge;
-            // Update the text charge display
-            if (charge > 0) {
-                $('#textCharge').text(`₱${charge}`); // Display additional charge
-            } else {
-                $('#textCharge').text('No additional charge'); // No charge if within benchmark
-            }
-
-            updateTotalCharge(); // Call to update the total charge display
-
-        }
+    const element = document.getElementById('canvasContainer');
+    const parent = element.parentElement;
+    // parent.style.backgroundImage = "url('{{ asset('images/' . $product->customizing_image) }}')";
 
 
-        // Set up text property listeners
-        $('#fontSize').on('input', function() {
-            const activeObject = canvas.getActiveObject();
-            if (activeObject && activeObject.type === 'textbox') {
-                activeObject.set('fontSize', parseInt($(this).val(), 10));
-                canvas.renderAll();
-            }
+    // Set element dimensions (can be fetched from DB)
+    const newLeft = {{$product->canvas_left}}, newTop = {{$product->canvas_top}};
+    element.style.left = `${newLeft}%`;
+    element.style.top = `${newTop}%`;
+    const canWidth = {{$product->canvas_width}} * parent.clientWidth / 100;
+    const canHeight = {{$product->canvas_height}} * parent.clientHeight / 100;
+
+    $(document).ready(function() {
+        canvas = new fabric.Canvas("canvas");
+        setCanvasSize(canWidth, canHeight); // Set canvas size
+        
+        // Add Text to Canvas
+        $('#addTextBtn').click(() => addTextToCanvas());
+
+        // Delete Active Object
+        $('#deleteBtn').click(() => deleteActiveObject());
+
+        // Add Image to Canvas
+        $('#addImgBtn').click(() => addImageToCanvas());
+
+        // Shape selection from dropdown
+        $('.dropdown-item').click(function(event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            const selectedShape = $(this).data('shape');
+            const color = $('#shapeColorPicker').val(); // Get the current color from the shape color picker
+            addShapeToCanvas(selectedShape, color); // Pass the color to the function
         });
 
-        $('#fontFamily').on('change', function() {
-            const activeObject = canvas.getActiveObject();
-            if (activeObject && activeObject.type === 'textbox') {
-                activeObject.set('fontFamily', $(this).val());
-                canvas.renderAll();
-            }
-        });
+        // Bind download function to button
+        $('#downloadBtn').click(downloadCanvas);
 
-        // Add shape to canvas
-        function addShapeToCanvas(selectedShape, color) {
-            let shape;
-
-            switch (selectedShape) {
-                case 'circle':
-                    shape = new fabric.Circle({
-                        radius: 30,
-                        fill: color,
-                        left: canvas.width / 2,
-                        top: canvas.height / 2
-                    });
-                    break;
-                case 'rectangle':
-                    shape = new fabric.Rect({
-                        width: 60,
-                        height: 40,
-                        fill: color,
-                        left: canvas.width / 2,
-                        top: canvas.height / 2
-                    });
-                    break;
-                case 'triangle':
-                    shape = new fabric.Triangle({
-                        width: 60,
-                        height: 60,
-                        fill: color,
-                        left: canvas.width / 2,
-                        top: canvas.height / 2
-                    });
-                    break;
-                case 'square':
-                    shape = new fabric.Rect({
-                        width: 50,
-                        height: 50,
-                        fill: color,
-                        left: canvas.width / 2,
-                        top: canvas.height / 2
-                    });
-                    break;
-                default:
-                    return; // Exit if no shape is selected
-            }
-
-            canvas.add(shape).setActiveObject(shape);
-            $('#shapeColorLabel, #shapeColorPicker').show(); // Show color options if applicable
-            canvas.renderAll();
-        }
-
-        // Add image to canvas
-
-        function addImageToCanvas() {
-            const fileInput = $('<input type="file" accept="image/*" style="display:none;">');
-
-            fileInput.on('change', function(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const imgElement = new Image();
-                        imgElement.src = e.target.result;
-                        imgElement.onload = () => {
-                            addImageToCanvasFromSrc(imgElement);
-                            imageCount++; // Increment the image count
-                            updateImageCharge(); // Update the charge for images
-                        };
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            fileInput.appendTo('body').trigger('click');
-        }
-        function updateImageCharge() {
-            if (imageCount > 1) {
-                totalImageCharge = (imageCount - 1) * 15; // 15 pesos for each additional image beyond the first
-                $('#imageCharge').text(`₱${totalImageCharge}`);
-            } else {
-                totalImageCharge = 0; // No charge for the first image
-                $('#imageCharge').text('No additional charge'); // No charge for the first image
-            }
-
-            updateTotalCharge(); // Call to update the total charge display
-
-        }
-
-
-        // Add image to canvas from img element
-        function addImageToCanvasFromSrc(imgElement) {
-            const scale = Math.min(canvas.width / imgElement.width, canvas.height / imgElement.height);
-            const imgInstance = new fabric.Image(imgElement, {
-                left: (canvas.width - imgElement.width * scale) / 2,
-                top: (canvas.height - imgElement.height * scale) / 2,
-                scaleX: scale,
-                scaleY: scale,
-            });
-
-            canvas.add(imgInstance).setActiveObject(imgInstance);
-            canvas.renderAll();
-        }
-
-        // Delete active object (text, shape, or image)
-        function deleteActiveObject() {
-            const activeObject = canvas.getActiveObject();
-            if (activeObject) {
-                canvas.remove(activeObject);
-                if (activeObject.type === 'textbox') {
-                    textObjects.splice(activeTextIndex, 1);
-                    activeTextIndex = -1;
-                } else if (activeObject.type === 'image') {
-                    imageCount--; // Decrement the image count if an image is deleted
-                    updateImageCharge(); // Update the charge after deleting the image
-                }
-                $('#textEditor, #deleteBtn').hide();
-                canvas.renderAll();
-            }
-        }
-
-
-
-        // Handle selection events for canvas objects
-        function handleObjectSelected(e) {
-            const activeObject = e.target;
-            if (activeObject.type === 'textbox') {
-                updateTextEditorValues(activeObject);
-                $('#textEditor').show(); // Show the text editor
-                $('#shapeColor').hide(); // Hide shape color button
-                $('#shapeColorPicker').hide(); // Hide shape color picker
-            } else if (['circle', 'rect', 'triangle', 'square'].includes(activeObject.type)) {
-                $('#shapeColor').show(); // Show the shape color button
-                $('#shapeColorPicker').show(); // Show the shape color picker
-                $('#textEditor').hide(); // Hide the text editor
-            }
-            $('#deleteBtn').show();
-        }
-
-        // Change the color of the shape when the shape color picker changes
-        $('#shapeColorPicker').on('input', function() {
+        // Show color picker for text when the text color changes
+        $('#textColorPicker').on('input', function() {
             const selectedColor = $(this).val();
             const activeObject = canvas.getActiveObject();
-            if (activeObject && ['circle', 'rect', 'triangle', 'square'].includes(activeObject.type)) {
-                activeObject.set('fill', selectedColor);
-                canvas.renderAll();
+            if (activeObject && activeObject.type === 'textbox') {
+                activeObject.set('fill', selectedColor); // Change the fill color of the active text object
+                canvas.renderAll(); // Refresh the canvas
             }
         });
 
+        // Show color picker when the eyedropper button is clicked
+        $('#eyedropperBtn').on('click', function(event) {
+            $('#textColorPicker').show(); // Show the text color picker
 
-        // Clear selection and hide editors
-        function clearSelection() {
-            $('#textEditor, #deleteBtn').hide(); // Hide text editor and delete button
-            $('#shapeColor, #shapeColorPicker').hide(); // Hide shape color button and picker
-        }
+            // Position the color picker
+            const buttonOffset = $(this).offset();
+            const buttonHeight = $(this).outerHeight();
 
-        // Event listener for transparent background toggle
-            $('#transparentBgToggle').click(function() {
-                canvas.setBackgroundColor('rgba(0,0,0,0)', canvas.renderAll.bind(canvas)); // Set background to transparent
+            $('#textColorPicker').css({
+                top: buttonOffset.top + buttonHeight + 5,
+                left: buttonOffset.left
             });
 
-        // Function to download the #container content (image + canvas) as a PNG
-            // function downloadCanvas() {
-            //     // Select the container div to capture (image + canvas)
-            //     const container = document.getElementById('container');
-                
-            //     // Use html2canvas to take a screenshot of the container div
-            //     html2canvas(container, {
-            //         allowTaint: true,
-            //         useCORS: true,
-            //         scale: 2 // Increase resolution of the output image
-            //     }).then(canvas => {
-            //         // Convert the captured screenshot to a PNG data URL
-            //         const dataURL = canvas.toDataURL('image/png');
-                    
-            //         // Create a download link
-            //         const link = document.createElement('a');
-            //         link.href = dataURL;
-            //         link.download = 'my_design.png'; // Set the downloaded file name
-                    
-            //         // Trigger the download
-            //         document.body.appendChild(link);
-            //         link.click();
-            //         document.body.removeChild(link);
-            //     });
-            // }
-            function downloadCanvas() {
-        const container = document.getElementById('container');
+            // Focus the text color picker for immediate selection
+            $('#textColorPicker').focus().trigger('click');
 
-        html2canvas(container, {
-            allowTaint: true,
-            useCORS: true,
-            scale: 2
-        }).then(canvas => {
-            const dataURL = canvas.toDataURL('image/png');
+            event.preventDefault();
+        });
 
-            // Create a download link for the image
-            const link = document.createElement('a');
-            link.href = dataURL;
-            link.download = 'my_design.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+        // Function to change background color
+        function changeBackgroundColor(color) {
+            container.style.backgroundColor = color;
+        }
 
-            // Get the product code from the form
-            const productCode = document.getElementById('product_code').value;
+        // Event listener for color picker
+        colorPicker.addEventListener('input', function() {
+            changeBackgroundColor(this.value);
+        });
 
-            // Set the image data to the hidden input field
-            document.getElementById('image_data').value = dataURL;
+        // Event listener for dropdown
+        colorDropdown.addEventListener('change', function() {
+            changeBackgroundColor(this.value);
+        });
 
-            // Submit the form
-            document.getElementById('designForm').submit();
+        // Event listener for transparent background toggle
+        transparentBgToggle.addEventListener('click', function() {
+            container.style.backgroundColor = 'transparent'; // Reset to transparent
+        });
+
+        // Show/hide text editor and delete button
+        canvas.on('object:selected', handleObjectSelected);
+        canvas.on('selection:cleared', clearSelection);
+
+        // Initially hide the color picker input
+        $('#textColorPicker').hide();
+
+                });
+
+    // Set canvas size dynamically
+    function setCanvasSize(width, height) {
+        $("#canvasContainer").css({ width, height });
+        $("#canvas").attr({ width, height });
+        canvas.setWidth(width);
+        canvas.setHeight(height);
+    }
+
+    // Add Text Object to Canvas
+    function addTextToCanvas() {
+        const text = new fabric.Textbox("Add Your Text", {
+            left: canvas.width / 2,
+            top: canvas.height / 2,
+            fontSize: parseInt($('#fontSize').val(), 10), // Get font size from dropdown
+            fontFamily: $('#fontFamily').val(), // Get font family from dropdown
+            fill: $('#textColorPicker').val(), // Initial text color
+            textAlign: "center",
+            editable: true,
+        });
+
+        textObjects.push(text);
+        canvas.add(text).setActiveObject(text);
+        activeTextIndex = textObjects.length - 1;
+
+        updateTextEditorValues(text);
+
+        // Add input event to track text changes and update benchmark charge
+        text.on('changed', function() {
+            updateTextCharge(text.text);
         });
     }
 
-    </script>
+    function updateTextEditorValues(text) {
+        $("#textColorPicker").val(text.fill);
+        $("#fontSize").val(text.fontSize);
+        $("#fontFamily").val(text.fontFamily);
+        updateTextCharge(text.text); // Update charge when text is added
+    }
+
+    // Function to calculate and display the additional charge
+    function updateTextCharge(text) {
+        const filteredText = text.replace(/[0-9\s]/g, ''); // Remove digits and spaces
+        const length = filteredText.length; // Calculate length of filtered text
+
+        // Minimum character benchmark
+        const benchmark = 10;
+        let charge = 0;
+
+        if (length > benchmark) {
+            // Calculate additional charge for characters beyond the benchmark
+            charge = (length - benchmark) * 5; // 5 pesos for each character beyond 10
+        }
+        totalTextCharge = charge;
+        // Update the text charge display
+        if (charge > 0) {
+            $('#textCharge').text(`₱${charge}`); // Display additional charge
+        } else {
+            $('#textCharge').text('No additional charge'); // No charge if within benchmark
+        }
+
+        updateTotalCharge(); // Call to update the total charge display
+
+    }
+
+
+    // Set up text property listeners
+    $('#fontSize').on('input', function() {
+        const activeObject = canvas.getActiveObject();
+        if (activeObject && activeObject.type === 'textbox') {
+            activeObject.set('fontSize', parseInt($(this).val(), 10));
+            canvas.renderAll();
+        }
+    });
+
+    $('#fontFamily').on('change', function() {
+        const activeObject = canvas.getActiveObject();
+        if (activeObject && activeObject.type === 'textbox') {
+            activeObject.set('fontFamily', $(this).val());
+            canvas.renderAll();
+        }
+    });
+
+    // Add shape to canvas
+    function addShapeToCanvas(selectedShape, color) {
+        let shape;
+
+        switch (selectedShape) {
+            case 'circle':
+                shape = new fabric.Circle({
+                    radius: 30,
+                    fill: color,
+                    left: canvas.width / 2,
+                    top: canvas.height / 2
+                });
+                break;
+            case 'rectangle':
+                shape = new fabric.Rect({
+                    width: 60,
+                    height: 40,
+                    fill: color,
+                    left: canvas.width / 2,
+                    top: canvas.height / 2
+                });
+                break;
+            case 'triangle':
+                shape = new fabric.Triangle({
+                    width: 60,
+                    height: 60,
+                    fill: color,
+                    left: canvas.width / 2,
+                    top: canvas.height / 2
+                });
+                break;
+            case 'square':
+                shape = new fabric.Rect({
+                    width: 50,
+                    height: 50,
+                    fill: color,
+                    left: canvas.width / 2,
+                    top: canvas.height / 2
+                });
+                break;
+            default:
+                return; // Exit if no shape is selected
+        }
+
+        canvas.add(shape).setActiveObject(shape);
+        $('#shapeColorLabel, #shapeColorPicker').show(); // Show color options if applicable
+        canvas.renderAll();
+    }
+
+    // Add image to canvas
+
+    function addImageToCanvas() {
+        const fileInput = $('<input type="file" accept="image/*" style="display:none;">');
+
+        fileInput.on('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgElement = new Image();
+                    imgElement.src = e.target.result;
+                    imgElement.onload = () => {
+                        addImageToCanvasFromSrc(imgElement);
+                        imageCount++; // Increment the image count
+                        updateImageCharge(); // Update the charge for images
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        fileInput.appendTo('body').trigger('click');
+    }
+    function updateImageCharge() {
+        if (imageCount > 1) {
+            totalImageCharge = (imageCount - 1) * 15; // 15 pesos for each additional image beyond the first
+            $('#imageCharge').text(`₱${totalImageCharge}`);
+        } else {
+            totalImageCharge = 0; // No charge for the first image
+            $('#imageCharge').text('No additional charge'); // No charge for the first image
+        }
+
+        updateTotalCharge(); // Call to update the total charge display
+
+    }
+
+
+    // Add image to canvas from img element
+    function addImageToCanvasFromSrc(imgElement) {
+        const scale = Math.min(canvas.width / imgElement.width, canvas.height / imgElement.height);
+        const imgInstance = new fabric.Image(imgElement, {
+            left: (canvas.width - imgElement.width * scale) / 2,
+            top: (canvas.height - imgElement.height * scale) / 2,
+            scaleX: scale,
+            scaleY: scale,
+        });
+
+        canvas.add(imgInstance).setActiveObject(imgInstance);
+        canvas.renderAll();
+    }
+
+    // Delete active object (text, shape, or image)
+    function deleteActiveObject() {
+        const activeObject = canvas.getActiveObject();
+        if (activeObject) {
+            canvas.remove(activeObject);
+            if (activeObject.type === 'textbox') {
+                textObjects.splice(activeTextIndex, 1);
+                activeTextIndex = -1;
+            } else if (activeObject.type === 'image') {
+                imageCount--; // Decrement the image count if an image is deleted
+                updateImageCharge(); // Update the charge after deleting the image
+            }
+            $('#textEditor, #deleteBtn').hide();
+            canvas.renderAll();
+        }
+    }
+
+
+
+    // Handle selection events for canvas objects
+    function handleObjectSelected(e) {
+        const activeObject = e.target;
+        if (activeObject.type === 'textbox') {
+            updateTextEditorValues(activeObject);
+            $('#textEditor').show(); // Show the text editor
+            $('#shapeColor').hide(); // Hide shape color button
+            $('#shapeColorPicker').hide(); // Hide shape color picker
+        } else if (['circle', 'rect', 'triangle', 'square'].includes(activeObject.type)) {
+            $('#shapeColor').show(); // Show the shape color button
+            $('#shapeColorPicker').show(); // Show the shape color picker
+            $('#textEditor').hide(); // Hide the text editor
+        }
+        $('#deleteBtn').show();
+    }
+
+    // Change the color of the shape when the shape color picker changes
+    $('#shapeColorPicker').on('input', function() {
+        const selectedColor = $(this).val();
+        const activeObject = canvas.getActiveObject();
+        if (activeObject && ['circle', 'rect', 'triangle', 'square'].includes(activeObject.type)) {
+            activeObject.set('fill', selectedColor);
+            canvas.renderAll();
+        }
+    });
+
+
+    // Clear selection and hide editors
+    function clearSelection() {
+        $('#textEditor, #deleteBtn').hide(); // Hide text editor and delete button
+        $('#shapeColor, #shapeColorPicker').hide(); // Hide shape color button and picker
+    }
+
+    // Event listener for transparent background toggle
+        $('#transparentBgToggle').click(function() {
+            canvas.setBackgroundColor('rgba(0,0,0,0)', canvas.renderAll.bind(canvas)); // Set background to transparent
+        });
+
+    // Function to download the #container content (image + canvas) as a PNG
+        // function downloadCanvas() {
+        //     // Select the container div to capture (image + canvas)
+        //     const container = document.getElementById('container');
+            
+        //     // Use html2canvas to take a screenshot of the container div
+        //     html2canvas(container, {
+        //         allowTaint: true,
+        //         useCORS: true,
+        //         scale: 2 // Increase resolution of the output image
+        //     }).then(canvas => {
+        //         // Convert the captured screenshot to a PNG data URL
+        //         const dataURL = canvas.toDataURL('image/png');
+                
+        //         // Create a download link
+        //         const link = document.createElement('a');
+        //         link.href = dataURL;
+        //         link.download = 'my_design.png'; // Set the downloaded file name
+                
+        //         // Trigger the download
+        //         document.body.appendChild(link);
+        //         link.click();
+        //         document.body.removeChild(link);
+        //     });
+        // }
+        function downloadCanvas() {
+    const container = document.getElementById('container');
+
+    html2canvas(container, {
+        allowTaint: true,
+        useCORS: true,
+        scale: 2
+    }).then(canvas => {
+        const dataURL = canvas.toDataURL('image/png');
+
+        // Create a download link for the image
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'my_design.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Get the product code from the form
+        const productCode = document.getElementById('product_code').value;
+
+        // Set the image data to the hidden input field
+        document.getElementById('image_data').value = dataURL;
+
+        // Submit the form
+        document.getElementById('designForm').submit();
+    });
+}
+
+</script>
 @endsection
