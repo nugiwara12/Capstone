@@ -17,7 +17,7 @@
         <div class="flex justify-end mb-2">
             <!-- Button to open the Add Users modal -->
             <button class="bg-blue-700 p-2 rounded-md text-white hover:text-white" id="openAddModalButton">
-                <i class="bi bi-person-plus"></i> Add Category
+                <i class="bi bi-journal-plus"></i> Add Category
             </button>
         </div>
     </div>

@@ -136,50 +136,13 @@
 </div>
 
 <div class="mt-4">
-<!-- <form id="designForm" action="/save-image" method="POST"> -->
-        <!-- @csrf CSRF token for Laravel -->
-        <!-- <input type="hidden" id="image_data" name="dl_customize"> Hidden input for image data -->
         <button type="button" onclick="downloadCanvas()" class="btn btn-success w-100">Download Design</button>
-    <!-- </form> -->
-</div>
 
 </div>
 
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        window.downloadCanvas = function() {
-            const container = document.getElementById('container');
+</div>
 
-            html2canvas(container, {
-                allowTaint: true,
-                useCORS: true,
-                scale: 2
-            }).then(canvas => {
-                const dataURL = canvas.toDataURL('image/png');
 
-                // Create a download link for the image
-                const link = document.createElement('a');
-                link.href = dataURL;
-                link.download = 'my_design.png';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                // Set the image data to the hidden input field
-                document.getElementById('image_data').value = dataURL;
-                document.getElementById('image_data').name = 'image'; // Set name to match controller
-
-                // Submit the form
-                const form = document.getElementById('designForm'); // Ensure you get the form correctly
-                if (form) {
-                    form.submit();
-                } else {
-                    console.error('Form element not found!');
-                }
-            }).catch(error => console.error('Error capturing canvas:', error));
-        };
-    });
-</script> -->
 
 
 <!-- Fabric -->

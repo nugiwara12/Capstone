@@ -1,3 +1,4 @@
+@if (Auth::check() && in_array(Auth::user()->role, ['admin', 'seller']))
 @extends('layouts.app3')
 
 @section('title', 'Create Product')
@@ -166,3 +167,5 @@
 </form>
 
 @endsection
+
+@endif

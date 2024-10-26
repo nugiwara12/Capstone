@@ -7,11 +7,15 @@ use App\Models\Contact;
 use App\Mail\SendContact; // Ensure this is the correct Mailable class
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator; // Make sure to import the Validator
+use Illuminate\Support\Facades\Auth;
 
 class ContactUsFormController extends Controller
 {
     public function index()
     {
+        if (!in_array(Auth::user()->role, ['admin', 'seller'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         $contacts = Contact::paginate(request('per_page', 10)); // Default to 10 per page
         return view('contact.index', compact('contacts'));
     }
@@ -60,6 +64,9 @@ class ContactUsFormController extends Controller
     // Show a specific contact
     public function show($id)
     {
+        if (!in_array(Auth::user()->role, ['admin', 'seller'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         $contact = Contact::findOrFail($id);
         return view('contact.show', compact('contact'));
     }
@@ -67,6 +74,9 @@ class ContactUsFormController extends Controller
     // Destroy (delete) a specific contact
     public function destroy($id)
     {
+        if (!in_array(Auth::user()->role, ['admin', 'seller'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         $contact = Contact::findOrFail($id);
         $contact->delete();
 

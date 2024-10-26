@@ -348,7 +348,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h2 class="mb-lg-4 mb-3">Customers Also Bought These</h2>
+                <h2 class="mb-lg-4 mb-3 text-lg">Customers Also Bought These</h2>
                 <div class="product-wrapper product-style-2 slide-4 p-0 light-arrow bottom-space">
                     @foreach ($shuffle as $ap)
                     <div>
@@ -360,37 +360,20 @@
                                             class="bg-img blur-up lazyload" alt="">
                                     </a>
                                 </div>
-                                <div class="cart-wrap">
+                                <!-- <div class="cart-wrap">
                                     <ul>
                                         <li>
                                             <a href="{{route('product-details', $ap->id)}}">
-                                                <i data-feather="eye"></i>
+                                                <i class="bi bi-eye"></i>
                                             </a>
                                         </li>
 
                                     </ul>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="product-details">
                                 <div class="rating-details">
                                     <span class="font-light grid-content">{{$ap->category}}</span>
-                                    <ul class="rating mt-0">
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                    </ul>
                                 </div>
                                 <div class="main-price">
                                     <a href="details.php" class="font-default">

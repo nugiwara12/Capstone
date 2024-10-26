@@ -179,9 +179,10 @@
         </div>
 
         <div class="row mb-5">
-            <div class="d-grid">
+            <div class="col-6 ms-auto d-grid"> <!-- col-6 makes it half-width; ms-auto pushes it to the right -->
                 <button type="submit" class="btn btn-success">Update</button>
             </div>
         </div>
+
     </form>
 @endsection

@@ -12,7 +12,11 @@ use App\Mail\DeliveryStatusUpdated;
 
 class OrderController extends Controller
 {
+    
     public function index(Request $request) {
+        if (!in_array(Auth::user()->role, ['admin', 'seller'])) {
+            abort(404); // Return a 404 error if user is unauthorized
+        }
         // Get the search query if available
         $search = $request->input('search');
     
