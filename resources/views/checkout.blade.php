@@ -270,54 +270,49 @@
                 </div>
             </div>
             </form>
-            <!-- GCash and Maya QR Code Section -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-                <!-- GCash Payment Option -->
-                <div class="text-center">
-                    <h4 class="font-semibold mb-2">Pay with GCash</h4>
-                    <img src="{{ asset('assets/images/payment/gcash-logo.ico') }}" alt="GCash Logo" 
-                        class="w-50 h-40 mx-auto rounded-md shadow-md cursor-pointer" 
-                        data-toggle="modal" 
-                        data-target="#gcashModal">
-                </div>
-                <!-- Maya Payment Option -->
-                <div class="text-center">
-                    <h4 class="font-semibold mb-2">Pay with Maya</h4>
-                    <img src="{{ asset('assets/images/payment/maya-logo.ico') }}" alt="Maya Logo" 
-                        class="w-50 h-40 mx-auto rounded-md shadow-md cursor-pointer" 
-                        onclick="showModal('mayaModal')">
-                </div>
+                             <!-- GCash and Maya QR Code Section -->
+                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+    <!-- GCash Payment Option -->
+    <div class="text-center">
+        <h4 class="font-semibold mb-2">Pay with GCash</h4>
+        <img src="{{ asset('assets/images/payment/gcash-logo.ico') }}" alt="GCash Logo" 
+            class="w-50 h-40 mx-auto rounded-md shadow-md cursor-pointer" 
+            data-toggle="modal" 
+            data-target="#gcashModal">
+    </div>
+    <!-- Maya Payment Option -->
+    <div class="text-center">
+        <h4 class="font-semibold mb-2">Pay with Maya</h4>
+        <img src="{{ asset('assets/images/payment/maya-logo.ico') }}" alt="Maya Logo" 
+             class="w-50 h-40 mx-auto rounded-md shadow-md cursor-pointer" 
+             onclick="showModal('mayaModal')">
+    </div>
+</div>
+
+<!-- GCash Modal -->
+<div class="modal fade" id="gcashModal" tabindex="-1" role="dialog" aria-labelledby="gcashModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header p-2">
+                <h5 class="text-black text-lg font-semibold" id="gcashModalLabel">Pay with GCash</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-3xl">&times;</span>
+                </button>
             </div>
+            <div class="modal-body overflow-auto" style="max-height: 700px; overflow-y: auto;">
+                <div class="flex flex-col items-center text-center mb-4">
+                    <img src="{{ asset('assets/images/payment/gcash-code.png') }}" alt="GCash QR Code" class="img-fluid w-full">
+                    <span class="text-muted mt-2">Scan the QR code to pay with GCash</span>
+                </div>
+                <form action="{{ route('payment.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="payment_method" value="gcash">
 
-            <!-- GCash Modal -->
-            <div class="modal fade" id="gcashModal" tabindex="-1" role="dialog" aria-labelledby="gcashModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-md modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header p-2">
-                            <h5 class="text-black text-lg font-semibold" id="gcashModalLabel">Pay with GCash</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true" class="text-3xl">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body overflow-auto" style="max-height: 700px; overflow-y: auto;">
-                            <div class="flex flex-col items-center text-center mb-4">
-                                <img src="{{ asset('assets/images/payment/gcash-code.png') }}" alt="GCash QR Code" class="img-fluid w-full">
-                                <span class="text-muted mt-2">Scan the QR code to pay with GCash</span>
-                            </div>
-                            <form action="{{ route('order.store') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <input type="hidden" name="payment_method" value="gcash">
-
-                                <!-- Name -->
-                                <div class="mb-3">
-                                    <label for="gcashName" class="form-label">Name</label>
-                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashName" name="name" placeholder="Enter your name" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="product_title" class="form-label">Product Name</label>
-                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="product_title" name="product_title" placeholder="Enter Product Name" required>
-                                </div>
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <label for="gcashName" class="form-label">Name</label>
+                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashName" name="name" placeholder="Enter your name" required>
+                    </div>
 
                                 <!-- Address -->
                                 <div class="mb-3">
@@ -331,18 +326,11 @@
                                     <input type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashEmail" name="email" placeholder="Enter your email" required>
                                 </div>
 
-                                <!-- Phone -->
-                                <div class="mb-3">
-                                    <label for="gcashPhone" class="block text-sm font-medium text-gray-700">Gcash Phone Number</label>
-                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashPhone" name="phone" placeholder="Enter your phone number" required>
-                                </div>
-
-                                <!-- Price -->
-                                <div class="mb-3">
-                                    <label for="price" class="block text-sm font-medium text-gray-700">Amount</label>
-                                    <input type="number" step="0.01" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="price" name="price" placeholder="Enter price" required>
-                                </div>
-
+                    <!-- Phone -->
+                    <div class="mb-3">
+                        <label for="gcashPhone" class="block text-sm font-medium text-gray-700">Gcash Phone Number</label>
+                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="gcashPhone" name="phone" placeholder="Enter your phone number" required>
+                    </div>
 
                                 <!-- Screenshot Upload -->
                                 <div class="mb-3">
