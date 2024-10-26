@@ -134,7 +134,7 @@
 
                         <div class="tab-pane fade table-dashboard dashboard wish-list-section" id="order">
                             <div class="box-head mb-3">
-                                <h3>My Order</h3>
+                                <h3 class="text-lg">My Order</h3>
                             </div>
                             <div class="table-responsive">
                                 <table class="table cart-table">

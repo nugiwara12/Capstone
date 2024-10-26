@@ -127,7 +127,7 @@
                         <a href="{{ route('products') }}" class="flex items-center w-full space-x-2 rounded-lg no-underline hover:no-underline text-black 
                             {{ request()->routeIs('products') ? 'bg-blue-800 text-white' : 'text-blue-800 bg-white hover:bg-blue-200' }}">
                             <span aria-hidden="true" class="p-2 py-2 rounded-lg {{ request()->routeIs('products') ? 'bg-blue-800' : 'bg-blue-200' }}">
-                                <i class="bi bi-journals"></i>  
+                                <i class="bi bi-box2"></i>  
                             </span>
                             <span>PRODUCT</span>
                         </a>
