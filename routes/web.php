@@ -87,6 +87,7 @@ Route::post('orders/{id}/delivered', [OrderController::class, 'delivered'])->nam
 Route::post('orders/{id}/shipped', [OrderController::class, 'shipped'])->name('order.shipped');
 Route::post('orders/{id}/packed', [OrderController::class, 'packed'])->name('order.packed');
 Route::post('orders/{id}/preparing', [OrderController::class, 'preparing'])->name('order.preparing');
+Route::post('/orders/store', [OrderController::class, 'store'])->name('order.store');
 Route::delete('orders/{id}', [OrderController::class, 'delete'])->name('order.delete');
 
 

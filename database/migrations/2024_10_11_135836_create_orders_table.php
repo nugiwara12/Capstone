@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('quantity')->nullable();
             $table->string('price')->nullable();
             $table->string('image')->nullable();
+            $table->string('screenshot')->nullable();
             $table->string('payment_status')->nullable();
             $table->string('delivery_status')->nullable();
             $table->timestamps();

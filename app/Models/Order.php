@@ -26,4 +26,9 @@ class Order extends Model
         'payment_status',
         'delivery_status'
     ];
+
+    // Define the relationship to Product
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
 }

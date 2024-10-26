@@ -61,6 +61,46 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Order deleted successfully!');
     }
 
+    public function store(Request $request)
+    {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'payment_method' => 'required|string',
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'email' => 'required|email',
+            'product_title' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+            'price' => 'required|numeric',
+            'screenshot' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Optional screenshot validation
+        ]);
+    
+        // Handle file upload if a screenshot is provided
+        $screenshotPath = null;
+        if ($request->hasFile('screenshot')) {
+            $screenshotPath = $request->file('screenshot')->store('uploads/gcash_screenshots', 'public');
+        }
+    
+        // Create a new order record
+        $order = new Order;
+        $order->name = $validated['name'];
+        $order->address = $validated['address'];
+        $order->price = $validated['price'];
+        $order->email = $validated['email'];
+        $order->product_title = $validated['product_title'];
+        $order->phone = $validated['phone'];
+        $order->screenshot = $screenshotPath;
+        $order->delivery_status = 'Pending';
+        $order->save();
+    
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Order submitted successfully!');
+    }
+
+    public function cardStore() {
+        
+    }
+    
     public function placeOrder(Request $request) {
         $user = Auth::user();
         $userId = $user->id;
